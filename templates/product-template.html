@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta name="keywords" content="{{KEYWORDS}}">
+  <title>{{PRODUCT_NAME}} レビュー - キッズグッズラボ</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="{{PRODUCT_NAME}} レビュー - キッズグッズラボ">
+  <meta property="og:description" content="{{META_DESCRIPTION}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:type" content="article">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧸</text></svg>">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    "itemReviewed": {
+      "@type": "Product",
+      "name": "{{PRODUCT_NAME}}",
+      "image": "{{PRODUCT_IMAGE}}",
+      "description": "{{PRODUCT_SHORT_DESCRIPTION}}"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "{{RATING}}",
+      "bestRating": "5"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "キッズグッズラボ"
+    },
+    "datePublished": "{{PUBLISH_DATE}}"
+  }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">🧸</span>
+        <span class="site-name">キッズグッズラボ</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="/" class="nav-link">ホーム</a>
+        <a href="/products/" class="nav-link">商品レビュー</a>
+        <a href="/about.html" class="nav-link">運営者情報</a>
+        <a href="/contact.html" class="nav-link">お問い合わせ</a>
+      </nav>
+
+      <button class="mobile-menu-btn" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Article Header -->
+  <section class="article-header">
+    <div class="container">
+      <div class="article-meta">
+        <span class="article-category">{{CATEGORY}}</span>
+        <span class="article-date">{{PUBLISH_DATE}}</span>
+      </div>
+      <h1 class="article-title">{{PRODUCT_NAME}} レビュー</h1>
+      <p class="article-excerpt">{{PRODUCT_SHORT_DESCRIPTION}}</p>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <section class="article-content">
+    <div class="container">
+      <div class="article-body">
+        <!-- Product Info Box -->
+        <div class="product-info-box">
+          <div class="product-image" style="border-radius: var(--radius-md); overflow: hidden;">
+            <img src="{{PRODUCT_IMAGE}}" alt="{{PRODUCT_NAME}}">
+          </div>
+
+          <dl class="product-specs">
+            <dt>商品名</dt>
+            <dd>{{PRODUCT_NAME}}</dd>
+
+            <dt>価格</dt>
+            <dd>{{PRICE}}</dd>
+
+            <dt>対象年齢</dt>
+            <dd>{{TARGET_AGE}}</dd>
+
+            <dt>メーカー</dt>
+            <dd>{{MANUFACTURER}}</dd>
+          </dl>
+
+          <a href="{{AFFILIATE_LINK}}" class="affiliate-btn" target="_blank" rel="noopener sponsored">
+            Amazonで詳細を見る
+          </a>
+        </div>
+
+        <!-- Introduction -->
+        <h2>はじめに</h2>
+        {{INTRODUCTION}}
+
+        <!-- Rating -->
+        <div class="rating-box">
+          <div class="rating-score">{{RATING}}</div>
+          <div class="rating-stars">{{RATING_STARS}}</div>
+          <p class="rating-label">総合評価</p>
+        </div>
+
+        <!-- Pros and Cons -->
+        <div class="pros-cons">
+          <div class="pros">
+            <h4>良い点</h4>
+            <ul>
+              {{PROS}}
+            </ul>
+          </div>
+          <div class="cons">
+            <h4>気になる点</h4>
+            <ul>
+              {{CONS}}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <h2>実際に使ってみた感想</h2>
+        {{MAIN_CONTENT}}
+
+        <!-- Specifications -->
+        <h2>商品の詳細スペック</h2>
+        {{SPECIFICATIONS}}
+
+        <!-- Who is it for -->
+        <h2>こんな人におすすめ</h2>
+        {{RECOMMENDATION}}
+
+        <!-- Conclusion -->
+        <h2>まとめ</h2>
+        {{CONCLUSION}}
+
+        <!-- CTA Box -->
+        <div class="product-info-box" style="text-align: center;">
+          <h3 style="margin-bottom: 16px;">{{PRODUCT_NAME}}</h3>
+          <p style="color: var(--text-light); margin-bottom: 24px;">{{CTA_TEXT}}</p>
+          <a href="{{AFFILIATE_LINK}}" class="affiliate-btn" target="_blank" rel="noopener sponsored">
+            Amazonで購入する
+          </a>
+          {{ADDITIONAL_AFFILIATE_LINKS}}
+        </div>
+
+        <!-- Related Products (optional) -->
+        {{RELATED_PRODUCTS}}
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <span class="logo-icon">🧸</span>
+            <span class="site-name">キッズグッズラボ</span>
+          </a>
+          <p>子育てを、もっと楽しく。実際に使って良かった子供用品を紹介するレビューサイトです。</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">カテゴリー</h4>
+          <ul class="footer-links">
+            <li><a href="/products/">おもちゃ</a></li>
+            <li><a href="/products/">ベビー用品</a></li>
+            <li><a href="/products/">知育玩具</a></li>
+            <li><a href="/products/">外遊び</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">サイト情報</h4>
+          <ul class="footer-links">
+            <li><a href="/about.html">運営者情報</a></li>
+            <li><a href="/privacy.html">プライバシーポリシー</a></li>
+            <li><a href="/contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">お知らせ</h4>
+          <ul class="footer-links">
+            <li><a href="#">サイトオープンしました</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 キッズグッズラボ All Rights Reserved.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">
+          ※当サイトはアフィリエイトプログラムに参加しています。
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

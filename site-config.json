@@ -1,0 +1,32 @@
+{
+  "siteName": "キッズグッズラボ",
+  "siteNameEn": "Kids Gear Log",
+  "siteUrl": "https://kidsgoodslab.com",
+  "siteDescription": "子育てを、もっと楽しく。実際に使って良かった子供用品を紹介するレビューサイトです。",
+  "siteIcon": "🧸",
+  "copyright": "キッズグッズラボ",
+  "author": {
+    "name": "運営者名",
+    "email": "contact@example.com"
+  },
+  "social": {
+    "twitter": "",
+    "instagram": "",
+    "youtube": ""
+  },
+  "affiliate": {
+    "amazonTag": "your-amazon-tag",
+    "rakutenId": "your-rakuten-id"
+  },
+  "analytics": {
+    "googleAnalyticsId": "G-XXXXXXXXXX"
+  },
+  "categories": [
+    { "id": "toy", "name": "おもちゃ" },
+    { "id": "baby", "name": "ベビー用品" },
+    { "id": "educational", "name": "知育玩具" },
+    { "id": "outdoor", "name": "外遊び" },
+    { "id": "furniture", "name": "家具・収納" },
+    { "id": "safety", "name": "安全グッズ" }
+  ]
+}

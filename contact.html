@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="キッズグッズラボへのお問い合わせページ。ご質問やご要望はこちらからどうぞ。">
+  <title>お問い合わせ - キッズグッズラボ</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧸</text></svg>">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">🧸</span>
+        <span class="site-name">キッズグッズラボ</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">ホーム</a>
+        <a href="products/index.html" class="nav-link">商品レビュー</a>
+        <a href="about.html" class="nav-link">運営者情報</a>
+        <a href="contact.html" class="nav-link">お問い合わせ</a>
+      </nav>
+
+      <button class="mobile-menu-btn" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">お問い合わせ</h1>
+    </div>
+  </section>
+
+  <!-- Page Content -->
+  <section class="page-content">
+    <div class="container">
+      <p style="text-align: center; margin-bottom: 40px;">
+        当サイトへのご質問、ご要望、レビューのリクエストなど、<br>
+        お気軽にお問い合わせください。
+      </p>
+
+      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">お名前 <span style="color: var(--primary-color);">*</span></label>
+          <input type="text" id="name" name="name" class="form-input" required placeholder="山田 太郎">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">メールアドレス <span style="color: var(--primary-color);">*</span></label>
+          <input type="email" id="email" name="email" class="form-input" required placeholder="example@email.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subject">件名</label>
+          <input type="text" id="subject" name="subject" class="form-input" placeholder="お問い合わせの件名">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">お問い合わせ内容 <span style="color: var(--primary-color);">*</span></label>
+          <textarea id="message" name="message" class="form-textarea" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">送信する</button>
+      </form>
+
+      <div style="background: var(--bg-gray); padding: 24px; border-radius: var(--radius-md); margin-top: 40px;">
+        <h3 style="font-size: 1rem; margin-bottom: 12px;">お問い合わせの前に</h3>
+        <ul style="padding-left: 20px; color: var(--text-light); font-size: 0.9rem;">
+          <li style="list-style: disc; margin-bottom: 8px;">返信には数日いただく場合がございます。</li>
+          <li style="list-style: disc; margin-bottom: 8px;">商品に関するお問い合わせは、メーカーへ直接ご連絡いただくことをお勧めします。</li>
+          <li style="list-style: disc; margin-bottom: 8px;">営業・宣伝目的のお問い合わせにはお返事いたしかねます。</li>
+        </ul>
+      </div>
+
+      <p style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.85rem;">
+        ※このフォームはFormspreeを使用しています。<br>
+        実際に使用する際は、Formspreeでフォームを作成し、<br>
+        action属性のURLを変更してください。
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">🧸</span>
+            <span class="site-name">キッズグッズラボ</span>
+          </a>
+          <p>子育てを、もっと楽しく。実際に使って良かった子供用品を紹介するレビューサイトです。</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">カテゴリー</h4>
+          <ul class="footer-links">
+            <li><a href="products/index.html">おもちゃ</a></li>
+            <li><a href="products/index.html">ベビー用品</a></li>
+            <li><a href="products/index.html">知育玩具</a></li>
+            <li><a href="products/index.html">外遊び</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">サイト情報</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">運営者情報</a></li>
+            <li><a href="privacy.html">プライバシーポリシー</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">お知らせ</h4>
+          <ul class="footer-links">
+            <li><a href="#">サイトオープンしました</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 キッズグッズラボ All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
