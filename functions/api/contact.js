@@ -28,15 +28,22 @@ export async function onRequestPost(context) {
       body: JSON.stringify(data),
     });
 
-    if (response.ok) {
-      // 成功時はサンクスページにリダイレクト
-      return Response.redirect(new URL('/contact-thanks.html', request.url), 302);
-    } else {
-      // エラー詳細を返す
-      const errorText = await response.text();
-      return new Response(`Webhook error: ${response.status} - ${errorText}`, { status: 500 });
-    }
+    const responseText = await response.text();
+
+    // デバッグ: 結果を表示（後で削除）
+    return new Response(JSON.stringify({
+      formData: data,
+      webhookStatus: response.status,
+      webhookOk: response.ok,
+      webhookResponse: responseText.substring(0, 200)
+    }, null, 2), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
   } catch (error) {
-    return new Response(`Error: ${error.message}`, { status: 500 });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }
