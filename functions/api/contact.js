@@ -5,7 +5,7 @@ export async function onRequestPost(context) {
   const webhookUrl = env.WEBHOOK_URL;
 
   if (!webhookUrl) {
-    return new Response(JSON.stringify({ error: 'Webhook URL not configured' }), {
+    return new Response(JSON.stringify({ error: 'WEBHOOK_URL not configured' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -32,9 +32,11 @@ export async function onRequestPost(context) {
       // 成功時はサンクスページにリダイレクト
       return Response.redirect(new URL('/contact-thanks.html', request.url), 302);
     } else {
-      return new Response('送信に失敗しました', { status: 500 });
+      // エラー詳細を返す
+      const errorText = await response.text();
+      return new Response(`Webhook error: ${response.status} - ${errorText}`, { status: 500 });
     }
   } catch (error) {
-    return new Response('エラーが発生しました', { status: 500 });
+    return new Response(`Error: ${error.message}`, { status: 500 });
   }
 }
