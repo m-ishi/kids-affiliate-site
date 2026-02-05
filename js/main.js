@@ -166,24 +166,6 @@ document.addEventListener('DOMContentLoaded', function() {
     animateOnScroll.forEach(el => animationObserver.observe(el));
   }
 
-  // Contact form handling
-  const contactForm = document.querySelector('.contact-form');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      // Get form data
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData);
-
-      // Here you would typically send the data to a server
-      // For static site, we'll show a success message
-
-      alert('お問い合わせありがとうございます。メッセージを受け付けました。');
-      this.reset();
-    });
-  }
 
   // Generate star rating HTML
   window.generateStars = function(rating) {
