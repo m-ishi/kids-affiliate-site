@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="キッズグッズラボへのお問い合わせページ。ご質問やご要望はこちらからどうぞ。">
-  <title>お問い合わせ - キッズグッズラボ</title>
+  <meta name="description" content="お問い合わせありがとうございます。">
+  <title>送信完了 - キッズグッズラボ</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,51 +44,24 @@
   <!-- Page Header -->
   <section class="page-header">
     <div class="container">
-      <h1 class="page-title">お問い合わせ</h1>
+      <h1 class="page-title">送信完了</h1>
     </div>
   </section>
 
   <!-- Page Content -->
   <section class="page-content">
     <div class="container">
-      <p style="text-align: center; margin-bottom: 40px;">
-        当サイトへのご質問、ご要望、レビューのリクエストなど、<br>
-        お気軽にお問い合わせください。
-      </p>
-
-      <form class="contact-form" action="/api/contact" method="POST">
-        <div class="form-group">
-          <label class="form-label" for="name">お名前 <span style="color: var(--primary-color);">*</span></label>
-          <input type="text" id="name" name="name" class="form-input" required placeholder="山田 太郎">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="email">メールアドレス <span style="color: var(--primary-color);">*</span></label>
-          <input type="email" id="email" name="email" class="form-input" required placeholder="example@email.com">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="subject">件名</label>
-          <input type="text" id="subject" name="subject" class="form-input" placeholder="お問い合わせの件名">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="message">お問い合わせ内容 <span style="color: var(--primary-color);">*</span></label>
-          <textarea id="message" name="message" class="form-textarea" required placeholder="お問い合わせ内容をご記入ください"></textarea>
-        </div>
-
-        <button type="submit" class="form-submit">送信する</button>
-      </form>
-
-      <div style="background: var(--bg-gray); padding: 24px; border-radius: var(--radius-md); margin-top: 40px;">
-        <h3 style="font-size: 1rem; margin-bottom: 12px;">お問い合わせの前に</h3>
-        <ul style="padding-left: 20px; color: var(--text-light); font-size: 0.9rem;">
-          <li style="list-style: disc; margin-bottom: 8px;">返信には数日いただく場合がございます。</li>
-          <li style="list-style: disc; margin-bottom: 8px;">商品に関するお問い合わせは、メーカーへ直接ご連絡いただくことをお勧めします。</li>
-          <li style="list-style: disc; margin-bottom: 8px;">営業・宣伝目的のお問い合わせにはお返事いたしかねます。</li>
-        </ul>
+      <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <p style="font-size: 4rem; margin-bottom: 24px;">✉️</p>
+        <h2 style="margin-bottom: 16px;">お問い合わせありがとうございます</h2>
+        <p style="color: var(--text-light); margin-bottom: 32px;">
+          メッセージを受け付けました。<br>
+          内容を確認の上、必要に応じてご連絡いたします。
+        </p>
+        <a href="index.html" class="affiliate-btn" style="display: inline-block;">
+          トップページに戻る
+        </a>
       </div>
-
     </div>
   </section>
 
@@ -110,7 +83,7 @@
             <li><a href="products/index.html">おもちゃ</a></li>
             <li><a href="products/index.html">ベビー用品</a></li>
             <li><a href="products/index.html">知育玩具</a></li>
-            <li><a href="products/index.html">外遊び</a></li>
+            <li><a href="products/index.html">消耗品</a></li>
           </ul>
         </div>
 
