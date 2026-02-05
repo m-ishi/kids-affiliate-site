@@ -82,8 +82,9 @@ async function main() {
     console.log('='.repeat(50));
 
     try {
+      const titleArg = product.title ? `"${product.title}"` : '';
       execSync(
-        `node "${path.join(__dirname, 'auto-generate-article.js')}" "${product.name}" "${product.category}"`,
+        `node "${path.join(__dirname, 'auto-generate-article.js')}" "${product.name}" "${product.category}" ${titleArg}`,
         { stdio: 'inherit' }
       );
 

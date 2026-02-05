@@ -1,10 +1,27 @@
 [
-  { "name": "グーン まっさらさら通気 テープ", "category": "consumable" },
-  { "name": "メリーズ ファーストプレミアム", "category": "consumable" },
-  { "name": "ムーニー エアフィット", "category": "consumable" },
-  { "name": "ベビービョルン バウンサー Bliss", "category": "baby" },
-  { "name": "プラレール ベーシックセット", "category": "toy" },
-  { "name": "こどもちゃれんじ ぷち", "category": "educational" },
-  { "name": "ジャングルジム ブランコ すべり台", "category": "outdoor" },
-  { "name": "ベビーサークル 折りたたみ", "category": "safety" }
+  {
+    "name": "エルゴベビー OMNI 360",
+    "category": "baby",
+    "title": "なぜエルゴじゃなく『あのブランド』なのか？開発秘話を知って、僕が娘に選んだ抱っこ紐の正体。"
+  },
+  {
+    "name": "コンビ ネムリラ AUTO SWING",
+    "category": "baby",
+    "title": "東京の狭い賃貸×0歳児。スペースを死守するために僕が調べ尽くした「多機能ベビーベッド」の最適解。"
+  },
+  {
+    "name": "メリーズ ファーストプレミアム",
+    "category": "consumable",
+    "title": "産院で使われる理由を調べたら、おむつ選びの正解が見えてきた。"
+  },
+  {
+    "name": "ベビービョルン バウンサー Bliss",
+    "category": "baby",
+    "title": "スウェーデン発・50年の歴史。なぜ世界中の親がこのバウンサーを選ぶのか。"
+  },
+  {
+    "name": "くもん NEWスタディ将棋",
+    "category": "educational",
+    "title": "藤井聡太を育てた知育玩具？くもん将棋の「駒に書いてある」が天才的な理由。"
+  }
 ]

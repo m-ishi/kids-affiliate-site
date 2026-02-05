@@ -3,10 +3,11 @@
  * 自動記事生成スクリプト
  *
  * 使用方法:
- *   node auto-generate-article.js "商品名" "カテゴリー"
+ *   node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"]
  *
  * 例:
- *   node auto-generate-article.js "パンパース さらさらケア" "consumable"
+ *   node auto-generate-article.js "エルゴベビー OMNI 360" "baby"
+ *   node auto-generate-article.js "エルゴベビー OMNI 360" "baby" "なぜエルゴじゃなく『あのブランド』なのか？開発秘話を知って、僕が娘に選んだ抱っこ紐の正体。"
  *
  * カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety
  */
@@ -103,10 +104,14 @@ async function searchAmazonASIN(productName) {
 }
 
 // Gemini APIで記事を生成
-async function generateArticle(productName, category, searchResults, asin) {
+async function generateArticle(productName, category, searchResults, asin, customTitle = null) {
   console.log(`✍️  Gemini APIで記事生成中...`);
 
   const searchContext = searchResults.map(r => `- ${r.title}: ${r.description}`).join('\n');
+
+  const titleInstruction = customTitle
+    ? `\n# 記事タイトル（この雰囲気・切り口で執筆すること）\n「${customTitle}」\n`
+    : '';
 
   const prompt = `
 # Role: 究極の「子育てリサーチ・スペシャリスト」パパブロガー
@@ -125,7 +130,7 @@ async function generateArticle(productName, category, searchResults, asin) {
 # 記事を書く商品
 商品名: ${productName}
 カテゴリー: ${CATEGORY_NAMES[category]}
-
+${titleInstruction}
 # リサーチ結果
 ${searchContext}
 
@@ -262,12 +267,14 @@ function generateStars(rating) {
 }
 
 // HTMLファイルを生成
-function generateHTML(productName, category, article, asin) {
+function generateHTML(productName, category, article, asin, customTitle = null) {
   const slug = generateSlug(productName);
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
   const amazonUrl = asin
     ? `https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`
     : `https://www.amazon.co.jp/s?k=${encodeURIComponent(productName)}&tag=${AMAZON_TAG}`;
+
+  const articleTitle = customTitle || `${productName} レビュー`;
 
   const html = `<!DOCTYPE html>
 <html lang="ja">
@@ -275,9 +282,9 @@ function generateHTML(productName, category, article, asin) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="${article.metaDescription}">
-  <title>${productName} レビュー - キッズグッズラボ</title>
+  <title>${articleTitle} - キッズグッズラボ</title>
 
-  <meta property="og:title" content="${productName} レビュー - キッズグッズラボ">
+  <meta property="og:title" content="${articleTitle} - キッズグッズラボ">
   <meta property="og:description" content="${article.metaDescription}">
   <meta property="og:type" content="article">
 
@@ -311,7 +318,7 @@ function generateHTML(productName, category, article, asin) {
         <span class="article-category">${CATEGORY_NAMES[category]}</span>
         <span class="article-date">${date}</span>
       </div>
-      <h1 class="article-title">${productName} レビュー</h1>
+      <h1 class="article-title">${articleTitle}</h1>
       <p class="article-excerpt">${article.excerpt}</p>
     </div>
   </section>
@@ -469,12 +476,16 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 2) {
-    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー"');
+    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"]');
     console.log('カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety');
+    console.log('');
+    console.log('例:');
+    console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby"');
+    console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby" "開発秘話を知って、僕が娘に選んだ抱っこ紐"');
     process.exit(1);
   }
 
-  const [productName, category] = args;
+  const [productName, category, customTitle] = args;
 
   if (!CATEGORY_NAMES[category]) {
     console.error(`無効なカテゴリー: ${category}`);
@@ -492,10 +503,10 @@ async function main() {
     const asin = await searchAmazonASIN(productName);
 
     // 3. 記事を生成
-    const article = await generateArticle(productName, category, searchResults, asin);
+    const article = await generateArticle(productName, category, searchResults, asin, customTitle);
 
     // 4. HTMLファイルを生成
-    const { html, slug, date } = generateHTML(productName, category, article, asin);
+    const { html, slug, date } = generateHTML(productName, category, article, asin, customTitle);
 
     // 5. ファイルを保存
     const productsDir = path.join(__dirname, '../products');
