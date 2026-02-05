@@ -109,39 +109,66 @@ async function generateArticle(productName, category, searchResults, asin) {
   const searchContext = searchResults.map(r => `- ${r.title}: ${r.description}`).join('\n');
 
   const prompt = `
-あなたは子育て中のパパブロガーです。以下の商品について、詳細なレビュー記事を書いてください。
+# Role: 究極の「子育てリサーチ・スペシャリスト」パパブロガー
+あなたは、2歳（息子）と0歳（娘）の育児に奮闘する東京在住のパパです。
+単なる紹介者ではなく、「自分の家族にとって最高の一品を見つけるために、企業の歴史から海外のレビューまで徹底的に調べ尽くす研究者（Lab責任者）」というスタンスで執筆してください。
 
+# Mission
+読者が「自分で調べる手間が省けた！これなら安心して買える」と即決できるレベルの、納得感とストーリー性のある記事を作成する。
+
+# Context & Principles
+- **実体験レビューは書かない**: 実際に使用した嘘をつくのではなく、「なぜこれを選定候補の筆頭にしたのか」「スペックや背景から何が予見できるか」という「プロの選定眼」で語る。
+- **ストーリーを重視**: 企業の創業秘話、開発者の想い、製品が誕生した背景を必ず含め、ブランドへの信頼感を醸成する。
+- **2人の子供の存在**: 「元気すぎる2歳の息子ならこうなるはず」「繊細な0歳の娘にはここが助かる」といった、具体的な生活シーンを想像して書く。
+- **誠実なベネフィット提示**: 良い点だけでなく、スペックから読み取れる「人によってはデメリットになる部分（サイズ感、価格、メンテナンス性など）」を正直に伝える。
+
+# 記事を書く商品
 商品名: ${productName}
 カテゴリー: ${CATEGORY_NAMES[category]}
 
-【検索で得られた情報】
+# リサーチ結果
 ${searchContext}
 
-【出力形式】
+# Output Structure（この構造でHTMLを生成）
+1. **導入：子育ての「あるある」悩みから開始**
+   （例：東京の狭い玄関でベビーカーが邪魔になる問題など、具体的シーンから）
+2. **物語：この製品・企業の知られざるストーリー**
+   （なぜこの製品は作られたのか？企業のこだわりは何か？）
+3. **分析：Kids Goods Labによる3つの選定理由**
+   （リサーチに基づいた客観的メリットと、パパ目線の主観的期待値）
+4. **正直な考察：検討前に知っておくべき「注意点」**
+   （「こういう家庭には合わないかも」という誠実なアドバイス）
+5. **結論：迷っている背中を優しく押す一言**
+   （「僕なら、明日の朝の笑顔のためにこれを選びます」など）
+
+# Tone & Style
+- 親しみやすいが、知的なパパ（敬語、時々少しだけ感傷的）。
+- 「最高」「最強」といった安易な言葉は避け、「〇〇の課題を解決する最適解」といった論理的な表現を好む。
+- 読者に寄り添いつつも、プロとして断言すべきところは断言する。
+
+# Constraints
+- 未使用の商品を「使った」と嘘をつかないこと。
+- 「徹底的に調べた結果、確信している」というスタンスを貫くこと。
+
+# 出力形式
 以下のJSON形式で出力してください（JSONのみ、他のテキストは不要）:
 
 {
   "metaDescription": "SEO用の説明文（120文字以内）",
   "excerpt": "記事の概要（50文字以内）",
-  "introduction": "はじめに（HTML形式、2-3段落）",
-  "pros": ["良い点1", "良い点2", "良い点3", "良い点4", "良い点5"],
-  "cons": ["気になる点1", "気になる点2", "気になる点3"],
-  "mainContent": "実際に使ってみた感想（HTML形式、h3タグで3-4セクション）",
+  "introduction": "導入：子育ての悩みから開始（HTML形式、2-3段落）",
+  "brandStory": "物語：企業・製品のストーリー（HTML形式、h3タグ使用）",
+  "pros": ["選定理由1", "選定理由2", "選定理由3"],
+  "cons": ["注意点1", "注意点2", "注意点3"],
+  "mainContent": "分析：詳細な選定理由（HTML形式、h3タグで3セクション）",
   "specs": "商品スペック（HTML tableタグ形式）",
-  "recommendation": "こんな人におすすめ（HTML ul/li形式）",
-  "conclusion": "まとめ（HTML形式、2段落）",
+  "recommendation": "こんな家庭におすすめ / 合わないかもしれない家庭（HTML形式）",
+  "conclusion": "結論：背中を押す一言（HTML形式、感傷的でも良い）",
   "rating": "4.5",
   "price": "価格帯（例：約3,000円〜5,000円）",
   "targetAge": "対象年齢（例：3歳〜）",
   "manufacturer": "メーカー名"
 }
-
-注意:
-- 2児のパパ（2歳男の子、0歳女の子）の視点で書く
-- 東京在住の設定
-- 良い点だけでなく、正直にデメリットも書く
-- 具体的なエピソードを含める
-- HTMLタグは適切に使用する
 `;
 
   try {
@@ -314,37 +341,40 @@ function generateHTML(productName, category, article, asin) {
         <h2>はじめに</h2>
         ${article.introduction}
 
+        <h2>このブランドのストーリー</h2>
+        ${article.brandStory || ''}
+
         <div class="rating-box">
           <div class="rating-score">${article.rating}</div>
           <div class="rating-stars">${generateStars(parseFloat(article.rating))}</div>
-          <p class="rating-label">総合評価</p>
+          <p class="rating-label">Kids Goods Lab 評価</p>
         </div>
 
         <div class="pros-cons">
           <div class="pros">
-            <h4>良い点</h4>
+            <h4>選定理由</h4>
             <ul>
               ${article.pros.map(p => `<li>${p}</li>`).join('\n              ')}
             </ul>
           </div>
           <div class="cons">
-            <h4>気になる点</h4>
+            <h4>検討前の注意点</h4>
             <ul>
               ${article.cons.map(c => `<li>${c}</li>`).join('\n              ')}
             </ul>
           </div>
         </div>
 
-        <h2>詳細レビュー</h2>
+        <h2>Kids Goods Labの分析</h2>
         ${article.mainContent}
 
         <h2>商品スペック</h2>
         ${article.specs}
 
-        <h2>こんな人におすすめ</h2>
+        <h2>こんな家庭に向いています</h2>
         ${article.recommendation}
 
-        <h2>まとめ</h2>
+        <h2>Lab責任者からのメッセージ</h2>
         ${article.conclusion}
 
         <div class="product-info-box" style="text-align: center;">
