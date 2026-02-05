@@ -1,0 +1,482 @@
+#!/usr/bin/env node
+/**
+ * 自動記事生成スクリプト
+ *
+ * 使用方法:
+ *   node auto-generate-article.js "商品名" "カテゴリー"
+ *
+ * 例:
+ *   node auto-generate-article.js "パンパース さらさらケア" "consumable"
+ *
+ * カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// API設定
+const BRAVE_API_KEY = process.env.BRAVE_API_KEY || 'BSAQoELrO9aig45Ahjdl7V4XBcij_va';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyBwWnuOMohF6nPvUliBEoCfIfjuM5aXpUc';
+const AMAZON_TAG = 'kidsgoodslab-22';
+
+const BRAVE_SEARCH_URL = 'https://api.search.brave.com/res/v1/web/search';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+const CATEGORY_NAMES = {
+  toy: 'おもちゃ',
+  baby: 'ベビー用品',
+  educational: '知育玩具',
+  consumable: '消耗品',
+  outdoor: '外遊び',
+  furniture: '家具・収納',
+  safety: '安全グッズ'
+};
+
+// Brave Search APIで商品情報を検索
+async function searchProduct(productName) {
+  console.log(`🔍 Brave APIで検索中: ${productName}`);
+
+  const queries = [
+    `${productName} レビュー 口コミ`,
+    `${productName} Amazon 価格`,
+    `${productName} メリット デメリット`
+  ];
+
+  let allResults = [];
+
+  for (const query of queries) {
+    try {
+      const response = await fetch(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(query)}&count=5`, {
+        headers: {
+          'Accept': 'application/json',
+          'X-Subscription-Token': BRAVE_API_KEY
+        }
+      });
+
+      const data = await response.json();
+      if (data.web && data.web.results) {
+        allResults = allResults.concat(data.web.results.map(r => ({
+          title: r.title,
+          description: r.description,
+          url: r.url
+        })));
+      }
+
+      // レート制限対策
+      await new Promise(r => setTimeout(r, 500));
+    } catch (error) {
+      console.error(`検索エラー: ${error.message}`);
+    }
+  }
+
+  console.log(`   ${allResults.length}件の検索結果を取得`);
+  return allResults;
+}
+
+// Amazon ASINを検索
+async function searchAmazonASIN(productName) {
+  console.log(`🛒 Amazon ASINを検索中...`);
+
+  try {
+    const response = await fetch(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(`${productName} site:amazon.co.jp`)}&count=3`, {
+      headers: {
+        'Accept': 'application/json',
+        'X-Subscription-Token': BRAVE_API_KEY
+      }
+    });
+
+    const data = await response.json();
+    if (data.web && data.web.results) {
+      for (const result of data.web.results) {
+        const asinMatch = result.url.match(/\/dp\/([A-Z0-9]{10})/);
+        if (asinMatch) {
+          console.log(`   ASIN: ${asinMatch[1]}`);
+          return asinMatch[1];
+        }
+      }
+    }
+  } catch (error) {
+    console.error(`ASIN検索エラー: ${error.message}`);
+  }
+
+  return null;
+}
+
+// Gemini APIで記事を生成
+async function generateArticle(productName, category, searchResults, asin) {
+  console.log(`✍️  Gemini APIで記事生成中...`);
+
+  const searchContext = searchResults.map(r => `- ${r.title}: ${r.description}`).join('\n');
+
+  const prompt = `
+あなたは子育て中のパパブロガーです。以下の商品について、詳細なレビュー記事を書いてください。
+
+商品名: ${productName}
+カテゴリー: ${CATEGORY_NAMES[category]}
+
+【検索で得られた情報】
+${searchContext}
+
+【出力形式】
+以下のJSON形式で出力してください（JSONのみ、他のテキストは不要）:
+
+{
+  "metaDescription": "SEO用の説明文（120文字以内）",
+  "excerpt": "記事の概要（50文字以内）",
+  "introduction": "はじめに（HTML形式、2-3段落）",
+  "pros": ["良い点1", "良い点2", "良い点3", "良い点4", "良い点5"],
+  "cons": ["気になる点1", "気になる点2", "気になる点3"],
+  "mainContent": "実際に使ってみた感想（HTML形式、h3タグで3-4セクション）",
+  "specs": "商品スペック（HTML tableタグ形式）",
+  "recommendation": "こんな人におすすめ（HTML ul/li形式）",
+  "conclusion": "まとめ（HTML形式、2段落）",
+  "rating": "4.5",
+  "price": "価格帯（例：約3,000円〜5,000円）",
+  "targetAge": "対象年齢（例：3歳〜）",
+  "manufacturer": "メーカー名"
+}
+
+注意:
+- 2児のパパ（2歳男の子、0歳女の子）の視点で書く
+- 東京在住の設定
+- 良い点だけでなく、正直にデメリットも書く
+- 具体的なエピソードを含める
+- HTMLタグは適切に使用する
+`;
+
+  try {
+    const response = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 4096,
+        }
+      })
+    });
+
+    const data = await response.json();
+    if (data.candidates && data.candidates[0]) {
+      const text = data.candidates[0].content.parts[0].text;
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+      }
+    }
+    throw new Error('Gemini APIからの応答を解析できません');
+  } catch (error) {
+    console.error(`記事生成エラー: ${error.message}`);
+    throw error;
+  }
+}
+
+// ファイル名を生成（SEOフレンドリー）
+function generateSlug(productName) {
+  // 日本語をローマ字に変換する簡易マッピング
+  const romanize = {
+    'パンパース': 'pampers',
+    'メリーズ': 'merries',
+    'ムーニー': 'moony',
+    'レゴ': 'lego',
+    'デュプロ': 'duplo',
+    'アンパンマン': 'anpanman',
+    'トミカ': 'tomica',
+    'プラレール': 'plarail',
+    'シルバニア': 'sylvanian',
+    'コンビ': 'combi',
+    'アップリカ': 'aprica',
+    'ピジョン': 'pigeon',
+    'リッチェル': 'richell',
+    'ストライダー': 'strider',
+    'ボーネルンド': 'bornelund',
+  };
+
+  let slug = productName.toLowerCase();
+
+  // 既知の単語を置換
+  for (const [jp, en] of Object.entries(romanize)) {
+    slug = slug.replace(new RegExp(jp, 'gi'), en);
+  }
+
+  // 残りの日本語や特殊文字を処理
+  slug = slug
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+
+  // 空の場合はタイムスタンプ
+  if (!slug || slug === '-') {
+    slug = `product-${Date.now()}`;
+  }
+
+  return slug;
+}
+
+// 星評価を生成
+function generateStars(rating) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5 ? 1 : 0;
+  return '★'.repeat(full) + (half ? '☆' : '') + '☆'.repeat(5 - full - half);
+}
+
+// HTMLファイルを生成
+function generateHTML(productName, category, article, asin) {
+  const slug = generateSlug(productName);
+  const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
+  const amazonUrl = asin
+    ? `https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`
+    : `https://www.amazon.co.jp/s?k=${encodeURIComponent(productName)}&tag=${AMAZON_TAG}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="${article.metaDescription}">
+  <title>${productName} レビュー - キッズグッズラボ</title>
+
+  <meta property="og:title" content="${productName} レビュー - キッズグッズラボ">
+  <meta property="og:description" content="${article.metaDescription}">
+  <meta property="og:type" content="article">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img">
+      </a>
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">ホーム</a>
+        <a href="index.html" class="nav-link">商品レビュー</a>
+        <a href="../about.html" class="nav-link">運営者情報</a>
+        <a href="../contact.html" class="nav-link">お問い合わせ</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="article-header">
+    <div class="container">
+      <div class="article-meta">
+        <span class="article-category">${CATEGORY_NAMES[category]}</span>
+        <span class="article-date">${date}</span>
+      </div>
+      <h1 class="article-title">${productName} レビュー</h1>
+      <p class="article-excerpt">${article.excerpt}</p>
+    </div>
+  </section>
+
+  <section class="article-content">
+    <div class="container">
+      <div class="article-body">
+        <div class="product-info-box">
+          <div class="product-image" style="border-radius: var(--radius-md); overflow: hidden;">
+            <span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;">📦</span>
+          </div>
+          <dl class="product-specs">
+            <dt>商品名</dt>
+            <dd>${productName}</dd>
+            <dt>価格</dt>
+            <dd>${article.price}</dd>
+            <dt>対象年齢</dt>
+            <dd>${article.targetAge}</dd>
+            <dt>メーカー</dt>
+            <dd>${article.manufacturer}</dd>
+          </dl>
+          <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">
+            Amazonで詳細を見る
+          </a>
+        </div>
+
+        <h2>はじめに</h2>
+        ${article.introduction}
+
+        <div class="rating-box">
+          <div class="rating-score">${article.rating}</div>
+          <div class="rating-stars">${generateStars(parseFloat(article.rating))}</div>
+          <p class="rating-label">総合評価</p>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <h4>良い点</h4>
+            <ul>
+              ${article.pros.map(p => `<li>${p}</li>`).join('\n              ')}
+            </ul>
+          </div>
+          <div class="cons">
+            <h4>気になる点</h4>
+            <ul>
+              ${article.cons.map(c => `<li>${c}</li>`).join('\n              ')}
+            </ul>
+          </div>
+        </div>
+
+        <h2>詳細レビュー</h2>
+        ${article.mainContent}
+
+        <h2>商品スペック</h2>
+        ${article.specs}
+
+        <h2>こんな人におすすめ</h2>
+        ${article.recommendation}
+
+        <h2>まとめ</h2>
+        ${article.conclusion}
+
+        <div class="product-info-box" style="text-align: center;">
+          <h3 style="margin-bottom: 16px;">${productName}</h3>
+          <p style="color: var(--text-light); margin-bottom: 24px;">詳細はAmazonでチェック！</p>
+          <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">
+            Amazonで購入する
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo">
+            <img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img">
+          </a>
+          <p>子育てを、もっと楽しく。人気の子供用品を紹介するレビューサイトです。</p>
+        </div>
+        <div>
+          <h4 class="footer-title">カテゴリー</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">おもちゃ</a></li>
+            <li><a href="index.html">ベビー用品</a></li>
+            <li><a href="index.html">知育玩具</a></li>
+            <li><a href="index.html">消耗品</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">サイト情報</h4>
+          <ul class="footer-links">
+            <li><a href="../about.html">運営者情報</a></li>
+            <li><a href="../privacy.html">プライバシーポリシー</a></li>
+            <li><a href="../contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 キッズグッズラボ All Rights Reserved.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">※当サイトはアフィリエイトプログラムに参加しています。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>`;
+
+  return { html, slug, date };
+}
+
+// index.htmlに商品カードを追加
+function addToIndex(slug, productName, category, excerpt, rating, indexPath) {
+  const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
+
+  const cardHTML = `        <article class="product-card" data-category="${category}">
+          <a href="${indexPath.includes('products') ? '' : 'products/'}${slug}.html">
+            <div class="product-image">
+              <span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;">📦</span>
+            </div>
+            <div class="product-content">
+              <span class="product-category">${CATEGORY_NAMES[category]}</span>
+              <h3 class="product-title">${productName}</h3>
+              <p class="product-excerpt">${excerpt}</p>
+              <div class="product-meta">
+                <div class="product-rating">${generateStars(parseFloat(rating))}</div>
+                <span class="product-date">${date}</span>
+              </div>
+            </div>
+          </a>
+        </article>`;
+
+  let indexContent = fs.readFileSync(indexPath, 'utf8');
+
+  // products-gridの最後に追加
+  const gridEndMatch = indexContent.match(/([ \t]*)<\/div>\s*<\/div>\s*<\/section>\s*<!-- About Section|<!-- No Results|<!-- Footer/);
+  if (gridEndMatch) {
+    const insertPos = indexContent.lastIndexOf('</article>', gridEndMatch.index) + '</article>'.length;
+    indexContent = indexContent.slice(0, insertPos) + '\n' + cardHTML + indexContent.slice(insertPos);
+    fs.writeFileSync(indexPath, indexContent, 'utf8');
+    return true;
+  }
+
+  return false;
+}
+
+// メイン処理
+async function main() {
+  const args = process.argv.slice(2);
+
+  if (args.length < 2) {
+    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー"');
+    console.log('カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety');
+    process.exit(1);
+  }
+
+  const [productName, category] = args;
+
+  if (!CATEGORY_NAMES[category]) {
+    console.error(`無効なカテゴリー: ${category}`);
+    console.log('有効なカテゴリー:', Object.keys(CATEGORY_NAMES).join(', '));
+    process.exit(1);
+  }
+
+  console.log(`\n📝 記事生成開始: ${productName}\n`);
+
+  try {
+    // 1. 商品情報を検索
+    const searchResults = await searchProduct(productName);
+
+    // 2. Amazon ASINを検索
+    const asin = await searchAmazonASIN(productName);
+
+    // 3. 記事を生成
+    const article = await generateArticle(productName, category, searchResults, asin);
+
+    // 4. HTMLファイルを生成
+    const { html, slug, date } = generateHTML(productName, category, article, asin);
+
+    // 5. ファイルを保存
+    const productsDir = path.join(__dirname, '../products');
+    const filePath = path.join(productsDir, `${slug}.html`);
+    fs.writeFileSync(filePath, html, 'utf8');
+    console.log(`✅ 記事を保存: products/${slug}.html`);
+
+    // 6. index.htmlに追加
+    const rootIndex = path.join(__dirname, '../index.html');
+    const productsIndex = path.join(productsDir, 'index.html');
+
+    addToIndex(slug, productName, category, article.excerpt, article.rating, rootIndex);
+    addToIndex(slug, productName, category, article.excerpt, article.rating, productsIndex);
+    console.log('✅ インデックスページを更新');
+
+    console.log(`\n🎉 完了！\n`);
+    console.log(`ファイル: products/${slug}.html`);
+    console.log(`Amazon URL: https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`);
+
+  } catch (error) {
+    console.error(`\n❌ エラー: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+main();
