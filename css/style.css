@@ -96,16 +96,20 @@ ul, ol {
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.logo-icon {
-  font-size: 1.8rem;
+.logo-img {
+  height: 45px;
+  width: auto;
+}
+
+.site-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 .nav-menu {
