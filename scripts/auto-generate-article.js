@@ -16,8 +16,17 @@ const fs = require('fs');
 const path = require('path');
 
 // API設定
-const BRAVE_API_KEY = process.env.BRAVE_API_KEY || 'BSAQoELrO9aig45Ahjdl7V4XBcij_va';
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyBwWnuOMohF6nPvUliBEoCfIfjuM5aXpUc';
+// APIキーは環境変数から取得（セキュリティのため）
+const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+if (!BRAVE_API_KEY || !GEMINI_API_KEY) {
+  console.error('❌ 環境変数が設定されていません');
+  console.error('以下を設定してください:');
+  console.error('  export BRAVE_API_KEY="your-key"');
+  console.error('  export GEMINI_API_KEY="your-key"');
+  process.exit(1);
+}
 const AMAZON_TAG = 'kidsgoodslab-22';
 
 const BRAVE_SEARCH_URL = 'https://api.search.brave.com/res/v1/web/search';
@@ -184,7 +193,7 @@ ${searchContext}
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 4096,
+          maxOutputTokens: 8192,
         }
       })
     });
@@ -192,10 +201,24 @@ ${searchContext}
     const data = await response.json();
     if (data.candidates && data.candidates[0]) {
       const text = data.candidates[0].content.parts[0].text;
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        return JSON.parse(jsonMatch[0]);
+      // JSONを抽出（コードブロック内のJSONにも対応）
+      let jsonStr = text;
+      const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (codeBlockMatch) {
+        jsonStr = codeBlockMatch[1];
       }
+      const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          return JSON.parse(jsonMatch[0]);
+        } catch (parseError) {
+          console.error('JSON解析エラー:', parseError.message);
+          console.error('受信したテキスト:', text.substring(0, 500));
+        }
+      }
+    }
+    if (data.error) {
+      console.error('Gemini APIエラー:', data.error);
     }
     throw new Error('Gemini APIからの応答を解析できません');
   } catch (error) {

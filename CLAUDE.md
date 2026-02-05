@@ -33,10 +33,22 @@ kids-affiliate-site/
 
 ## よく使うコマンド
 
+### 環境変数を設定（初回のみ）
+```bash
+export BRAVE_API_KEY="your-brave-api-key"
+export GEMINI_API_KEY="your-gemini-api-key"
+```
+
 ### 記事を追加する
 ```bash
-cd ~/kids-affiliate-site
-GEMINI_API_KEY="AIzaSyBwWnuOMohF6nPvUliBEoCfIfjuM5aXpUc" node scripts/generate-articles.js
+cd ~/kids-affiliate-site/scripts
+node auto-generate-article.js "商品名" "カテゴリー" "記事タイトル"
+```
+
+### バッチ処理（複数記事）
+```bash
+cd ~/kids-affiliate-site/scripts
+node batch-generate.js --limit 3
 ```
 
 ### デプロイする
@@ -76,10 +88,14 @@ git push
 6. **関連商品**のリンクを追加
 
 ## API情報
-- Gemini API Key: AIzaSyBwWnuOMohF6nPvUliBEoCfIfjuM5aXpUc
+- APIキーは環境変数で管理（セキュリティのためコードにはハードコードしない）
+- scripts/.env.example を参照
+
+## Amazonアソシエイト
+- Store ID: kidsgoodslab-22
+- 登録済み
 
 ## 次のTODO
-- [ ] Amazonアソシエイト登録
-- [ ] 残り3記事を追加
+- [ ] PA-API取得（審査通過後）
+- [ ] 安値速報機能の実装
 - [ ] 商品画像を追加
-- [ ] アフィリエイトリンクを実際のURLに更新
