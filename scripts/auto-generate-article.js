@@ -179,6 +179,8 @@ function generateSlug(productName) {
     'パンパース': 'pampers',
     'メリーズ': 'merries',
     'ムーニー': 'moony',
+    'グーン': 'goon',
+    'マミーポコ': 'mamypoko',
     'レゴ': 'lego',
     'デュプロ': 'duplo',
     'アンパンマン': 'anpanman',
@@ -191,6 +193,16 @@ function generateSlug(productName) {
     'リッチェル': 'richell',
     'ストライダー': 'strider',
     'ボーネルンド': 'bornelund',
+    'ベビービョルン': 'babybjorn',
+    'エルゴ': 'ergo',
+    'こどもちゃれんじ': 'kodomo-challenge',
+    'しまじろう': 'shimajiro',
+    'くもん': 'kumon',
+    '学研': 'gakken',
+    'さらさら': 'sarasara',
+    'まっさらさら': 'sarasara',
+    'テープ': 'tape',
+    'パンツ': 'pants',
   };
 
   let slug = productName.toLowerCase();
