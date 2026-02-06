@@ -11,7 +11,36 @@ export async function onRequestPost(context) {
     const formData = await request.formData();
     const data = {};
     for (const [key, value] of formData.entries()) {
-      data[key] = value;
+      data[key] = value.toString().trim();
+    }
+
+    // バリデーション: 必須フィールドのチェック
+    const name = data.name || '';
+    const email = data.email || '';
+    const message = data.message || '';
+
+    if (!name || !email || !message) {
+      return new Response('必須項目を入力してください。', {
+        status: 400,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      });
+    }
+
+    // メールアドレスの簡易バリデーション
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response('有効なメールアドレスを入力してください。', {
+        status: 400,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      });
+    }
+
+    // スパム対策: 内容が短すぎる場合
+    if (message.length < 10) {
+      return new Response('お問い合わせ内容は10文字以上で入力してください。', {
+        status: 400,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      });
     }
 
     const response = await fetch(webhookUrl, {

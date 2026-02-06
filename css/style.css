@@ -907,3 +907,225 @@ ul, ol {
 .hidden {
   display: none;
 }
+
+/* =============================================
+   Comparison Page Styles
+   ============================================= */
+
+.comparison-table-wrapper {
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 16px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.comparison-table thead th {
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background: var(--bg-light);
+}
+
+.comparison-table tbody tr:hover {
+  background: var(--accent-color);
+  background: rgba(255, 230, 109, 0.3);
+}
+
+.comparison-table .product-name {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.comparison-table .rating {
+  color: var(--accent-color);
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+.comparison-table .price {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.comparison-table .check {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+}
+
+.comparison-table .cross {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+/* Product Cards in Comparison */
+.comparison-product-card {
+  background: var(--bg-light);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin: 24px 0;
+  border-left: 4px solid var(--primary-color);
+}
+
+.comparison-product-card h3 {
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+  font-size: 1.3rem;
+}
+
+.comparison-product-card .product-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.comparison-product-card .rating-score {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.comparison-product-card .rating-stars {
+  color: var(--accent-color);
+}
+
+.comparison-pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.comparison-pros-cons .pros,
+.comparison-pros-cons .cons {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+}
+
+.comparison-pros-cons .pros {
+  background: rgba(78, 205, 196, 0.1);
+  border: 1px solid var(--secondary-color);
+}
+
+.comparison-pros-cons .cons {
+  background: rgba(255, 107, 157, 0.1);
+  border: 1px solid var(--primary-color);
+}
+
+.comparison-pros-cons h4 {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.comparison-pros-cons ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comparison-pros-cons li {
+  padding: 4px 0;
+  font-size: 0.9rem;
+}
+
+.comparison-pros-cons .pros li::before {
+  content: "✓ ";
+  color: var(--secondary-color);
+}
+
+.comparison-pros-cons .cons li::before {
+  content: "△ ";
+  color: var(--primary-color);
+}
+
+/* Selection Guide */
+.selection-guide {
+  background: var(--bg-gray);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.selection-guide h3 {
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+}
+
+.selection-guide .guide-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.selection-guide .guide-item:last-child {
+  border-bottom: none;
+}
+
+.selection-guide .guide-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.selection-guide .guide-text strong {
+  color: var(--primary-dark);
+}
+
+/* Winner Badge */
+.winner-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+/* Comparison CTA */
+.comparison-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.comparison-cta .affiliate-btn {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+@media (max-width: 768px) {
+  .comparison-pros-cons {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-table {
+    font-size: 0.85rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 10px 8px;
+  }
+}

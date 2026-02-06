@@ -22,8 +22,8 @@
   <header class="header">
     <div class="container header-inner">
       <a href="index.html" class="logo">
-        <span class="logo-icon">🧸</span>
-        <span class="site-name">キッズグッズラボ</span>
+        <img src="images/logo.png" alt="キッズグッズラボ" class="logo-img">
+        
       </a>
 
       <nav class="nav-menu">
@@ -56,7 +56,9 @@
         お気軽にお問い合わせください。
       </p>
 
-      <form class="contact-form" action="/api/contact" method="POST">
+      <form class="contact-form" action="/api/contact" method="POST" id="contactForm">
+        <div id="form-error" style="display: none; background: #ffe0e0; color: #c00; padding: 12px; border-radius: 8px; margin-bottom: 20px;"></div>
+
         <div class="form-group">
           <label class="form-label" for="name">お名前 <span style="color: var(--primary-color);">*</span></label>
           <input type="text" id="name" name="name" class="form-input" required placeholder="山田 太郎">
@@ -74,11 +76,47 @@
 
         <div class="form-group">
           <label class="form-label" for="message">お問い合わせ内容 <span style="color: var(--primary-color);">*</span></label>
-          <textarea id="message" name="message" class="form-textarea" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+          <textarea id="message" name="message" class="form-textarea" required minlength="10" placeholder="お問い合わせ内容をご記入ください（10文字以上）"></textarea>
         </div>
 
         <button type="submit" class="form-submit">送信する</button>
       </form>
+
+      <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const message = document.getElementById('message').value.trim();
+          const errorDiv = document.getElementById('form-error');
+
+          // バリデーション
+          if (!name || !email || !message) {
+            e.preventDefault();
+            errorDiv.textContent = '必須項目をすべて入力してください。';
+            errorDiv.style.display = 'block';
+            return;
+          }
+
+          // メールアドレスチェック
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            e.preventDefault();
+            errorDiv.textContent = '有効なメールアドレスを入力してください。';
+            errorDiv.style.display = 'block';
+            return;
+          }
+
+          // メッセージ長チェック
+          if (message.length < 10) {
+            e.preventDefault();
+            errorDiv.textContent = 'お問い合わせ内容は10文字以上で入力してください。';
+            errorDiv.style.display = 'block';
+            return;
+          }
+
+          errorDiv.style.display = 'none';
+        });
+      </script>
 
       <div style="background: var(--bg-gray); padding: 24px; border-radius: var(--radius-md); margin-top: 40px;">
         <h3 style="font-size: 1rem; margin-bottom: 12px;">お問い合わせの前に</h3>
@@ -98,8 +136,8 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <span class="logo-icon">🧸</span>
-            <span class="site-name">キッズグッズラボ</span>
+            <img src="images/logo.png" alt="キッズグッズラボ" class="logo-img">
+            
           </a>
           <p>子育てを、もっと楽しく。人気の子供用品を紹介するレビューサイトです。</p>
         </div>

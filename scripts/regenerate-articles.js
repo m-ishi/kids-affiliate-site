@@ -1,22 +1,20 @@
 #!/usr/bin/env node
 /**
- * 自動記事生成スクリプト
+ * 既存記事再生成スクリプト
  *
  * 使用方法:
- *   node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"]
+ *   node regenerate-articles.js [--limit N] [--start N]
  *
  * 例:
- *   node auto-generate-article.js "エルゴベビー OMNI 360" "baby"
- *   node auto-generate-article.js "エルゴベビー OMNI 360" "baby" "なぜエルゴじゃなく『あのブランド』なのか？開発秘話を知って、僕が娘に選んだ抱っこ紐の正体。"
- *
- * カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety
+ *   node regenerate-articles.js              # 全記事を再生成
+ *   node regenerate-articles.js --limit 3    # 最初の3件のみ
+ *   node regenerate-articles.js --start 5    # 6件目から開始
  */
 
 const fs = require('fs');
 const path = require('path');
 
 // API設定
-// APIキーは環境変数から取得（セキュリティのため）
 const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -27,8 +25,8 @@ if (!BRAVE_API_KEY || !GEMINI_API_KEY) {
   console.error('  export GEMINI_API_KEY="your-key"');
   process.exit(1);
 }
-const AMAZON_TAG = 'kidsgoodslab-22';
 
+const AMAZON_TAG = 'kidsgoodslab-22';
 const BRAVE_SEARCH_URL = 'https://api.search.brave.com/res/v1/web/search';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -44,7 +42,7 @@ const CATEGORY_NAMES = {
 
 // Brave Search APIで商品情報を検索
 async function searchProduct(productName) {
-  console.log(`🔍 Brave APIで検索中: ${productName}`);
+  console.log(`   🔍 Brave APIで検索中...`);
 
   const queries = [
     `${productName} レビュー 口コミ`,
@@ -72,10 +70,9 @@ async function searchProduct(productName) {
         })));
       }
 
-      // レート制限対策
       await new Promise(r => setTimeout(r, 500));
     } catch (error) {
-      console.error(`検索エラー: ${error.message}`);
+      console.error(`   検索エラー: ${error.message}`);
     }
   }
 
@@ -85,8 +82,6 @@ async function searchProduct(productName) {
 
 // Amazon ASINを検索
 async function searchAmazonASIN(productName) {
-  console.log(`🛒 Amazon ASINを検索中...`);
-
   try {
     const response = await fetch(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(`${productName} site:amazon.co.jp`)}&count=3`, {
       headers: {
@@ -100,21 +95,20 @@ async function searchAmazonASIN(productName) {
       for (const result of data.web.results) {
         const asinMatch = result.url.match(/\/dp\/([A-Z0-9]{10})/);
         if (asinMatch) {
-          console.log(`   ASIN: ${asinMatch[1]}`);
           return asinMatch[1];
         }
       }
     }
   } catch (error) {
-    console.error(`ASIN検索エラー: ${error.message}`);
+    console.error(`   ASIN検索エラー: ${error.message}`);
   }
 
   return null;
 }
 
 // Gemini APIで記事を生成
-async function generateArticle(productName, category, searchResults, asin, customTitle = null) {
-  console.log(`✍️  Gemini APIで記事生成中...`);
+async function generateArticle(productName, category, searchResults, customTitle) {
+  console.log(`   ✍️  Gemini APIで記事生成中...`);
 
   const searchContext = searchResults.map(r => `- ${r.title}: ${r.description}`).join('\n');
 
@@ -225,7 +219,6 @@ ${searchContext}
     const data = await response.json();
     if (data.candidates && data.candidates[0]) {
       const text = data.candidates[0].content.parts[0].text;
-      // JSONを抽出（コードブロック内のJSONにも対応）
       let jsonStr = text;
       const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
       if (codeBlockMatch) {
@@ -236,74 +229,17 @@ ${searchContext}
         try {
           return JSON.parse(jsonMatch[0]);
         } catch (parseError) {
-          console.error('JSON解析エラー:', parseError.message);
-          console.error('受信したテキスト:', text.substring(0, 500));
+          console.error('   JSON解析エラー:', parseError.message);
         }
       }
     }
     if (data.error) {
-      console.error('Gemini APIエラー:', data.error);
+      console.error('   Gemini APIエラー:', data.error);
     }
     throw new Error('Gemini APIからの応答を解析できません');
   } catch (error) {
-    console.error(`記事生成エラー: ${error.message}`);
     throw error;
   }
-}
-
-// ファイル名を生成（SEOフレンドリー）
-function generateSlug(productName) {
-  // 日本語をローマ字に変換する簡易マッピング
-  const romanize = {
-    'パンパース': 'pampers',
-    'メリーズ': 'merries',
-    'ムーニー': 'moony',
-    'グーン': 'goon',
-    'マミーポコ': 'mamypoko',
-    'レゴ': 'lego',
-    'デュプロ': 'duplo',
-    'アンパンマン': 'anpanman',
-    'トミカ': 'tomica',
-    'プラレール': 'plarail',
-    'シルバニア': 'sylvanian',
-    'コンビ': 'combi',
-    'アップリカ': 'aprica',
-    'ピジョン': 'pigeon',
-    'リッチェル': 'richell',
-    'ストライダー': 'strider',
-    'ボーネルンド': 'bornelund',
-    'ベビービョルン': 'babybjorn',
-    'エルゴ': 'ergo',
-    'こどもちゃれんじ': 'kodomo-challenge',
-    'しまじろう': 'shimajiro',
-    'くもん': 'kumon',
-    '学研': 'gakken',
-    'さらさら': 'sarasara',
-    'まっさらさら': 'sarasara',
-    'テープ': 'tape',
-    'パンツ': 'pants',
-  };
-
-  let slug = productName.toLowerCase();
-
-  // 既知の単語を置換
-  for (const [jp, en] of Object.entries(romanize)) {
-    slug = slug.replace(new RegExp(jp, 'gi'), en);
-  }
-
-  // 残りの日本語や特殊文字を処理
-  slug = slug
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim();
-
-  // 空の場合はタイムスタンプ
-  if (!slug || slug === '-') {
-    slug = `product-${Date.now()}`;
-  }
-
-  return slug;
 }
 
 // 星評価を生成
@@ -314,8 +250,7 @@ function generateStars(rating) {
 }
 
 // HTMLファイルを生成
-function generateHTML(productName, category, article, asin, customTitle = null) {
-  const slug = generateSlug(productName);
+function generateHTML(productName, category, article, asin, customTitle) {
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
   const amazonUrl = asin
     ? `https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`
@@ -324,7 +259,7 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
   // 優先順位: カスタムタイトル > AI生成タイトル > デフォルト
   const articleTitle = customTitle || article.title || `${productName} レビュー`;
 
-  const html = `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -480,104 +415,85 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
   <script src="../js/main.js"></script>
 </body>
 </html>`;
-
-  return { html, slug, date };
-}
-
-// index.htmlに商品カードを追加
-function addToIndex(slug, productName, category, excerpt, rating, indexPath) {
-  const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
-
-  const cardHTML = `        <article class="product-card" data-category="${category}">
-          <a href="${indexPath.includes('products') ? '' : 'products/'}${slug}.html">
-            <div class="product-image">
-              <span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;">📦</span>
-            </div>
-            <div class="product-content">
-              <span class="product-category">${CATEGORY_NAMES[category]}</span>
-              <h3 class="product-title">${productName}</h3>
-              <p class="product-excerpt">${excerpt}</p>
-              <div class="product-meta">
-                <div class="product-rating">${generateStars(parseFloat(rating))}</div>
-                <span class="product-date">${date}</span>
-              </div>
-            </div>
-          </a>
-        </article>`;
-
-  let indexContent = fs.readFileSync(indexPath, 'utf8');
-
-  // products-gridの最後に追加
-  const gridEndMatch = indexContent.match(/([ \t]*)<\/div>\s*<\/div>\s*<\/section>\s*<!-- About Section|<!-- No Results|<!-- Footer/);
-  if (gridEndMatch) {
-    const insertPos = indexContent.lastIndexOf('</article>', gridEndMatch.index) + '</article>'.length;
-    indexContent = indexContent.slice(0, insertPos) + '\n' + cardHTML + indexContent.slice(insertPos);
-    fs.writeFileSync(indexPath, indexContent, 'utf8');
-    return true;
-  }
-
-  return false;
 }
 
 // メイン処理
 async function main() {
   const args = process.argv.slice(2);
+  let limit = Infinity;
+  let start = 0;
 
-  if (args.length < 2) {
-    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"]');
-    console.log('カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety');
-    console.log('');
-    console.log('例:');
-    console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby"');
-    console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby" "開発秘話を知って、僕が娘に選んだ抱っこ紐"');
+  // 引数解析
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--limit' && args[i + 1]) {
+      limit = parseInt(args[i + 1], 10);
+    }
+    if (args[i] === '--start' && args[i + 1]) {
+      start = parseInt(args[i + 1], 10);
+    }
+  }
+
+  // キューを読み込み
+  const queuePath = path.join(__dirname, 'regenerate-queue.json');
+  if (!fs.existsSync(queuePath)) {
+    console.error('❌ regenerate-queue.json が見つかりません');
     process.exit(1);
   }
 
-  const [productName, category, customTitle] = args;
+  const queue = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
+  const items = queue.slice(start, start + limit);
 
-  if (!CATEGORY_NAMES[category]) {
-    console.error(`無効なカテゴリー: ${category}`);
-    console.log('有効なカテゴリー:', Object.keys(CATEGORY_NAMES).join(', '));
-    process.exit(1);
+  console.log(`\n📝 記事再生成開始`);
+  console.log(`   対象: ${items.length}件 (${start + 1}件目から)\n`);
+
+  const productsDir = path.join(__dirname, '../products');
+  let successCount = 0;
+  let failCount = 0;
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const progress = `[${i + 1}/${items.length}]`;
+
+    console.log(`${progress} ${item.name}`);
+    console.log(`   タイトル: ${item.title}`);
+
+    try {
+      // 1. 商品情報を検索
+      const searchResults = await searchProduct(item.name);
+
+      // 2. Amazon ASINを検索
+      const asin = await searchAmazonASIN(item.name);
+      if (asin) {
+        console.log(`   ASIN: ${asin}`);
+      }
+
+      // 3. 記事を生成
+      const article = await generateArticle(item.name, item.category, searchResults, item.title);
+
+      // 4. HTMLファイルを生成
+      const html = generateHTML(item.name, item.category, article, asin, item.title);
+
+      // 5. ファイルを保存（既存ファイルを上書き）
+      const filePath = path.join(productsDir, `${item.slug}.html`);
+      fs.writeFileSync(filePath, html, 'utf8');
+      console.log(`   ✅ 保存: products/${item.slug}.html\n`);
+
+      successCount++;
+
+      // レート制限対策（2秒待機）
+      if (i < items.length - 1) {
+        await new Promise(r => setTimeout(r, 2000));
+      }
+
+    } catch (error) {
+      console.log(`   ❌ エラー: ${error.message}\n`);
+      failCount++;
+    }
   }
 
-  console.log(`\n📝 記事生成開始: ${productName}\n`);
-
-  try {
-    // 1. 商品情報を検索
-    const searchResults = await searchProduct(productName);
-
-    // 2. Amazon ASINを検索
-    const asin = await searchAmazonASIN(productName);
-
-    // 3. 記事を生成
-    const article = await generateArticle(productName, category, searchResults, asin, customTitle);
-
-    // 4. HTMLファイルを生成
-    const { html, slug, date } = generateHTML(productName, category, article, asin, customTitle);
-
-    // 5. ファイルを保存
-    const productsDir = path.join(__dirname, '../products');
-    const filePath = path.join(productsDir, `${slug}.html`);
-    fs.writeFileSync(filePath, html, 'utf8');
-    console.log(`✅ 記事を保存: products/${slug}.html`);
-
-    // 6. index.htmlに追加
-    const rootIndex = path.join(__dirname, '../index.html');
-    const productsIndex = path.join(productsDir, 'index.html');
-
-    addToIndex(slug, productName, category, article.excerpt, article.rating, rootIndex);
-    addToIndex(slug, productName, category, article.excerpt, article.rating, productsIndex);
-    console.log('✅ インデックスページを更新');
-
-    console.log(`\n🎉 完了！\n`);
-    console.log(`ファイル: products/${slug}.html`);
-    console.log(`Amazon URL: https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`);
-
-  } catch (error) {
-    console.error(`\n❌ エラー: ${error.message}`);
-    process.exit(1);
-  }
+  console.log(`\n🎉 完了！`);
+  console.log(`   成功: ${successCount}件`);
+  console.log(`   失敗: ${failCount}件\n`);
 }
 
 main();

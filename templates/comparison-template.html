@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <title>{{TITLE}} - キッズグッズラボ</title>
+
+  <meta property="og:title" content="{{TITLE}} - キッズグッズラボ">
+  <meta property="og:description" content="{{META_DESCRIPTION}}">
+  <meta property="og:type" content="article">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img">
+      </a>
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">ホーム</a>
+        <a href="index.html" class="nav-link">商品レビュー</a>
+        <a href="../about.html" class="nav-link">運営者情報</a>
+        <a href="../contact.html" class="nav-link">お問い合わせ</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="article-header">
+    <div class="container">
+      <div class="article-meta">
+        <span class="article-category">{{CATEGORY}}</span>
+        <span class="article-date">{{DATE}}</span>
+      </div>
+      <h1 class="article-title">{{TITLE}}</h1>
+      <p class="article-excerpt">{{EXCERPT}}</p>
+    </div>
+  </section>
+
+  <section class="article-content">
+    <div class="container">
+      <div class="article-body">
+
+        <!-- 導入 -->
+        <h2>はじめに</h2>
+        {{INTRODUCTION}}
+
+        <!-- 比較早見表 -->
+        <h2>比較早見表</h2>
+        <div class="comparison-table-wrapper">
+          {{COMPARISON_TABLE}}
+        </div>
+
+        <!-- 各商品の詳細 -->
+        {{PRODUCT_DETAILS}}
+
+        <!-- 選び方ガイド -->
+        <h2>あなたに合った選び方</h2>
+        {{SELECTION_GUIDE}}
+
+        <!-- 結論 -->
+        <h2>Lab責任者の結論</h2>
+        {{CONCLUSION}}
+
+        <!-- CTA -->
+        <div class="comparison-cta">
+          {{CTA_BUTTONS}}
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo">
+            <img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img">
+          </a>
+          <p>子育てを、もっと楽しく。人気の子供用品を紹介するレビューサイトです。</p>
+        </div>
+        <div>
+          <h4 class="footer-title">カテゴリー</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">おもちゃ</a></li>
+            <li><a href="index.html">ベビー用品</a></li>
+            <li><a href="index.html">知育玩具</a></li>
+            <li><a href="index.html">消耗品</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">サイト情報</h4>
+          <ul class="footer-links">
+            <li><a href="../about.html">運営者情報</a></li>
+            <li><a href="../privacy.html">プライバシーポリシー</a></li>
+            <li><a href="../contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 キッズグッズラボ All Rights Reserved.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">※当サイトはアフィリエイトプログラムに参加しています。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
