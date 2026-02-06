@@ -332,15 +332,43 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
   <meta name="description" content="${article.metaDescription}">
   <title>${articleTitle} - キッズグッズラボ</title>
 
+  <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
+
   <meta property="og:title" content="${articleTitle} - キッズグッズラボ">
   <meta property="og:description" content="${article.metaDescription}">
   <meta property="og:type" content="article">
+  <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" type="image/png" href="../images/logo.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "${productName}",
+    "description": "${article.metaDescription}",
+    "brand": {
+      "@type": "Brand",
+      "name": "${article.manufacturer}"
+    },
+    "review": {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "${article.rating}",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "キッズグッズラボ"
+      }
+    }
+  }
+  </script>
 </head>
 <body>
   <header class="header">

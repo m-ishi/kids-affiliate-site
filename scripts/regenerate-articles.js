@@ -250,7 +250,7 @@ function generateStars(rating) {
 }
 
 // HTMLファイルを生成
-function generateHTML(productName, category, article, asin, customTitle) {
+function generateHTML(productName, category, article, asin, customTitle, slug) {
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
   const amazonUrl = asin
     ? `https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`
@@ -267,15 +267,43 @@ function generateHTML(productName, category, article, asin, customTitle) {
   <meta name="description" content="${article.metaDescription}">
   <title>${articleTitle} - キッズグッズラボ</title>
 
+  <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
+
   <meta property="og:title" content="${articleTitle} - キッズグッズラボ">
   <meta property="og:description" content="${article.metaDescription}">
   <meta property="og:type" content="article">
+  <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" type="image/png" href="../images/logo.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "${productName}",
+    "description": "${article.metaDescription}",
+    "brand": {
+      "@type": "Brand",
+      "name": "${article.manufacturer}"
+    },
+    "review": {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "${article.rating}",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "キッズグッズラボ"
+      }
+    }
+  }
+  </script>
 </head>
 <body>
   <header class="header">
@@ -471,7 +499,7 @@ async function main() {
       const article = await generateArticle(item.name, item.category, searchResults, item.title);
 
       // 4. HTMLファイルを生成
-      const html = generateHTML(item.name, item.category, article, asin, item.title);
+      const html = generateHTML(item.name, item.category, article, asin, item.title, item.slug);
 
       // 5. ファイルを保存（既存ファイルを上書き）
       const filePath = path.join(productsDir, `${item.slug}.html`);

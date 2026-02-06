@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kidsgoodslab.com/sitemap.xml
+
+# Disallow admin/internal pages
+Disallow: /contact-thanks.html
+Disallow: /scripts/
+Disallow: /templates/
