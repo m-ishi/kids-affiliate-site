@@ -33,6 +33,22 @@ for (const file of files) {
 
 console.log(`Extracted ${products.length} products`);
 
+// 日付でソート（新しい順）、同じ日付の場合はファイル更新日時で
+products.sort((a, b) => {
+  // 日付を比較可能な形式に変換 (2026.02.07 -> 20260207)
+  const dateA = a.date.replace(/\./g, '');
+  const dateB = b.date.replace(/\./g, '');
+  if (dateB !== dateA) {
+    return dateB.localeCompare(dateA);
+  }
+  // 同じ日付の場合はファイル更新日時で比較
+  const statA = fs.statSync(path.join(productsDir, a.file));
+  const statB = fs.statSync(path.join(productsDir, b.file));
+  return statB.mtime - statA.mtime;
+});
+
+console.log('Sorted by date (newest first)');
+
 const categoryMap = {
   'おもちゃ': 'toy', 'ベビー用品': 'baby', '知育玩具': 'educational',
   '消耗品': 'consumable', '外遊び': 'outdoor', '家具・収納': 'furniture', '安全グッズ': 'safety'
