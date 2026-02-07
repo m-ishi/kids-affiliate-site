@@ -324,6 +324,11 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
   // 優先順位: カスタムタイトル > AI生成タイトル > デフォルト
   const articleTitle = customTitle || article.title || `${productName} レビュー`;
 
+  // Amazon商品画像（ASIN がある場合）
+  const productImageHTML = asin
+    ? `<a href="${amazonUrl}" target="_blank" rel="noopener sponsored"><img src="https://m.media-amazon.com/images/P/${asin}.09.LZZZZZZZ.jpg" alt="${productName}" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<span style=\\'font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;\\'>📦</span>';"></a>`
+    : `${productImageHTML}`;
+
   const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -404,7 +409,7 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
       <div class="article-body">
         <div class="product-info-box">
           <div class="product-image" style="border-radius: var(--radius-md); overflow: hidden;">
-            <span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;">📦</span>
+            ${productImageHTML}
           </div>
           <dl class="product-specs">
             <dt>商品名</dt>
@@ -513,13 +518,18 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
 }
 
 // index.htmlに商品カードを追加
-function addToIndex(slug, productName, category, excerpt, rating, indexPath) {
+function addToIndex(slug, productName, category, excerpt, rating, indexPath, asin) {
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
+
+  // カード用の画像（ASINがあればAmazon画像を使用）
+  const cardImageHTML = asin
+    ? `<img src="https://m.media-amazon.com/images/P/${asin}.09.LZZZZZZZ.jpg" alt="${productName}" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;\\'>📦</span>';">`
+    : `<span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;">📦</span>`;
 
   const cardHTML = `        <article class="product-card" data-category="${category}">
           <a href="${indexPath.includes('products') ? '' : 'products/'}${slug}.html">
             <div class="product-image">
-              <span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;">📦</span>
+              ${cardImageHTML}
             </div>
             <div class="product-content">
               <span class="product-category">${CATEGORY_NAMES[category]}</span>
@@ -594,8 +604,8 @@ async function main() {
     const rootIndex = path.join(__dirname, '../index.html');
     const productsIndex = path.join(productsDir, 'index.html');
 
-    addToIndex(slug, productName, category, article.excerpt, article.rating, rootIndex);
-    addToIndex(slug, productName, category, article.excerpt, article.rating, productsIndex);
+    addToIndex(slug, productName, category, article.excerpt, article.rating, rootIndex, asin);
+    addToIndex(slug, productName, category, article.excerpt, article.rating, productsIndex, asin);
     console.log('✅ インデックスページを更新');
 
     console.log(`\n🎉 完了！\n`);

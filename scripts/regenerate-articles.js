@@ -259,6 +259,11 @@ function generateHTML(productName, category, article, asin, customTitle, slug) {
   // 優先順位: カスタムタイトル > AI生成タイトル > デフォルト
   const articleTitle = customTitle || article.title || `${productName} レビュー`;
 
+  // Amazon商品画像（ASIN がある場合）
+  const productImageHTML = asin
+    ? `<a href="${amazonUrl}" target="_blank" rel="noopener sponsored"><img src="https://m.media-amazon.com/images/P/${asin}.09.LZZZZZZZ.jpg" alt="${productName}" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<span style=\\'font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;\\'>📦</span>';"></a>`
+    : `<span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;">📦</span>`;
+
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -339,7 +344,7 @@ function generateHTML(productName, category, article, asin, customTitle, slug) {
       <div class="article-body">
         <div class="product-info-box">
           <div class="product-image" style="border-radius: var(--radius-md); overflow: hidden;">
-            <span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;">📦</span>
+            ${productImageHTML}
           </div>
           <dl class="product-specs">
             <dt>商品名</dt>
