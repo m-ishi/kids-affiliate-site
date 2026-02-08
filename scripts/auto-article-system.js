@@ -7,12 +7,15 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const { patterns, getPrompt } = require('./article-patterns');
+const { generateOGP } = require('./generate-ogp-image');
 
 const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const AFFILIATE_TAG = 'kidsgoodslab-22';
 
 const productsDir = '/Users/masa/kids-affiliate-site/products';
+const ogpDir = '/Users/masa/kids-affiliate-site/images/ogp';
+const productImagesDir = '/Users/masa/kids-affiliate-site/images/products';
 const verifiedProducts = require('./verified-products.json');
 
 // カテゴリーマッピング（verified-products → article-patterns）
@@ -397,6 +400,11 @@ function createHTML(product, title, excerpt, content, slug) {
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${excerpt}">
   <meta property="og:type" content="article">
+  <meta property="og:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
   <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -582,7 +590,13 @@ async function main() {
     const html = createHTML(product, title, excerpt, content, slug);
     fs.writeFileSync(path.join(productsDir, `${slug}.html`), html, 'utf8');
 
-    console.log(`  ✅ ${slug}.html`);
+    // OGP画像生成
+    console.log('  OGP画像生成中...');
+    const productImagePath = path.join(productImagesDir, `${product.asin}.jpg`);
+    const imgPath = fs.existsSync(productImagePath) ? productImagePath : null;
+    await generateOGP(product.name, title, product.category, slug, imgPath);
+
+    console.log(`  ✅ ${slug}.html + OGP画像`);
     generated++;
 
     await new Promise(r => setTimeout(r, 1000));
