@@ -1,0 +1,448 @@
+{
+  "matched": [
+    {
+      "file": "-.html",
+      "title": "コスパ最強おむつの実力は？マミーポコが「普段使い」に最適な理由",
+      "product": {
+        "name": "マミーポコ パンツ",
+        "asin": "B0CP1HVWTH",
+        "category": "consumable",
+        "subcat": "diapers"
+      }
+    },
+    {
+      "file": "anpanman-block-lab-town.html",
+      "title": "なぜアンパンマンなのか。1歳児の発達に合わせた「はじめてのブロック」の選び方。",
+      "product": {
+        "name": "アンパンマン ブロックラボ",
+        "asin": "B0BKVHQ8M9",
+        "category": "educational",
+        "subcat": "blocks"
+      }
+    },
+    {
+      "file": "babybjorn-bliss.html",
+      "title": "スウェーデン発・50年の歴史。なぜ世界中の親がこのバウンサーを選ぶのか。",
+      "product": {
+        "name": "ベビービョルン バウンサー Bliss",
+        "asin": "B0BXN6HN7P",
+        "category": "furniture",
+        "subcat": "bouncer"
+      }
+    },
+    {
+      "file": "bornelund-magformers-62.html",
+      "title": "算数が得意な子に育つ？数学者が推奨する「磁石ブロック」の知育効果を調べてみた。",
+      "product": {
+        "name": "ボーネルンド マグフォーマー",
+        "asin": "B078HL1NY4",
+        "category": "educational",
+        "subcat": "blocks"
+      }
+    },
+    {
+      "file": "combi-nemulila-auto-swing.html",
+      "title": "抱っこで腱鞘炎になりかけた僕が調べた、電動スイングの「本当の価値」。",
+      "product": {
+        "name": "コンビ ネムリラ AUTO SWING",
+        "asin": "B0CLPZQBMK",
+        "category": "furniture",
+        "subcat": "swing"
+      }
+    },
+    {
+      "file": "ergobaby-omni-360.html",
+      "title": "腰痛持ちの僕が本気で調べた。「エルゴ」が世界中の親に選ばれ続ける理由。",
+      "product": {
+        "name": "エルゴベビー OMNI Breeze",
+        "asin": "B09QKYJLPZ",
+        "category": "baby",
+        "subcat": "carrier"
+      }
+    },
+    {
+      "file": "fisher-price-ii.html",
+      "title": "世界中の赤ちゃんが夢中になる理由。フィッシャープライスの発達心理学",
+      "product": {
+        "name": "フィッシャープライス バイリンガル",
+        "asin": "B0BHXWT8DY",
+        "category": "educational",
+        "subcat": "learning"
+      }
+    },
+    {
+      "file": "goon-sarasara-tape.html",
+      "title": "肌が弱い赤ちゃんのために。「敏感肌設計」おむつの違いを徹底比較。",
+      "product": {
+        "name": "グーン プラス",
+        "asin": "B0CPM9RYNL",
+        "category": "consumable",
+        "subcat": "diapers"
+      }
+    },
+    {
+      "file": "icreo-.html",
+      "title": "母乳に最も近いミルク？アイクレオが選ばれる科学的根拠",
+      "product": {
+        "name": "アイクレオ バランスミルク",
+        "asin": "B07CWF5D4P",
+        "category": "food",
+        "subcat": "formula"
+      }
+    },
+    {
+      "file": "intex-.html",
+      "title": "庭が巨大プールに変身。組み立て式プールの選び方と注意点",
+      "product": {
+        "name": "INTEX プール",
+        "asin": "B0CY5RVZ47",
+        "category": "outdoor",
+        "subcat": "pool"
+      }
+    },
+    {
+      "file": "kewpie-.html",
+      "title": "忙しいママの味方。キューピーベビーフードの安全基準を調査",
+      "product": {
+        "name": "キューピー ベビーフード",
+        "asin": "B07JM7ZNVD",
+        "category": "food",
+        "subcat": "babyfood"
+      }
+    },
+    {
+      "file": "kumon-.html",
+      "title": "1歳児が100回繰り返す理由。くもん「くるくるチャイム」の知育効果",
+      "product": {
+        "name": "くもん くるくるチャイム",
+        "asin": "B0BL1D4BKZ",
+        "category": "educational",
+        "subcat": "learning"
+      }
+    },
+    {
+      "file": "lego-duplo-kazuasobi-train.html",
+      "title": "1歳半から始められる「レゴデビュー」。デュプロが知育玩具として優れている理由。",
+      "product": {
+        "name": "レゴ デュプロ コンテナ",
+        "asin": "B0BBT8P3P1",
+        "category": "educational",
+        "subcat": "blocks"
+      }
+    },
+    {
+      "file": "meiji-.html",
+      "title": "計量不要の革命。ほほえみキューブが夜間授乳を楽にする理由",
+      "product": {
+        "name": "ほほえみ らくらくキューブ",
+        "asin": "B0CLZ1J3HZ",
+        "category": "food",
+        "subcat": "formula"
+      }
+    },
+    {
+      "file": "mell-chan-.html",
+      "title": "お世話遊びが思いやりを育てる。メルちゃんが選ばれ続ける理由",
+      "product": {
+        "name": "メルちゃん お人形セット",
+        "asin": "B0CLPZTN3H",
+        "category": "educational",
+        "subcat": "doll"
+      }
+    },
+    {
+      "file": "mell-chan-baby-car.html",
+      "title": "「ママの真似」が子どもの心を育てる。メルちゃんが選ばれ続ける本当の理由。",
+      "product": {
+        "name": "メルちゃん お人形セット",
+        "asin": "B0CLPZTN3H",
+        "category": "educational",
+        "subcat": "doll"
+      }
+    },
+    {
+      "file": "merries-.html",
+      "title": "通気性No.1の実力。メリーズが敏感肌ベビーに選ばれる理由",
+      "product": {
+        "name": "メリーズ さらさらエアスルー",
+        "asin": "B0CPTD5JQK",
+        "category": "consumable",
+        "subcat": "diapers"
+      }
+    },
+    {
+      "file": "moony-.html",
+      "title": "オーガニックおむつは本当に肌にいい？ナチュラルムーニーを検証",
+      "product": {
+        "name": "ナチュラルムーニー オーガニック",
+        "asin": "B0CPVBVF5K",
+        "category": "consumable",
+        "subcat": "diapers"
+      }
+    },
+    {
+      "file": "pampers-sarasara-care.html",
+      "title": "病院でも選ばれる理由。パンパースの「さらさら」に隠されたP&Gの40年の執念。",
+      "product": {
+        "name": "パンパース さらさらケア",
+        "asin": "B0D5WVT4B2",
+        "category": "consumable",
+        "subcat": "diapers"
+      }
+    },
+    {
+      "file": "pampers-vs-merries.html",
+      "title": "パンパース vs メリーズ。徹底比較で見えた、敏感肌ベビーに本当に優しいのは？",
+      "product": {
+        "name": "パンパース 肌へのいちばん",
+        "asin": "B0D5WX2F8N",
+        "category": "consumable",
+        "subcat": "diapers"
+      }
+    },
+    {
+      "file": "pigeon-bonyu-jikkan.html",
+      "title": "産院で最も使われている哺乳瓶。「母乳実感」が選ばれ続ける理由を調べた。",
+      "product": {
+        "name": "ピジョン 母乳実感",
+        "asin": "B0CLPYPC2R",
+        "category": "baby",
+        "subcat": "feeding"
+      }
+    },
+    {
+      "file": "pigeon-handy-fit.html",
+      "title": "母乳育児を諦めかけた人へ。ピジョン搾乳器が「続けられる」を実現する仕組み",
+      "product": {
+        "name": "ピジョン 搾乳器 電動",
+        "asin": "B0CLPY97P5",
+        "category": "baby",
+        "subcat": "feeding"
+      }
+    },
+    {
+      "file": "plarail-.html",
+      "title": "60年の歴史が証明する遊びの価値。プラレールが知育玩具である理由",
+      "product": {
+        "name": "プラレール ベーシックセット",
+        "asin": "B0CLPZTK5L",
+        "category": "educational",
+        "subcat": "vehicle"
+      }
+    },
+    {
+      "file": "richell-fuwafuwa-baby-bath.html",
+      "title": "沐浴が怖かった僕を救った「空気で膨らむ」という発想。リッチェルの優しさの正体。",
+      "product": {
+        "name": "リッチェル ふかふかベビーバス",
+        "asin": "B0CLPYQK7L",
+        "category": "baby",
+        "subcat": "bath"
+      }
+    },
+    {
+      "file": "strider-14x.html",
+      "title": "ペダル後付けで自転車に！ストライダー14xが革命的な理由",
+      "product": {
+        "name": "ストライダー 14x",
+        "asin": "B0CLPZTMJ7",
+        "category": "outdoor",
+        "subcat": "bike"
+      }
+    },
+    {
+      "file": "strider-sport-model.html",
+      "title": "自転車に乗れる子と乗れない子。その差を生む「最初の一台」の選び方。",
+      "product": {
+        "name": "ストライダー スポーツモデル",
+        "asin": "B0CLPZTR4J",
+        "category": "outdoor",
+        "subcat": "bike"
+      }
+    },
+    {
+      "file": "sylvanian-red-roof-house.html",
+      "title": "なぜ40年経っても色褪せないのか。シルバニアファミリーが世代を超えて愛される秘密。",
+      "product": {
+        "name": "シルバニアファミリー 赤い屋根の大きなお家",
+        "asin": "B0BTRRJ58R",
+        "category": "educational",
+        "subcat": "dollhouse"
+      }
+    },
+    {
+      "file": "sylvanian-sylvanian.html",
+      "title": "3歳からの「ごっこ遊び」が社会性を育てる。シルバニアの教育効果",
+      "product": {
+        "name": "シルバニアファミリー 赤い屋根の大きなお家",
+        "asin": "B0BTRRJ58R",
+        "category": "educational",
+        "subcat": "dollhouse"
+      }
+    },
+    {
+      "file": "tomica-dx-tower.html",
+      "title": "トミカ でっかく遊ぼう DXトミカタワー レビュー",
+      "product": {
+        "name": "トミカ ベーシック道路セット",
+        "asin": "B0CLPZTHJR",
+        "category": "educational",
+        "subcat": "vehicle"
+      }
+    },
+    {
+      "file": "tomica-dxtomica.html",
+      "title": "全高80cmの秘密基地!? トミカタワーが子どもの創造力を刺激する理由",
+      "product": {
+        "name": "トミカ ベーシック道路セット",
+        "asin": "B0CLPZTHJR",
+        "category": "educational",
+        "subcat": "vehicle"
+      }
+    },
+    {
+      "file": "wakodo-.html",
+      "title": "月齢別で迷わない。和光堂の離乳食シリーズが支持される理由",
+      "product": {
+        "name": "和光堂 グーグーキッチン",
+        "asin": "B07BHKZ85Y",
+        "category": "food",
+        "subcat": "babyfood"
+      }
+    }
+  ],
+  "unmatched": [
+    {
+      "file": "-bos.html",
+      "title": "本当に臭わない？BOSおむつ袋の驚きの消臭力を科学的に解説"
+    },
+    {
+      "file": "10mois-.html",
+      "title": "背中スイッチ対策の最終兵器？たまごマットが話題の理由を調べてみた"
+    },
+    {
+      "file": "anpanman-.html",
+      "title": "雨の日の運動不足を解消。室内ジャングルジムの安全な選び方"
+    },
+    {
+      "file": "anpanman-buranko-park-dx.html",
+      "title": "雨の日も体を動かせる。室内ジャングルジムを選ぶ前に知っておきたいこと。"
+    },
+    {
+      "file": "aprica-.html",
+      "title": "なぜ小児科医が推奨？アップリカ抱っこ紐の「横抱き」が新生児に優しい理由"
+    },
+    {
+      "file": "babybjorn-.html",
+      "title": "抜け出せない安心設計。ベビービョルンハイチェアの人間工学"
+    },
+    {
+      "file": "bornelund-.html",
+      "title": "本物の音色を0歳から。ボーネルンド木琴が音楽教育の入り口になる理由"
+    },
+    {
+      "file": "bridgestone-.html",
+      "title": "電動アシスト子乗せ自転車の選び方。ビッケが人気の理由"
+    },
+    {
+      "file": "combi-.html",
+      "title": "ISOFIX対応の安心感。コンビの新生児対応チャイルドシート"
+    },
+    {
+      "file": "combi-switch.html",
+      "title": "片手で持てる5.0kg。軽さの追求が生んだベビーカーの革命"
+    },
+    {
+      "file": "edinter-.html",
+      "title": "振ると音がする積み木。五感を刺激する日本製おもちゃの魅力"
+    },
+    {
+      "file": "edinter-mori-asobibako.html",
+      "title": "1台で5種類の遊び。日本製木のおもちゃメーカーが込めた「本物の木育」とは。"
+    },
+    {
+      "file": "familiar-.html",
+      "title": "出産祝いの定番には理由がある。ファミリアの食器が選ばれ続ける秘密"
+    },
+    {
+      "file": "gakken-new-block.html",
+      "title": "レゴより柔らかい。なぜ日本の保育園はこのブロックを選ぶのか。"
+    },
+    {
+      "file": "ikea-.html",
+      "title": "おもちゃ収納の最適解？IKEAトロファストが選ばれる5つの理由"
+    },
+    {
+      "file": "joie-arc360.html",
+      "title": "360度回転で乗せ降ろし楽々。Joieチャイルドシートの革新性"
+    },
+    {
+      "file": "katoji-.html",
+      "title": "1万円台で買えるハイチェア。KATOJIが選ばれる理由を調査"
+    },
+    {
+      "file": "kumon-study-shogi.html",
+      "title": "藤井聡太も使った？駒に動き方が書いてある「くもん将棋」が天才的な理由。"
+    },
+    {
+      "file": "lego-.html",
+      "title": "創造力は無限大。レゴクラシックが世界中の子どもに選ばれる理由"
+    },
+    {
+      "file": "muji-.html",
+      "title": "シンプルが正解。無印の収納ケースで子供部屋がスッキリする理由"
+    },
+    {
+      "file": "nihon-ikuji-smart-gate-2.html",
+      "title": "階段からの転落事故ゼロへ。ベビーゲート選びで後悔しないために調べたこと。"
+    },
+    {
+      "file": "nishimatsuya-smartangel-.html",
+      "title": "1,000円台で買える安心。西松屋ベビーバスが新米パパママに支持される理由"
+    },
+    {
+      "file": "nitori-.html",
+      "title": "お値段以上の収納力。ニトリカラボで作る子供部屋収納術"
+    },
+    {
+      "file": "pampers-oyasumi-pants.html",
+      "title": "朝までぐっすり、漏れない夜を。夜用おむつの「吸収量」を徹底比較した結果。"
+    },
+    {
+      "file": "panasonic-.html",
+      "title": "坂道も楽々。パナソニック電動自転車ギュットの実力を調査"
+    },
+    {
+      "file": "people-.html",
+      "title": "舐めても安心「お米のおもちゃ」。純国産が選ばれる本当の理由"
+    },
+    {
+      "file": "people-1.html",
+      "title": "1歳児の「やりたい！」を全部叶える。20種類のいたずらが詰まった知育玩具"
+    },
+    {
+      "file": "product-1770464618290.html",
+      "title": "30分で自転車に乗れた！へんしんバイクの驚きの効果を検証"
+    },
+    {
+      "file": "richell-.html",
+      "title": "離乳食作りが10倍楽に。リッチェルの冷凍トレーが時短ママに選ばれる理由"
+    },
+    {
+      "file": "richell-corner-cushion.html",
+      "title": "うちの子がテーブルの角で…を防ぐ。安全対策グッズの選び方を本気で調べた。"
+    },
+    {
+      "file": "stokke-.html",
+      "title": "大人になるまで使える椅子。ストッケが「一生もの」と言われる理由"
+    },
+    {
+      "file": "takara-tomy-6way.html",
+      "title": "0歳から使える6WAY。プーさんメリーが10年以上売れ続ける理由"
+    },
+    {
+      "file": "yamatoya-.html",
+      "title": "日本製ベビーチェアの実力。大和屋すくすくチェアのこだわり"
+    }
+  ]
+}
