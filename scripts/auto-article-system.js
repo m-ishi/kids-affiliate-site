@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 const { patterns, getPrompt } = require('./article-patterns');
 
 const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
@@ -532,6 +533,27 @@ async function main() {
   // インデックス更新
   console.log('\nインデックス更新中...');
   require('./rebuild-index.js');
+
+  // 自動デプロイ（git push）
+  if (generated > 0) {
+    console.log('\n自動デプロイ中...');
+    try {
+      const rootDir = '/Users/masa/kids-affiliate-site';
+      execSync('git add -A', { cwd: rootDir, stdio: 'pipe' });
+
+      const commitMsg = `記事${generated}件追加（自動生成）`;
+      execSync(`git commit -m "${commitMsg}"`, { cwd: rootDir, stdio: 'pipe' });
+
+      execSync('git push', { cwd: rootDir, stdio: 'pipe' });
+      console.log('✅ デプロイ完了（Cloudflare Pagesで自動公開されます）');
+    } catch (e) {
+      if (e.message.includes('nothing to commit')) {
+        console.log('変更なし、デプロイスキップ');
+      } else {
+        console.error('❌ デプロイ失敗:', e.message);
+      }
+    }
+  }
 }
 
 module.exports = { generateArticle, createHTML, generateSlug };
