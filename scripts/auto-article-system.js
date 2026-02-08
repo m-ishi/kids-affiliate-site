@@ -251,58 +251,81 @@ ${searchResults || '（検索結果なし）'}
 【記事構成ルール（9セクション・6000-8000文字厳守）】
 
 このパターン「${patternKey}」に最適化しつつ、以下の構成で書いてください。
-※各セクションには必ず「具体的で魅力的な見出し」を付けること（「導入文」「まとめ」などの抽象的な見出しは禁止）
 
-1. 冒頭（300-400文字）
-   → 見出し例：「${product.name}の○○で悩んでいませんか？」「結論：○○がおすすめな理由」
-   - 読者の疑問・悩みを代弁し、結論を先に提示
+★★★ 見出しルール ★★★
+- 全ての<h2>見出しは、読者が「読みたい！」と思う具体的で自然な日本語にすること
+- 見出しは疑問形、感嘆、具体的な数字を使って興味を引く
+- 「導入文」「まとめ」「商品概要」等の抽象的ワードは絶対禁止
 
-2. 商品の特徴（200-300文字）
-   → 見出し例：「${product.name}ってどんな商品？3つの特徴」
-   - 商品の基本情報とこのパターン視点での重要ポイント
+【構成と見出し例】
 
-3. この記事でわかること（100-150文字）
-   → 見出し例：「この記事で解決できる5つの疑問」
-   - 箇条書きで記事の内容を予告
+1. 冒頭パート（300-400文字）
+   見出し例：
+   - 「夜中のオムツ漏れ、もう限界…そんなあなたに朗報です」
+   - 「正直、最初は半信半疑でした」
+   - 「2歳児のパパが本音で語る${product.name}」
 
-4. データ・比較（600-800文字）
-   → 見出し例：「${product.name}のスペックを徹底比較」「価格・サイズ・性能を数字で検証」
-   - 具体的な数値、スペック、競合との比較
+2. 商品紹介（200-300文字）
+   見出し例：
+   - 「そもそも${product.name}って何がすごいの？」
+   - 「他のオムツと何が違う？3つのポイント」
+   - 「売れてる理由、調べてみました」
 
-5. 詳細レビュー（1500-2000文字）
-   → 見出し例：「実際に3ヶ月使ってわかった本音レビュー」「我が家での使用シーンを公開」
-   - パターンに特化した詳細解説と体験談
+3. 記事の内容予告（100-150文字）
+   見出し例：
+   - 「この記事で分かる5つのこと」
+   - 「読む前に知っておきたいポイント」
 
-6. 使いこなしのコツ（600-800文字）
-   → 見出し例：「先輩ママ直伝！失敗しない○○のコツ5選」
-   - 実践的なアドバイスとステップバイステップ
+4. 数字で見る比較（600-800文字）
+   見出し例：
+   - 「価格・枚数・1枚あたり単価を徹底比較！」
+   - 「ドラッグストア vs Amazon、どっちが安い？」
+   - 「サイズ別の選び方、表で一発解決」
 
-7. 買う前に知っておくべきこと（500-700文字）
-   → 見出し例：「正直レビュー：${product.name}のデメリット3つ」
-   - 正直なマイナス面、合わない人・ケース
+5. 体験レビュー（1500-2000文字）
+   見出し例：
+   - 「3ヶ月使い続けてわかった"リアルな感想"」
+   - 「深夜2時のオムツ替え、救われた話」
+   - 「ぶっちゃけ、ここが良かった・ダメだった」
 
-8. こんな人におすすめ（300-400文字）
-   → 見出し例：「${product.name}が向いている人チェックリスト」
-   - 箇条書きで分かりやすく
+6. 使い方のコツ（600-800文字）
+   見出し例：
+   - 「先輩パパママに聞いた！失敗しないコツ5選」
+   - 「知らないと損する裏ワザ、教えます」
+   - 「初めて使う人へ、これだけは守って！」
 
-9. 最終判断（300-400文字）
-   → 見出し例：「結局${product.name}は買いなのか？最終結論」
-   - パターン視点での結論と背中押し
+7. 注意点（500-700文字）
+   見出し例：
+   - 「買う前に知っておきたいデメリット3つ」
+   - 「こんな人には正直おすすめしません」
+   - 「我が家で起きたトラブルと対処法」
+
+8. おすすめチェック（300-400文字）
+   見出し例：
+   - 「当てはまったら買い！チェックリスト」
+   - 「${product.name}が向いてる人、向いてない人」
+
+9. 結論（300-400文字）
+   見出し例：
+   - 「で、結局買いなの？パパの最終結論」
+   - 「迷っているなら、これだけ覚えて帰って」
+   - 「1年使った今、もう一度買うか？→答えはYES」
 
 【出力形式】
-<title>キャッチーなタイトル（パターンを反映、32文字以内）</title>
+<title>キャッチーなタイトル（32文字以内）</title>
 <excerpt>記事要約（60文字）</excerpt>
 <content>
-<h2>具体的で魅力的な見出し（※「導入文」「まとめ」等の抽象語は絶対禁止）</h2>
+<h2>読者の心を掴む具体的な見出し</h2>
 <p>本文...</p>
 </content>
 
 【厳守事項】
-- 必ず6000文字以上
+- 必ず6000文字以上書く
 - パターン「${patternKey}」の視点を全体に反映
-- 具体的なエピソード・数値を含める
-- 断定的な表現を使う
-- ★重要★ h2見出しは必ず具体的な内容にする。「導入文」「商品概要」「目次的導入」「事実・データ」「メインコンテンツ」「実践的アドバイス」「注意点・デメリット」「おすすめな人チェックリスト」「まとめ」などの抽象的な見出しは絶対に使用禁止
+- 具体的なエピソード・数値を必ず含める
+- 断定的な表現を使う（「〜かもしれません」より「〜です」）
+- ★絶対禁止ワード★ 以下は見出しに使用禁止：
+  「導入文」「商品概要」「目次的導入」「事実・データパート」「メインコンテンツ」「実践的アドバイス」「注意点・デメリット」「おすすめな人チェックリスト」「まとめ」「最終判断」「商品の特徴」「データ・比較」「詳細レビュー」
 `;
 
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
@@ -316,6 +339,35 @@ ${searchResults || '（検索結果なし）'}
 
   const data = await response.json();
   return data.candidates?.[0]?.content?.parts?.[0]?.text || null;
+}
+
+// 記事中盤にCTAを挿入
+function insertMidArticleCTAs(content, product) {
+  const ctaSmall = `
+<div style="background:#fff3cd;border:2px solid #ffc107;padding:20px;border-radius:10px;margin:24px 0;text-align:center;">
+  <p style="margin:0 0 12px;font-weight:600;">📦 ${product.name}をチェック</p>
+  <a href="https://www.amazon.co.jp/dp/${product.asin}?tag=${AFFILIATE_TAG}" class="affiliate-btn" target="_blank" rel="noopener sponsored" style="display:inline-block;background:#ff9900;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Amazonで見る →</a>
+</div>`;
+
+  const ctaMedium = `
+<div style="background:linear-gradient(135deg,#e8f5e9 0%,#c8e6c9 100%);padding:24px;border-radius:12px;margin:32px 0;text-align:center;">
+  <p style="font-size:1.1rem;font-weight:600;margin-bottom:12px;">🛒 今すぐ価格をチェック！</p>
+  <p style="margin-bottom:16px;color:#555;">在庫状況や最新価格はAmazonで確認できます</p>
+  <a href="https://www.amazon.co.jp/dp/${product.asin}?tag=${AFFILIATE_TAG}" class="affiliate-btn" target="_blank" rel="noopener sponsored" style="display:inline-block;background:#4caf50;color:#fff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;">${product.name}の詳細を見る</a>
+</div>`;
+
+  // h2タグで分割
+  const sections = content.split(/<h2>/i);
+  if (sections.length < 4) return content;
+
+  // 2番目のセクションの後にCTA挿入
+  let result = sections[0];
+  for (let i = 1; i < sections.length; i++) {
+    result += '<h2>' + sections[i];
+    if (i === 2) result += ctaSmall;  // 2番目のh2の後
+    if (i === 5) result += ctaMedium; // 5番目のh2の後
+  }
+  return result;
 }
 
 // HTML生成
@@ -511,7 +563,10 @@ async function main() {
 
     const title = titleMatch ? titleMatch[1] : `${product.name} ${patternName}`;
     const excerpt = excerptMatch ? excerptMatch[1] : `${product.name}を徹底解説`;
-    const content = contentMatch ? contentMatch[1].trim() : result;
+    let content = contentMatch ? contentMatch[1].trim() : result;
+
+    // 記事中にCTAを挿入（2番目と5番目のh2の後）
+    content = insertMidArticleCTAs(content, product);
 
     const textContent = content.replace(/<[^>]+>/g, '');
     console.log(`  文字数: ${textContent.length}文字`);
