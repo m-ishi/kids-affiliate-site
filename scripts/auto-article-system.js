@@ -370,6 +370,14 @@ function insertMidArticleCTAs(content, product) {
   return result;
 }
 
+// ランダム日付生成（過去2ヶ月で分散）
+function getRandomDate() {
+  const now = new Date();
+  const daysAgo = Math.floor(Math.random() * 60); // 0〜59日前
+  const randomDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+  return randomDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.');
+}
+
 // HTML生成
 function createHTML(product, title, excerpt, content, slug) {
   const categoryJa = {
@@ -377,7 +385,7 @@ function createHTML(product, title, excerpt, content, slug) {
     'consumable': '消耗品', 'outdoor': '外遊び', 'baby': 'ベビー用品', 'safety': '安全グッズ'
   }[product.category] || 'ベビー用品';
 
-  const date = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.');
+  const date = getRandomDate();
 
   return `<!DOCTYPE html>
 <html lang="ja">
