@@ -101,11 +101,28 @@ async function main() {
     }
   }
 
+  // インデックスとサイトマップを再構築
+  console.log('\n🔄 インデックスページを再構築中...');
+  try {
+    execSync(`node "${path.join(__dirname, 'rebuild-index.js')}"`, { stdio: 'inherit' });
+    console.log('✅ インデックス更新完了');
+  } catch (error) {
+    console.log('⚠️ インデックス更新エラー');
+  }
+
+  console.log('🗺️ サイトマップを更新中...');
+  try {
+    execSync(`node "${path.join(__dirname, 'update-sitemap.js')}"`, { stdio: 'inherit' });
+    console.log('✅ サイトマップ更新完了');
+  } catch (error) {
+    console.log('⚠️ サイトマップ更新エラー');
+  }
+
   // Gitコミット＆プッシュ
   console.log('\n📤 GitHubにプッシュ中...');
   try {
     execSync('git add -A', { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
-    execSync(`git commit -m "自動記事生成: ${toProcess.length}件追加"`, { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
+    execSync(`git commit -m "記事${toProcess.length}件追加（自動生成）"`, { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
     execSync('git push', { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
     console.log('✅ プッシュ完了');
   } catch (error) {
