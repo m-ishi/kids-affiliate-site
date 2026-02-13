@@ -149,101 +149,150 @@ async function searchAmazonASIN(productName) {
   return null;
 }
 
-// Gemini APIで記事を生成
+// 記事中盤にCTAを挿入
+function insertMidArticleCTAs(content, productName, amazonUrl) {
+  const ctaSmall = `
+<div style="background:#fff3cd;border:2px solid #ffc107;padding:20px;border-radius:10px;margin:24px 0;text-align:center;">
+  <p style="margin:0 0 12px;font-weight:600;">📦 ${productName}をチェック</p>
+  <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored" style="display:inline-block;background:#ff9900;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Amazonで見る →</a>
+</div>`;
+
+  const ctaMedium = `
+<div style="background:linear-gradient(135deg,#e8f5e9 0%,#c8e6c9 100%);padding:24px;border-radius:12px;margin:32px 0;text-align:center;">
+  <p style="font-size:1.1rem;font-weight:600;margin-bottom:12px;">🛒 今すぐ価格をチェック！</p>
+  <p style="margin-bottom:16px;color:#555;">在庫状況や最新価格はAmazonで確認できます</p>
+  <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored" style="display:inline-block;background:#4caf50;color:#fff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;">${productName}の詳細を見る</a>
+</div>`;
+
+  // h2タグで分割
+  const sections = content.split(/<h2>/i);
+  if (sections.length < 4) return content;
+
+  let result = sections[0];
+  for (let i = 1; i < sections.length; i++) {
+    result += '<h2>' + sections[i];
+    if (i === 2) result += ctaSmall;  // 2番目のh2の後
+    if (i === 5) result += ctaMedium; // 5番目のh2の後
+  }
+  return result;
+}
+
+// Gemini APIで記事を生成（9セクション・5000-7000文字構成）
 async function generateArticle(productName, category, searchResults, asin, customTitle = null) {
   console.log(`✍️  Gemini APIで記事生成中...`);
 
   const searchContext = searchResults.map(r => `- ${r.title}: ${r.description}`).join('\n');
 
   const titleInstruction = customTitle
-    ? `\n# 記事タイトル（この雰囲気・切り口で執筆すること）\n「${customTitle}」\n`
+    ? `\n【参考タイトル例】\n${customTitle}\n`
     : '';
 
   const prompt = `
-# Role: 究極の「子育てリサーチ・スペシャリスト」パパブロガー
-あなたは、2歳（息子）と0歳（娘）の育児に奮闘する東京在住のパパです。
-単なる紹介者ではなく、「自分の家族にとって最高の一品を見つけるために、企業の歴史から海外のレビューまで徹底的に調べ尽くす研究者（Lab責任者）」というスタンスで執筆してください。
+あなたは高CVRアフィリエイト記事の専門ライター「パパラボ」です。
+2歳男の子と0歳女の子を育てている子育てパパとして記事を書きます。
 
-# Mission
-読者が「自分で調べる手間が省けた！これなら安心して買える」と即決できるレベルの、納得感とストーリー性のある記事を作成する。
+【重要：記事の視点ルール】
+★「調査・比較・検討」の視点で書く
+★「口コミを調べた」「友人に聞いた」「店頭でチェックした」「比較検討した」というスタンス
+★購入を検討している人に向けて、調べた情報をまとめる形式
 
-# Context & Principles
-- **実体験レビューは書かない**: 実際に使用した嘘をつくのではなく、「なぜこれを選定候補の筆頭にしたのか」「スペックや背景から何が予見できるか」という「プロの選定眼」で語る。
-- **ストーリーを重視**: 企業の創業秘話、開発者の想い、製品が誕生した背景を必ず含め、ブランドへの信頼感を醸成する。
-- **2人の子供の存在**: 「元気すぎる2歳の息子ならこうなるはず」「繊細な0歳の娘にはここが助かる」といった、具体的な生活シーンを想像して書く。
-- **誠実なベネフィット提示**: 良い点だけでなく、スペックから読み取れる「人によってはデメリットになる部分（サイズ感、価格、メンテナンス性など）」を正直に伝える。
+【絶対禁止の表現】
+- 「愛用」という単語自体を使わない
+- 「我が家で使っています」「うちで使っている」
+- 「実際に使ってみた」「使ってみました」
+- 「〜ヶ月使った感想」「〜年使った」
+- 「リピート」「リピ買い」
+- その他「自分や他人が継続使用している」ことを示す表現すべて
 
-# 記事を書く商品
+【推奨する表現】
+- 「口コミを調べてみると」「評判をまとめると」
+- 「友人ママに聞いたところ」「ママ友の間では」
+- 「店頭で実物をチェックしたら」
+- 「比較検討した結果」「調べてわかったこと」
+- 「購入を検討している方へ」
+
+【商品情報】
 商品名: ${productName}
 カテゴリー: ${CATEGORY_NAMES[category]}
 ${titleInstruction}
-# リサーチ結果
-${searchContext}
+【参考情報】
+${searchContext || '（検索結果なし）'}
 
-# タイトル生成ルール（超重要）
-以下のパターンを参考に、クリックしたくなる魅力的なタイトルを生成してください。
+【記事構成ルール（9セクション・5000-7000文字厳守）】
 
-## 効果的なタイトルパターン
-1. **疑問・謎かけ型**: 「なぜ〇〇は××なのか？調べて分かった衝撃の理由」
-2. **数字・具体性型**: 「〇〇を選ぶ前に知っておきたい3つの真実」
-3. **ストーリー型**: 「〇〇年の歴史が証明する、△△の本当の価値」
-4. **比較・発見型**: 「〇〇と××の違い。調べて初めて分かったこと」
-5. **共感・悩み解決型**: 「〇〇で悩んでいた僕が、△△に出会って変わったこと」
-6. **秘密・裏話型**: 「〇〇が選ばれ続ける、知られざる理由」
-7. **権威・信頼型**: 「専門家も認める〇〇。その実力を徹底検証」
+★★★ 見出しルール ★★★
+- 全ての<h2>見出しは、読者が「読みたい！」と思う具体的で自然な日本語にすること
+- 見出しは疑問形、感嘆、具体的な数字を使って興味を引く
+- 「導入文」「まとめ」「商品概要」等の抽象的ワードは絶対禁止
 
-## タイトル生成の禁止事項
-- 「おすすめ」「人気」「ランキング」などの陳腐な表現
-- 「最強」「最高」「神」などの誇大表現
-- 商品名だけのタイトル
-- 「レビュー」「口コミ」などの直接的な表現
+【構成と見出し例】
 
-## タイトル生成の必須事項
-- 読者の好奇心を刺激する「フック」を必ず入れる
-- 30〜50文字程度で、SNSでシェアされやすい長さに
-- 記事の核心となる「発見」や「気づき」を匂わせる
+1. 冒頭パート（300-400文字）
+   見出し例：
+   - 「夜中のオムツ漏れ、もう限界…そんなあなたに朗報です」
+   - 「正直、最初は半信半疑でした」
+   - 「2歳児のパパが本音で語る${productName}」
 
-# Output Structure（この構造でHTMLを生成）
-1. **導入：子育ての「あるある」悩みから開始**
-   （例：東京の狭い玄関でベビーカーが邪魔になる問題など、具体的シーンから）
-2. **物語：この製品・企業の知られざるストーリー**
-   （なぜこの製品は作られたのか？企業のこだわりは何か？）
-3. **分析：Kids Goods Labによる3つの選定理由**
-   （リサーチに基づいた客観的メリットと、パパ目線の主観的期待値）
-4. **正直な考察：検討前に知っておくべき「注意点」**
-   （「こういう家庭には合わないかも」という誠実なアドバイス）
-5. **結論：迷っている背中を優しく押す一言**
-   （「僕なら、明日の朝の笑顔のためにこれを選びます」など）
+2. 商品紹介（200-300文字）
+   見出し例：
+   - 「そもそも${productName}って何がすごいの？」
+   - 「他の商品と何が違う？3つのポイント」
+   - 「売れてる理由、調べてみました」
 
-# Tone & Style
-- 親しみやすいが、知的なパパ（敬語、時々少しだけ感傷的）。
-- 「最高」「最強」といった安易な言葉は避け、「〇〇の課題を解決する最適解」といった論理的な表現を好む。
-- 読者に寄り添いつつも、プロとして断言すべきところは断言する。
+3. 記事の内容予告（100-150文字）
+   見出し例：
+   - 「この記事で分かる5つのこと」
+   - 「読む前に知っておきたいポイント」
 
-# Constraints
-- 未使用の商品を「使った」と嘘をつかないこと。
-- 「徹底的に調べた結果、確信している」というスタンスを貫くこと。
+4. 数字で見る比較（600-800文字）
+   見出し例：
+   - 「価格・枚数・1枚あたり単価を徹底比較！」
+   - 「ドラッグストア vs Amazon、どっちが安い？」
+   - 「サイズ別の選び方、表で一発解決」
 
-# 出力形式
-以下のJSON形式で出力してください（JSONのみ、他のテキストは不要）:
+5. 体験レビュー（1500-2000文字）
+   見出し例：
+   - 「口コミを徹底調査！リアルな評判まとめ」
+   - 「調べて分かった、この商品の本当の実力」
+   - 「ぶっちゃけ、ここが良い・ここがダメ」
 
-{
-  "title": "キャッチーな記事タイトル（30〜50文字、上記ルールに従う）",
-  "metaDescription": "SEO用の説明文（120文字以内）",
-  "excerpt": "記事の概要（50文字以内）",
-  "introduction": "導入：子育ての悩みから開始（HTML形式、2-3段落）",
-  "brandStory": "物語：企業・製品のストーリー（HTML形式、h3タグ使用）",
-  "pros": ["選定理由1", "選定理由2", "選定理由3"],
-  "cons": ["注意点1", "注意点2", "注意点3"],
-  "mainContent": "分析：詳細な選定理由（HTML形式、h3タグで3セクション）",
-  "specs": "商品スペック（HTML tableタグ形式）",
-  "recommendation": "こんな家庭におすすめ / 合わないかもしれない家庭（HTML形式）",
-  "conclusion": "結論：背中を押す一言（HTML形式、感傷的でも良い）",
-  "rating": "4.5",
-  "price": "価格帯（例：約3,000円〜5,000円）",
-  "targetAge": "対象年齢（例：3歳〜）",
-  "manufacturer": "メーカー名"
-}
+6. 使い方のコツ（600-800文字）
+   見出し例：
+   - 「先輩パパママに聞いた！失敗しないコツ5選」
+   - 「知らないと損する裏ワザ、教えます」
+   - 「初めて使う人へ、これだけは守って！」
+
+7. 注意点（500-700文字）
+   見出し例：
+   - 「買う前に知っておきたいデメリット3つ」
+   - 「こんな人には正直おすすめしません」
+   - 「調べて分かったトラブル事例と対処法」
+
+8. おすすめチェック（300-400文字）
+   見出し例：
+   - 「当てはまったら買い！チェックリスト」
+   - 「${productName}が向いてる人、向いてない人」
+
+9. 結論（300-400文字）
+   見出し例：
+   - 「で、結局買いなの？パパの最終結論」
+   - 「迷っているなら、これだけ覚えて帰って」
+   - 「調べ尽くした今、もう一度選ぶか？→答えはYES」
+
+【出力形式】
+<title>キャッチーなタイトル（32文字以内）</title>
+<excerpt>記事要約（60文字）</excerpt>
+<content>
+<h2>読者の心を掴む具体的な見出し</h2>
+<p>本文...</p>
+</content>
+
+【厳守事項】
+- 必ず5000文字以上書く
+- 具体的なエピソード・数値を必ず含める
+- 断定的な表現を使う（「〜かもしれません」より「〜です」）
+- ★絶対禁止ワード★ 以下は見出しに使用禁止：
+  「導入文」「商品概要」「目次的導入」「事実・データパート」「メインコンテンツ」「実践的アドバイス」「注意点・デメリット」「おすすめな人チェックリスト」「まとめ」「最終判断」「商品の特徴」「データ・比較」「詳細レビュー」
 `;
 
   try {
@@ -253,8 +302,8 @@ ${searchContext}
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 8192,
+          temperature: 0.85,
+          maxOutputTokens: 16000,
         }
       })
     });
@@ -262,21 +311,21 @@ ${searchContext}
     const data = await response.json();
     if (data.candidates && data.candidates[0]) {
       const text = data.candidates[0].content.parts[0].text;
-      // JSONを抽出（コードブロック内のJSONにも対応）
-      let jsonStr = text;
-      const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-      if (codeBlockMatch) {
-        jsonStr = codeBlockMatch[1];
-      }
-      const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        try {
-          return JSON.parse(jsonMatch[0]);
-        } catch (parseError) {
-          console.error('JSON解析エラー:', parseError.message);
-          console.error('受信したテキスト:', text.substring(0, 500));
-        }
-      }
+
+      // <title>, <excerpt>, <content> を抽出
+      const titleMatch = text.match(/<title>([^<]+)<\/title>/);
+      const excerptMatch = text.match(/<excerpt>([^<]+)<\/excerpt>/);
+      const contentMatch = text.match(/<content>([\s\S]*?)<\/content>/);
+
+      const title = titleMatch ? titleMatch[1] : `${productName}を徹底解説`;
+      const excerpt = excerptMatch ? excerptMatch[1] : `${productName}の選び方と注意点をまとめました`;
+      let content = contentMatch ? contentMatch[1].trim() : text;
+
+      // テキスト文字数を計算
+      const textContent = content.replace(/<[^>]+>/g, '');
+      console.log(`   📊 生成文字数: ${textContent.length}文字`);
+
+      return { title, excerpt, content };
     }
     if (data.error) {
       console.error('Gemini APIエラー:', data.error);
@@ -350,7 +399,7 @@ function generateStars(rating) {
   return '★'.repeat(full) + (half ? '☆' : '') + '☆'.repeat(5 - full - half);
 }
 
-// HTMLファイルを生成
+// HTMLファイルを生成（9セクション構成対応）
 function generateHTML(productName, category, article, asin, customTitle = null) {
   const slug = generateSlug(productName);
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
@@ -360,72 +409,45 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
 
   // 優先順位: カスタムタイトル > AI生成タイトル > デフォルト
   const articleTitle = customTitle || article.title || `${productName} レビュー`;
+  const excerpt = article.excerpt || `${productName}を徹底解説`;
 
-  // OGP画像を商品画像として使用
-  const productImageHTML = `<a href="${amazonUrl}" target="_blank" rel="noopener sponsored"><img src="../images/ogp/${slug}.png" alt="${productName}" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a>`;
+  // 記事中盤にCTAを挿入
+  let articleContent = article.content || '';
+  articleContent = insertMidArticleCTAs(articleContent, productName, amazonUrl);
 
   const html = `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="${article.metaDescription}">
+  <meta name="description" content="${excerpt}">
   <title>${articleTitle} - キッズグッズラボ</title>
-
-  <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
-
-  <meta property="og:title" content="${articleTitle} - キッズグッズラボ">
-  <meta property="og:description" content="${article.metaDescription}">
+  <meta property="og:title" content="${articleTitle}">
+  <meta property="og:description" content="${excerpt}">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}.html">
   <meta property="og:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
-
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
+  <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" type="image/png" href="../images/logo.png">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "${productName}",
-    "description": "${article.metaDescription}",
-    "brand": {
-      "@type": "Brand",
-      "name": "${article.manufacturer}"
-    },
-    "review": {
-      "@type": "Review",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "${article.rating}",
-        "bestRating": "5"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "キッズグッズラボ"
-      }
-    }
-  }
-  </script>
 </head>
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="../index.html" class="logo">
-        <img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img">
-      </a>
+      <a href="../index.html" class="logo"><img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img"></a>
       <nav class="nav-menu">
         <a href="../index.html" class="nav-link">ホーム</a>
         <a href="index.html" class="nav-link">商品レビュー</a>
         <a href="../about.html" class="nav-link">運営者情報</a>
         <a href="../contact.html" class="nav-link">お問い合わせ</a>
       </nav>
-      <button class="mobile-menu-btn" aria-label="メニュー">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="mobile-menu-btn" aria-label="メニュー"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -436,76 +458,27 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
         <span class="article-date">${date}</span>
       </div>
       <h1 class="article-title">${articleTitle}</h1>
-      <p class="article-excerpt">${article.excerpt}</p>
+      <p class="article-excerpt">${excerpt}</p>
     </div>
   </section>
 
   <section class="article-content">
     <div class="container">
       <div class="article-body">
-        <div class="product-info-box">
-          <div class="product-image" style="border-radius: var(--radius-md); overflow: hidden;">
-            ${productImageHTML}
-          </div>
-          <dl class="product-specs">
-            <dt>商品名</dt>
-            <dd>${productName}</dd>
-            <dt>価格</dt>
-            <dd>${article.price}</dd>
-            <dt>対象年齢</dt>
-            <dd>${article.targetAge}</dd>
-            <dt>メーカー</dt>
-            <dd>${article.manufacturer}</dd>
-          </dl>
-          <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">
-            Amazonで詳細を見る
+        <div class="product-info-card" style="background:#f8f9fa;padding:24px;border-radius:12px;margin-bottom:32px;text-align:center;">
+          <a href="${amazonUrl}" target="_blank" rel="noopener sponsored">
+            <img src="../images/ogp/${slug}.png" alt="${productName}" style="max-width:280px;height:auto;display:block;margin:0 auto 16px;">
           </a>
+          <p style="font-weight:600;margin-bottom:8px;">${productName}</p>
+          <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">Amazonで価格を見る</a>
         </div>
 
-        <h2>はじめに</h2>
-        ${article.introduction}
+        ${articleContent}
 
-        <h2>このブランドのストーリー</h2>
-        ${article.brandStory || ''}
-
-        <div class="rating-box">
-          <div class="rating-score">${article.rating}</div>
-          <div class="rating-stars">${generateStars(parseFloat(article.rating))}</div>
-          <p class="rating-label">Kids Goods Lab 評価</p>
-        </div>
-
-        <div class="pros-cons">
-          <div class="pros">
-            <h4>選定理由</h4>
-            <ul>
-              ${article.pros.map(p => `<li>${p}</li>`).join('\n              ')}
-            </ul>
-          </div>
-          <div class="cons">
-            <h4>検討前の注意点</h4>
-            <ul>
-              ${article.cons.map(c => `<li>${c}</li>`).join('\n              ')}
-            </ul>
-          </div>
-        </div>
-
-        <h2>Kids Goods Labの分析</h2>
-        ${article.mainContent}
-
-        <h2>商品スペック</h2>
-        ${article.specs}
-
-        <h2>こんな家庭に向いています</h2>
-        ${article.recommendation}
-
-        <h2>Lab責任者からのメッセージ</h2>
-        ${article.conclusion}
-
-        <div class="product-info-box" style="text-align: center;">
-          <h3 style="margin-bottom: 16px;">${productName}</h3>
-          <p style="color: var(--text-light); margin-bottom: 24px;">詳細はAmazonでチェック！</p>
-          <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">
-            Amazonで購入する
+        <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:32px;border-radius:12px;text-align:center;margin:40px 0;">
+          <p style="color:#fff;font-size:1.1rem;margin-bottom:16px;font-weight:600;">この商品をAmazonでチェック</p>
+          <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored" style="background:#fff;color:#667eea;font-weight:700;padding:16px 32px;font-size:1.1rem;">
+            ${productName}の詳細を見る →
           </a>
         </div>
       </div>
@@ -514,43 +487,23 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
 
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="../index.html" class="logo">
-            <img src="../images/logo.png" alt="キッズグッズラボ" class="logo-img">
-          </a>
-          <p>子育てを、もっと楽しく。人気の子供用品を紹介するレビューサイトです。</p>
-        </div>
-        <div>
-          <h4 class="footer-title">カテゴリー</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">おもちゃ</a></li>
-            <li><a href="index.html">ベビー用品</a></li>
-            <li><a href="index.html">知育玩具</a></li>
-            <li><a href="index.html">消耗品</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="footer-title">サイト情報</h4>
-          <ul class="footer-links">
-            <li><a href="../about.html">運営者情報</a></li>
-            <li><a href="../privacy.html">プライバシーポリシー</a></li>
-            <li><a href="../contact.html">お問い合わせ</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 キッズグッズラボ All Rights Reserved.</p>
-        <p style="margin-top: 8px; font-size: 0.8rem;">※当サイトはアフィリエイトプログラムに参加しています。</p>
+      <div class="footer-content">
+        <div class="footer-logo">キッズグッズラボ</div>
+        <nav class="footer-nav">
+          <a href="../about.html">運営者情報</a>
+          <a href="../contact.html">お問い合わせ</a>
+          <a href="../privacy.html">プライバシーポリシー</a>
+        </nav>
+        <p class="footer-copy">&copy; 2026 キッズグッズラボ</p>
+        <p style="margin-top:8px;font-size:0.8rem;">※当サイトはアフィリエイトプログラムに参加しています。</p>
       </div>
     </div>
   </footer>
-
   <script src="../js/main.js"></script>
 </body>
 </html>`;
 
-  return { html, slug, date };
+  return { html, slug, date, articleTitle };
 }
 
 // index.htmlに商品カードを追加
@@ -636,7 +589,7 @@ async function main() {
     const article = await generateArticle(productName, category, searchResults, asin, customTitle);
 
     // 4. HTMLファイルを生成
-    const { html, slug, date } = generateHTML(productName, category, article, asin, customTitle);
+    const { html, slug, date, articleTitle } = generateHTML(productName, category, article, asin, customTitle);
 
     // 5. OGP画像を生成
     console.log(`🎨 OGP画像を生成中...`);
@@ -657,8 +610,9 @@ async function main() {
     const rootIndex = path.join(__dirname, '../index.html');
     const productsIndex = path.join(productsDir, 'index.html');
 
-    addToIndex(slug, productName, category, article.excerpt, article.rating, rootIndex, asin);
-    addToIndex(slug, productName, category, article.excerpt, article.rating, productsIndex, asin);
+    const rating = article.rating || '4.5';
+    addToIndex(slug, productName, category, article.excerpt, rating, rootIndex, asin);
+    addToIndex(slug, productName, category, article.excerpt, rating, productsIndex, asin);
     console.log('✅ インデックスページを更新');
 
     console.log(`\n🎉 完了！\n`);
