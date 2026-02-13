@@ -15,6 +15,18 @@
 const fs = require('fs');
 const path = require('path');
 
+// .envファイルから環境変数を読み込み
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  for (const line of envContent.split('\n')) {
+    const [key, ...valueParts] = line.split('=');
+    if (key && valueParts.length > 0) {
+      process.env[key.trim()] = valueParts.join('=').trim();
+    }
+  }
+}
+
 // API設定
 // APIキーは環境変数から取得（セキュリティのため）
 const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
@@ -42,6 +54,42 @@ const CATEGORY_NAMES = {
   safety: '安全グッズ'
 };
 
+// リトライ付きBrave API呼び出し
+async function fetchBraveWithRetry(url, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/json',
+          'X-Subscription-Token': BRAVE_API_KEY
+        }
+      });
+
+      if (response.status === 429) {
+        const waitTime = attempt * 3000;
+        console.log(`   ⚠️ レート制限 (429)。${waitTime / 1000}秒後にリトライ... (${attempt}/${maxRetries})`);
+        await new Promise(r => setTimeout(r, waitTime));
+        continue;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Brave API error: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (attempt < maxRetries) {
+        const waitTime = attempt * 2000;
+        console.log(`   ⚠️ ${error.message}。${waitTime / 1000}秒後にリトライ... (${attempt}/${maxRetries})`);
+        await new Promise(r => setTimeout(r, waitTime));
+      } else {
+        throw error;
+      }
+    }
+  }
+  return null;
+}
+
 // Brave Search APIで商品情報を検索
 async function searchProduct(productName) {
   console.log(`🔍 Brave APIで検索中: ${productName}`);
@@ -56,15 +104,9 @@ async function searchProduct(productName) {
 
   for (const query of queries) {
     try {
-      const response = await fetch(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(query)}&count=5`, {
-        headers: {
-          'Accept': 'application/json',
-          'X-Subscription-Token': BRAVE_API_KEY
-        }
-      });
+      const data = await fetchBraveWithRetry(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(query)}&count=5&search_lang=jp&country=jp`);
 
-      const data = await response.json();
-      if (data.web && data.web.results) {
+      if (data && data.web && data.web.results) {
         allResults = allResults.concat(data.web.results.map(r => ({
           title: r.title,
           description: r.description,
@@ -72,8 +114,8 @@ async function searchProduct(productName) {
         })));
       }
 
-      // レート制限対策
-      await new Promise(r => setTimeout(r, 500));
+      // レート制限対策（1秒間隔）
+      await new Promise(r => setTimeout(r, 1500));
     } catch (error) {
       console.error(`検索エラー: ${error.message}`);
     }
@@ -88,15 +130,9 @@ async function searchAmazonASIN(productName) {
   console.log(`🛒 Amazon ASINを検索中...`);
 
   try {
-    const response = await fetch(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(`${productName} site:amazon.co.jp`)}&count=3`, {
-      headers: {
-        'Accept': 'application/json',
-        'X-Subscription-Token': BRAVE_API_KEY
-      }
-    });
+    const data = await fetchBraveWithRetry(`${BRAVE_SEARCH_URL}?q=${encodeURIComponent(`${productName} site:amazon.co.jp`)}&count=3&search_lang=jp&country=jp`);
 
-    const data = await response.json();
-    if (data.web && data.web.results) {
+    if (data && data.web && data.web.results) {
       for (const result of data.web.results) {
         const asinMatch = result.url.match(/\/dp\/([A-Z0-9]{10})/);
         if (asinMatch) {
@@ -571,7 +607,7 @@ async function main() {
     process.exit(1);
   }
 
-  const [productName, category, customTitle] = args;
+  const [productName, category, customTitle, providedAsin] = args;
 
   if (!CATEGORY_NAMES[category]) {
     console.error(`無効なカテゴリー: ${category}`);
@@ -585,8 +621,14 @@ async function main() {
     // 1. 商品情報を検索
     const searchResults = await searchProduct(productName);
 
-    // 2. Amazon ASINを検索
-    const asin = await searchAmazonASIN(productName);
+    // 2. Amazon ASINを検索（提供済みならスキップ）
+    let asin;
+    if (providedAsin) {
+      console.log(`🛒 ASIN指定あり: ${providedAsin}`);
+      asin = providedAsin;
+    } else {
+      asin = await searchAmazonASIN(productName);
+    }
 
     // 3. 記事を生成
     const article = await generateArticle(productName, category, searchResults, asin, customTitle);
