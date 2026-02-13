@@ -40,3 +40,6 @@ build/
 *.generated.html
 .env
 scripts/.env
+
+# Tools (local MCP servers)
+tools/
