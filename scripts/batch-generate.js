@@ -7,6 +7,10 @@
  *
  * 商品リストは products-queue.json から読み込みます
  * 生成済みの商品は products-done.json に記録されます
+ *
+ * キューファイル形式:
+ *   [{ "name": "商品名", "category": "カテゴリ", "pattern": "パターンキー", "title": "記事タイトル", "asin": "ASIN" }]
+ *   pattern: reviews, where-to-buy, lowest-price, comparison, age-guide 等（省略時は reviews）
  */
 
 const { execSync } = require('child_process');
@@ -20,9 +24,9 @@ const DONE_FILE = path.join(__dirname, 'products-done.json');
 function initQueueFile() {
   if (!fs.existsSync(QUEUE_FILE)) {
     const sample = [
-      { name: "グーン まっさらさら通気", category: "consumable" },
-      { name: "ベビービョルン バウンサー", category: "baby" },
-      { name: "プラレール ベーシックセット", category: "toy" }
+      { name: "グーン まっさらさら通気", category: "consumable", pattern: "reviews" },
+      { name: "ベビービョルン バウンサー", category: "baby", pattern: "where-to-buy" },
+      { name: "プラレール ベーシックセット", category: "toy", pattern: "age-guide" }
     ];
     fs.writeFileSync(QUEUE_FILE, JSON.stringify(sample, null, 2), 'utf8');
     console.log(`📝 サンプルキューファイルを作成: ${QUEUE_FILE}`);
@@ -83,9 +87,10 @@ async function main() {
 
     try {
       const titleArg = product.title ? `"${product.title}"` : '""';
-      const asinArg = product.asin ? `"${product.asin}"` : '';
+      const asinArg = product.asin ? `"${product.asin}"` : '""';
+      const patternArg = product.pattern ? `"${product.pattern}"` : '';
       execSync(
-        `node "${path.join(__dirname, 'auto-generate-article.js')}" "${product.name}" "${product.category}" ${titleArg} ${asinArg}`,
+        `node "${path.join(__dirname, 'auto-generate-article.js')}" "${product.name}" "${product.category}" ${titleArg} ${asinArg} ${patternArg}`,
         { stdio: 'inherit' }
       );
 

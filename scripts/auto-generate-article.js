@@ -41,6 +41,7 @@ if (!BRAVE_API_KEY || !GEMINI_API_KEY) {
 }
 const AMAZON_TAG = 'kidsgoodslab-22';
 const { generateOGP } = require('./generate-ogp-image');
+const { getSectionPrompt } = require('./pattern-sections');
 
 const BRAVE_SEARCH_URL = 'https://api.search.brave.com/res/v1/web/search';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
@@ -177,14 +178,21 @@ function insertMidArticleCTAs(content, productName, amazonUrl) {
   return result;
 }
 
-// Gemini APIで記事を生成（9セクション・5000-7000文字構成）
-async function generateArticle(productName, category, searchResults, asin, customTitle = null) {
+// Gemini APIで記事を生成（パターン別セクション構成・5000-7000文字）
+async function generateArticle(productName, category, searchResults, asin, customTitle = null, patternKey = null) {
   console.log(`✍️  Gemini APIで記事生成中...`);
+  if (patternKey) console.log(`   📋 パターン: ${patternKey}`);
 
   const searchContext = searchResults.map(r => `- ${r.title}: ${r.description}`).join('\n');
 
   const titleInstruction = customTitle
     ? `\n【参考タイトル例】\n${customTitle}\n`
+    : '';
+
+  // パターン別のセクション構成を取得
+  const sectionPrompt = getSectionPrompt(patternKey || 'reviews', productName);
+  const patternInstruction = patternKey
+    ? `\n【記事の切り口（パターン）】\nパターン: ${patternKey}\nこのパターンの視点を記事全体に反映させること\n`
     : '';
 
   const prompt = `
@@ -214,7 +222,7 @@ async function generateArticle(productName, category, searchResults, asin, custo
 【商品情報】
 商品名: ${productName}
 カテゴリー: ${CATEGORY_NAMES[category]}
-${titleInstruction}
+${patternInstruction}${titleInstruction}
 【参考情報】
 ${searchContext || '（検索結果なし）'}
 
@@ -224,61 +232,11 @@ ${searchContext || '（検索結果なし）'}
 - 全ての<h2>見出しは、読者が「読みたい！」と思う具体的で自然な日本語にすること
 - 見出しは疑問形、感嘆、具体的な数字を使って興味を引く
 - 「導入文」「まとめ」「商品概要」等の抽象的ワードは絶対禁止
+- 以下の見出し例は参考。そのまま使わず、内容に合わせてアレンジすること
 
-【構成と見出し例】
+【パターン専用の記事構成】
 
-1. 冒頭パート（300-400文字）
-   見出し例：
-   - 「夜中のオムツ漏れ、もう限界…そんなあなたに朗報です」
-   - 「正直、最初は半信半疑でした」
-   - 「2歳児のパパが本音で語る${productName}」
-
-2. 商品紹介（200-300文字）
-   見出し例：
-   - 「そもそも${productName}って何がすごいの？」
-   - 「他の商品と何が違う？3つのポイント」
-   - 「売れてる理由、調べてみました」
-
-3. 記事の内容予告（100-150文字）
-   見出し例：
-   - 「この記事で分かる5つのこと」
-   - 「読む前に知っておきたいポイント」
-
-4. 数字で見る比較（600-800文字）
-   見出し例：
-   - 「価格・枚数・1枚あたり単価を徹底比較！」
-   - 「ドラッグストア vs Amazon、どっちが安い？」
-   - 「サイズ別の選び方、表で一発解決」
-
-5. 体験レビュー（1500-2000文字）
-   見出し例：
-   - 「口コミを徹底調査！リアルな評判まとめ」
-   - 「調べて分かった、この商品の本当の実力」
-   - 「ぶっちゃけ、ここが良い・ここがダメ」
-
-6. 使い方のコツ（600-800文字）
-   見出し例：
-   - 「先輩パパママに聞いた！失敗しないコツ5選」
-   - 「知らないと損する裏ワザ、教えます」
-   - 「初めて使う人へ、これだけは守って！」
-
-7. 注意点（500-700文字）
-   見出し例：
-   - 「買う前に知っておきたいデメリット3つ」
-   - 「こんな人には正直おすすめしません」
-   - 「調べて分かったトラブル事例と対処法」
-
-8. おすすめチェック（300-400文字）
-   見出し例：
-   - 「当てはまったら買い！チェックリスト」
-   - 「${productName}が向いてる人、向いてない人」
-
-9. 結論（300-400文字）
-   見出し例：
-   - 「で、結局買いなの？パパの最終結論」
-   - 「迷っているなら、これだけ覚えて帰って」
-   - 「調べ尽くした今、もう一度選ぶか？→答えはYES」
-
+${sectionPrompt}
 【出力形式】
 <title>キャッチーなタイトル（32文字以内）</title>
 <excerpt>記事要約（60文字）</excerpt>
@@ -289,7 +247,7 @@ ${searchContext || '（検索結果なし）'}
 
 【厳守事項】
 - 必ず5000文字以上書く
-- 具体的なエピソード・数値を必ず含める
+${patternKey ? `- パターン「${patternKey}」の視点を全体に反映\n` : ''}- 具体的なエピソード・数値を必ず含める
 - 断定的な表現を使う（「〜かもしれません」より「〜です」）
 - ★絶対禁止ワード★ 以下は見出しに使用禁止：
   「導入文」「商品概要」「目次的導入」「事実・データパート」「メインコンテンツ」「実践的アドバイス」「注意点・デメリット」「おすすめな人チェックリスト」「まとめ」「最終判断」「商品の特徴」「データ・比較」「詳細レビュー」
@@ -553,16 +511,17 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 2) {
-    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"]');
+    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"] ["ASIN"] ["パターンキー"]');
     console.log('カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety');
+    console.log('パターンキー: where-to-buy, reviews, lowest-price, coupon, skin-trouble, etc.');
     console.log('');
     console.log('例:');
     console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby"');
-    console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby" "開発秘話を知って、僕が娘に選んだ抱っこ紐"');
+    console.log('  node auto-generate-article.js "パンパース" "consumable" "" "B0BYG24S5V" "lowest-price"');
     process.exit(1);
   }
 
-  const [productName, category, customTitle, providedAsin] = args;
+  const [productName, category, customTitle, providedAsin, patternKey] = args;
 
   if (!CATEGORY_NAMES[category]) {
     console.error(`無効なカテゴリー: ${category}`);
@@ -586,7 +545,7 @@ async function main() {
     }
 
     // 3. 記事を生成
-    const article = await generateArticle(productName, category, searchResults, asin, customTitle);
+    const article = await generateArticle(productName, category, searchResults, asin, customTitle, patternKey);
 
     // 4. HTMLファイルを生成
     const { html, slug, date, articleTitle } = generateHTML(productName, category, article, asin, customTitle);
