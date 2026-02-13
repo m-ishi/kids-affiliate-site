@@ -40,6 +40,7 @@ if (!BRAVE_API_KEY || !GEMINI_API_KEY) {
   process.exit(1);
 }
 const AMAZON_TAG = 'kidsgoodslab-22';
+const { generateOGP } = require('./generate-ogp-image');
 
 const BRAVE_SEARCH_URL = 'https://api.search.brave.com/res/v1/web/search';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
@@ -360,10 +361,8 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
   // 優先順位: カスタムタイトル > AI生成タイトル > デフォルト
   const articleTitle = customTitle || article.title || `${productName} レビュー`;
 
-  // Amazon商品画像（ASIN がある場合）
-  const productImageHTML = asin
-    ? `<a href="${amazonUrl}" target="_blank" rel="noopener sponsored"><img src="https://m.media-amazon.com/images/P/${asin}.09.LZZZZZZZ.jpg" alt="${productName}" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<span style=\\'font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 200px; background: #f8f8f8;\\'>📦</span>';"></a>`
-    : `${productImageHTML}`;
+  // OGP画像を商品画像として使用
+  const productImageHTML = `<a href="${amazonUrl}" target="_blank" rel="noopener sponsored"><img src="../images/ogp/${slug}.png" alt="${productName}" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"></a>`;
 
   const html = `<!DOCTYPE html>
 <html lang="ja">
@@ -379,6 +378,7 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
   <meta property="og:description" content="${article.metaDescription}">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}.html">
+  <meta property="og:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -557,9 +557,11 @@ function generateHTML(productName, category, article, asin, customTitle = null) 
 function addToIndex(slug, productName, category, excerpt, rating, indexPath, asin) {
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
 
-  // カード用の画像（ASINがあればAmazon画像を使用）
-  const cardImageHTML = asin
-    ? `<img src="https://m.media-amazon.com/images/P/${asin}.09.LZZZZZZZ.jpg" alt="${productName}" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;\\'>📦</span>';">`
+  // カード用の画像（OGP画像を使用）
+  const imgPrefix = indexPath.includes('products') ? '../' : '';
+  const ogpExists = fs.existsSync(path.join(__dirname, '..', 'images', 'ogp', `${slug}.png`));
+  const cardImageHTML = ogpExists
+    ? `<img src="${imgPrefix}images/ogp/${slug}.png" alt="${productName}" style="width: 100%; height: auto; object-fit: cover;">`
     : `<span style="font-size: 4rem; display: flex; align-items: center; justify-content: center; height: 100%; background: #f8f8f8;">📦</span>`;
 
   const cardHTML = `        <article class="product-card" data-category="${category}">
@@ -636,13 +638,22 @@ async function main() {
     // 4. HTMLファイルを生成
     const { html, slug, date } = generateHTML(productName, category, article, asin, customTitle);
 
-    // 5. ファイルを保存
+    // 5. OGP画像を生成
+    console.log(`🎨 OGP画像を生成中...`);
+    try {
+      await generateOGP(productName, articleTitle, category, slug);
+      console.log(`✅ OGP画像を生成: images/ogp/${slug}.png`);
+    } catch (ogpError) {
+      console.error(`⚠️ OGP画像生成失敗（記事は作成します）: ${ogpError.message}`);
+    }
+
+    // 6. ファイルを保存
     const productsDir = path.join(__dirname, '../products');
     const filePath = path.join(productsDir, `${slug}.html`);
     fs.writeFileSync(filePath, html, 'utf8');
     console.log(`✅ 記事を保存: products/${slug}.html`);
 
-    // 6. index.htmlに追加
+    // 7. index.htmlに追加
     const rootIndex = path.join(__dirname, '../index.html');
     const productsIndex = path.join(productsDir, 'index.html');
 

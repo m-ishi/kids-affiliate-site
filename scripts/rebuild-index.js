@@ -64,8 +64,12 @@ function generateStars(r) {
 function generateCard(p, isProductsPage) {
   const cat = categoryMap[p.category] || 'baby';
   const href = isProductsPage ? p.file : `products/${p.file}`;
-  const imgHTML = p.asin
-    ? `<img src="https://m.media-amazon.com/images/P/${p.asin}.09.LZZZZZZZ.jpg" alt="" style="width:100%;height:100%;object-fit:contain;" onerror="this.outerHTML='📦';">`
+  const slug = p.file.replace('.html', '');
+  const ogpPath = path.join('/Users/masa/kids-affiliate-site/images/ogp', `${slug}.png`);
+  const hasOgp = fs.existsSync(ogpPath);
+  const imgPrefix = isProductsPage ? '../' : '';
+  const imgHTML = hasOgp
+    ? `<img src="${imgPrefix}images/ogp/${slug}.png" alt="${p.title}" style="width:100%;height:auto;object-fit:cover;">`
     : '📦';
 
   return `        <article class="product-card" data-category="${cat}">
