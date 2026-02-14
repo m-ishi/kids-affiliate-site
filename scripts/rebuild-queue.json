@@ -1,0 +1,723 @@
+[
+  {
+    "slug": "-",
+    "productName": "マミーポコ パンツ",
+    "category": "consumable",
+    "asin": "B0CP1HVWTH",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "anpanman-block-lab-town",
+    "productName": "アンパンマン ブロックラボ はじめてのブロックワゴン",
+    "category": "educational",
+    "asin": "B0BKVHQ8M9",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "aprica-ag",
+    "productName": "アップリカ マジカルエアー AG",
+    "category": "furniture",
+    "asin": "B09X137GDR",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "aprica-ah",
+    "productName": "アップリカ ラクーナクッション AH",
+    "category": "furniture",
+    "asin": "B0DXKB3DR4",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "aprica-rakuna-storage",
+    "productName": "アップリカ ラクーナ クッション",
+    "category": "furniture",
+    "asin": "B0BV2XTCPF",
+    "patternKey": "storage"
+  },
+  {
+    "slug": "aprica-yurarizm-model-comparison",
+    "productName": "アップリカ ユラリズム",
+    "category": "furniture",
+    "asin": "B0BV2YBVHK",
+    "patternKey": "model-comparison"
+  },
+  {
+    "slug": "babybjorn-bliss",
+    "productName": "ベビービョルン バウンサー Bliss",
+    "category": "baby",
+    "asin": "B07PWZYV45",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "babybjorn-mini-used",
+    "productName": "ベビービョルン MINI",
+    "category": "baby",
+    "asin": "B07DLGKQVD",
+    "patternKey": "used"
+  },
+  {
+    "slug": "babybjorn-one-kai-air",
+    "productName": "ベビービョルン ONE KAI Air",
+    "category": "baby",
+    "asin": "B07C2S4XK9",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "bornelund-magformers-62",
+    "productName": "ボーネルンド マグフォーマー 62ピース",
+    "category": "educational",
+    "asin": "B078HL1NY4",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "combi-",
+    "productName": "コンビ スゴカルα コンパクト エッグショック",
+    "category": "furniture",
+    "asin": "B0B4ZZRPTF",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "combi-auto-swing",
+    "productName": "コンビ ネムリラ AUTO SWING",
+    "category": "baby",
+    "asin": "B07ZTN6WBG",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "combi-ff-",
+    "productName": "コンビ ネムリラ FF ハイローチェア",
+    "category": "baby",
+    "asin": "B019DA84BO",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "combi-nemulila-auto-swing",
+    "productName": "コンビ ネムリラ AUTO SWING",
+    "category": "baby",
+    "asin": "B0CLPZQBMK",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "cybex-melio-storage",
+    "productName": "サイベックス メリオ カーボン",
+    "category": "furniture",
+    "asin": "B09DPFVJYC",
+    "patternKey": "storage"
+  },
+  {
+    "slug": "ergo-adapt-softflex",
+    "productName": "エルゴベビー ADAPT SoftFlex",
+    "category": "baby",
+    "asin": "B09R6D48CV",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "ergo-omni-360",
+    "productName": "エルゴベビー OMNI 360",
+    "category": "baby",
+    "asin": "B07CPX7R4P",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "ergobaby-adapt-used",
+    "productName": "エルゴベビー ADAPT",
+    "category": "baby",
+    "asin": "B0CLPZKYTJ",
+    "patternKey": "used"
+  },
+  {
+    "slug": "ergobaby-omni-360",
+    "productName": "エルゴベビー OMNI 360",
+    "category": "baby",
+    "asin": "B09QKYJLPZ",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "ergobaby-omni-breeze-seasonal",
+    "productName": "エルゴベビー OMNI Breeze",
+    "category": "baby",
+    "asin": "B09QKYJLPZ",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "fisher-price-ii",
+    "productName": "フィッシャープライス レインフォレスト・デラックスジムII",
+    "category": "toy",
+    "asin": "B0BHXWT8DY",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "fisherprice-bilingual-used",
+    "productName": "フィッシャープライス バイリンガル",
+    "category": "educational",
+    "asin": "B0BHXWT8DY",
+    "patternKey": "used"
+  },
+  {
+    "slug": "goon-coupon",
+    "productName": "グーン プラス",
+    "category": "consumable",
+    "asin": "B0CPM9RYNL",
+    "patternKey": "coupon"
+  },
+  {
+    "slug": "goon-lowest-price",
+    "productName": "グーン プラス",
+    "category": "consumable",
+    "asin": "B0CPM9RYNL",
+    "patternKey": "lowest-price"
+  },
+  {
+    "slug": "goon-reviews",
+    "productName": "グーン プラス",
+    "category": "consumable",
+    "asin": "B0CPM9RYNL",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "goon-sarasara-tape",
+    "productName": "グーン プラス 敏感肌設計",
+    "category": "consumable",
+    "asin": "B0CPM9RYNL",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "goon-skin-trouble",
+    "productName": "グーン プラス",
+    "category": "consumable",
+    "asin": "B0CPM9RYNL",
+    "patternKey": "skin-trouble"
+  },
+  {
+    "slug": "goon-where-to-buy",
+    "productName": "グーン プラス",
+    "category": "consumable",
+    "asin": "B0CPM9RYNL",
+    "patternKey": "where-to-buy"
+  },
+  {
+    "slug": "icreo-",
+    "productName": "アイクレオ バランスミルク",
+    "category": "consumable",
+    "asin": "B07CWF5D4P",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "intex-",
+    "productName": "INTEX フレームプール",
+    "category": "outdoor",
+    "asin": "B0CY5RVZ47",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "joie-tilt-repair",
+    "productName": "Joie チルト",
+    "category": "furniture",
+    "asin": "B07BFKG7RH",
+    "patternKey": "repair"
+  },
+  {
+    "slug": "joie-tilt-used",
+    "productName": "Joie チルト",
+    "category": "furniture",
+    "asin": "B07BFKG7RH",
+    "patternKey": "used"
+  },
+  {
+    "slug": "jtc-baby-",
+    "productName": "JTC BABY ユラライド",
+    "category": "outdoor",
+    "asin": "B0CDFR9M47",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "kewpie-",
+    "productName": "キューピー ベビーフード",
+    "category": "consumable",
+    "asin": "B07JM7ZNVD",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "kewpie-babyfood-reviews",
+    "productName": "キューピー ベビーフード",
+    "category": "food",
+    "asin": "B07JM7ZNVD",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "kumon-",
+    "productName": "くもん くるくるチャイム",
+    "category": "educational",
+    "asin": "B0BL1D4BKZ",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "kumon-new",
+    "productName": "くもん NEWスタディ将棋",
+    "category": "educational",
+    "asin": "B07Y1T2GVY",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "lego-duplo-kazuasobi-train",
+    "productName": "レゴ デュプロ かずあそびトレイン",
+    "category": "educational",
+    "asin": "B0BBT8P3P1",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "lifaxia-",
+    "productName": "LIFAXIA ベビーゲート ロール式",
+    "category": "safety",
+    "asin": "B09N2JB6GP",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "meiji-",
+    "productName": "明治 ほほえみ らくらくキューブ",
+    "category": "consumable",
+    "asin": "B0CLZ1J3HZ",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "mell-chan-",
+    "productName": "メルちゃん 入門セット",
+    "category": "toy",
+    "asin": "B0CLPZTN3H",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "mell-chan-baby-car",
+    "productName": "メルちゃん おせわパーツ ベビーカー",
+    "category": "toy",
+    "asin": "B0CLPZTN3H",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "merries-",
+    "productName": "メリーズ ファーストプレミアム",
+    "category": "consumable",
+    "asin": "B0F83NC6N1",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "merries-sarasara-coupon",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "coupon"
+  },
+  {
+    "slug": "merries-sarasara-lowest-price",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "lowest-price"
+  },
+  {
+    "slug": "merries-sarasara-quantity",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "quantity"
+  },
+  {
+    "slug": "merries-sarasara-reviews",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "merries-sarasara-seasonal",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "merries-sarasara-skin-trouble",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "skin-trouble"
+  },
+  {
+    "slug": "merries-sarasara-where-to-buy",
+    "productName": "メリーズ さらさらエアスルー",
+    "category": "consumable",
+    "asin": "B0CPTD5JQK",
+    "patternKey": "where-to-buy"
+  },
+  {
+    "slug": "moony-",
+    "productName": "ナチュラルムーニー オーガニックコットン",
+    "category": "consumable",
+    "asin": "B0CPVBVF5K",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "moony-coupon",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "coupon"
+  },
+  {
+    "slug": "moony-lowest-price",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "lowest-price"
+  },
+  {
+    "slug": "moony-quantity",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "quantity"
+  },
+  {
+    "slug": "moony-reviews",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "moony-seasonal",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "moony-skin-trouble",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "skin-trouble"
+  },
+  {
+    "slug": "moony-where-to-buy",
+    "productName": "ムーニー エアフィット",
+    "category": "consumable",
+    "asin": "B0CPVCTFLV",
+    "patternKey": "where-to-buy"
+  },
+  {
+    "slug": "moony",
+    "productName": "【パパの本音】ムーニーおしりふきって実際どう？2児のパパが徹底レビュー！",
+    "category": "consumable",
+    "asin": "B0CGK6JHBX",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "nihon-ikuji-smartgate2-where-to-buy",
+    "productName": "日本育児 スマートゲイト2",
+    "category": "safety",
+    "asin": "B09DPGQDKR",
+    "patternKey": "where-to-buy"
+  },
+  {
+    "slug": "pampers-",
+    "productName": "パンパース 肌へのいちばん おしりふき",
+    "category": "consumable",
+    "asin": "B06W5T41QK",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pampers-coupon",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "coupon"
+  },
+  {
+    "slug": "pampers-lowest-price",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "lowest-price"
+  },
+  {
+    "slug": "pampers-quantity",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "quantity"
+  },
+  {
+    "slug": "pampers-reviews",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pampers-sarasara-care",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pampers-sarasara-coupon",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "coupon"
+  },
+  {
+    "slug": "pampers-sarasara-lowest-price",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "lowest-price"
+  },
+  {
+    "slug": "pampers-sarasara-quantity",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "quantity"
+  },
+  {
+    "slug": "pampers-sarasara-reviews",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pampers-sarasara-seasonal",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "pampers-sarasara-skin-trouble",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "skin-trouble"
+  },
+  {
+    "slug": "pampers-sarasara-where-to-buy",
+    "productName": "パンパース さらさらケア",
+    "category": "consumable",
+    "asin": "B0D5WVT4B2",
+    "patternKey": "where-to-buy"
+  },
+  {
+    "slug": "pampers-seasonal",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "pampers-skin-trouble",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "skin-trouble"
+  },
+  {
+    "slug": "pampers-vs-merries",
+    "productName": "パンパース vs メリーズ。徹底比較で見えた、敏感肌ベビーに本当に優しいのは？",
+    "category": "consumable",
+    "asin": null,
+    "patternKey": "comparison"
+  },
+  {
+    "slug": "pampers-where-to-buy",
+    "productName": "パンパース 肌へのいちばん",
+    "category": "consumable",
+    "asin": "B0D5WX2F8N",
+    "patternKey": "where-to-buy"
+  },
+  {
+    "slug": "pampers",
+    "productName": "パンパース 肌へのいちばん おしりふき",
+    "category": "consumable",
+    "asin": "B08WHQWXNV",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pigeon-",
+    "productName": "ピジョン 母乳実感 哺乳びん 耐熱ガラス",
+    "category": "baby",
+    "asin": "B01CCLDK6U",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pigeon-bonyu-jikkan",
+    "productName": "ピジョン 母乳実感 哺乳びん",
+    "category": "baby",
+    "asin": "B0CLPYPC2R",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "pigeon-bonyujikkan-seasonal",
+    "productName": "ピジョン 母乳実感",
+    "category": "baby",
+    "asin": "B0CLPYPC2R",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "pigeon-handy-fit",
+    "productName": "ピジョン さく乳器 電動handy fit+",
+    "category": "baby",
+    "asin": "B0CLPY97P5",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "plarail-",
+    "productName": "プラレール きかんしゃトーマスセット",
+    "category": "toy",
+    "asin": "B0CLPZTK5L",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "product-1770950661377",
+    "productName": "アイクレオ 赤ちゃんミルク 液体",
+    "category": "consumable",
+    "asin": "B0CJFR912F",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "product-1770950690518",
+    "productName": "明治ほほえみ 粉ミルク",
+    "category": "consumable",
+    "asin": "B011ARA0YC",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "product-1770950719356",
+    "productName": "銀河工房 アンドロメダ銀河 木のおもちゃ",
+    "category": "educational",
+    "asin": "B07Q44BWZV",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "product-1770950827991",
+    "productName": "ストッケ フレキシバス",
+    "category": "baby",
+    "asin": "B07YVCN59D",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "richell-fukafukababybath-coupon",
+    "productName": "リッチェル ふかふかベビーバス",
+    "category": "baby",
+    "asin": "B0CLPYQK7L",
+    "patternKey": "coupon"
+  },
+  {
+    "slug": "richell-fukafukababybath-seasonal",
+    "productName": "リッチェル ふかふかベビーバス",
+    "category": "baby",
+    "asin": "B0CLPYQK7L",
+    "patternKey": "seasonal"
+  },
+  {
+    "slug": "richell-fuwafuwa-baby-bath",
+    "productName": "リッチェル ふかふかベビーバスW",
+    "category": "baby",
+    "asin": "B0CLPYQK7L",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "shnuggle-",
+    "productName": "Shnuggle シュナグル ベビーバス",
+    "category": "baby",
+    "asin": "B09QLXC8HC",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "skip-hop-",
+    "productName": "SKIP HOP ソフト・シンクバス",
+    "category": "baby",
+    "asin": "B077MBL7JK",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "strider-14x-reviews",
+    "productName": "ストライダー 14x",
+    "category": "outdoor",
+    "asin": "B0CLPZTMJ7",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "strider-14x-warranty",
+    "productName": "ストライダー 14x",
+    "category": "outdoor",
+    "asin": "B0CLPZTMJ7",
+    "patternKey": "warranty"
+  },
+  {
+    "slug": "strider-14x",
+    "productName": "ストライダー 14x",
+    "category": "outdoor",
+    "asin": "B0CLPZTMJ7",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "strider-sport-model",
+    "productName": "ストライダー スポーツモデル",
+    "category": "toy",
+    "asin": "B0CLPZTR4J",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "sylvanian-red-roof-house",
+    "productName": "シルバニアファミリー 赤い屋根の大きなお家",
+    "category": "toy",
+    "asin": "B0BTRRJ58R",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "sylvanian-sylvanian",
+    "productName": "シルバニアファミリー はじめてのシルバニアファミリー",
+    "category": "toy",
+    "asin": "B0BTRRJ58R",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "tomica-basicroad-reviews",
+    "productName": "トミカ ベーシック道路セット",
+    "category": "educational",
+    "asin": "B0CLPZTHJR",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "tomica-dx-tower",
+    "productName": "トミカ でっかく遊ぼう DXトミカタワー",
+    "category": "toy",
+    "asin": "B0CLPZTHJR",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "tomica-dxtomica",
+    "productName": "トミカ DXトミカタワー",
+    "category": "toy",
+    "asin": "B0CLPZTHJR",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "wakodo-",
+    "productName": "和光堂 グーグーキッチン",
+    "category": "consumable",
+    "asin": "B07BHKZ85Y",
+    "patternKey": "reviews"
+  },
+  {
+    "slug": "wipes-moony-reviews",
+    "productName": "おしりふき ムーニー",
+    "category": "consumable",
+    "asin": "B0CGK6JHBX",
+    "patternKey": "reviews"
+  }
+]
