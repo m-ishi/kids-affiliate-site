@@ -296,7 +296,18 @@ ${patternKey ? `- パターン「${patternKey}」の視点を全体に反映\n` 
 }
 
 // ファイル名を生成（SEOフレンドリー）
-function generateSlug(productName) {
+// slugHint が渡された場合はそちらを優先する
+function generateSlug(productName, slugHint) {
+  // slugHintが直接指定された場合はそれを使う
+  if (slugHint) {
+    return slugHint
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  }
+
   // 日本語をローマ字に変換する簡易マッピング
   const romanize = {
     'パンパース': 'pampers',
@@ -326,6 +337,25 @@ function generateSlug(productName) {
     'まっさらさら': 'sarasara',
     'テープ': 'tape',
     'パンツ': 'pants',
+    'マグネット': 'magnet',
+    'ブロック': 'block',
+    'おもちゃ': 'toy',
+    'サブスク': 'subscription',
+    'ベビーカー': 'stroller',
+    'チャイルドシート': 'child-seat',
+    'モンテッソーリ': 'montessori',
+    'プログラミング': 'programming',
+    '安全': 'safety',
+    '比較': 'comparison',
+    '危ない': 'danger',
+    '後悔': 'regret',
+    '卒業': 'graduation',
+    '誕生日': 'birthday',
+    'プレゼント': 'present',
+    'クリスマス': 'christmas',
+    'ランキング': 'ranking',
+    '知育': 'chiiku',
+    '玩具': 'toy',
   };
 
   let slug = productName.toLowerCase();
@@ -358,8 +388,8 @@ function generateStars(rating) {
 }
 
 // HTMLファイルを生成（9セクション構成対応）
-function generateHTML(productName, category, article, asin, customTitle = null) {
-  const slug = generateSlug(productName);
+function generateHTML(productName, category, article, asin, customTitle = null, slugHint = null) {
+  const slug = generateSlug(productName, slugHint);
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
   const amazonUrl = asin
     ? `https://www.amazon.co.jp/dp/${asin}?tag=${AMAZON_TAG}`
@@ -494,10 +524,10 @@ function addToIndex(slug, productName, category, excerpt, rating, indexPath, asi
 
   let indexContent = fs.readFileSync(indexPath, 'utf8');
 
-  // products-gridの最後に追加
-  const gridEndMatch = indexContent.match(/([ \t]*)<\/div>\s*<\/div>\s*<\/section>\s*<!-- About Section|<!-- No Results|<!-- Footer/);
-  if (gridEndMatch) {
-    const insertPos = indexContent.lastIndexOf('</article>', gridEndMatch.index) + '</article>'.length;
+  // products-gridの先頭に追加（新しい記事を上に表示）
+  const gridStartMatch = indexContent.match(/<div class="products-grid">/);
+  if (gridStartMatch) {
+    const insertPos = gridStartMatch.index + gridStartMatch[0].length;
     indexContent = indexContent.slice(0, insertPos) + '\n' + cardHTML + indexContent.slice(insertPos);
     fs.writeFileSync(indexPath, indexContent, 'utf8');
     return true;
@@ -511,17 +541,17 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 2) {
-    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"] ["ASIN"] ["パターンキー"]');
+    console.log('使用方法: node auto-generate-article.js "商品名" "カテゴリー" ["記事タイトル"] ["ASIN"] ["パターンキー"] ["slug"]');
     console.log('カテゴリー: toy, baby, educational, consumable, outdoor, furniture, safety');
     console.log('パターンキー: where-to-buy, reviews, lowest-price, coupon, skin-trouble, etc.');
     console.log('');
     console.log('例:');
     console.log('  node auto-generate-article.js "エルゴベビー OMNI 360" "baby"');
-    console.log('  node auto-generate-article.js "パンパース" "consumable" "" "B0BYG24S5V" "lowest-price"');
+    console.log('  node auto-generate-article.js "マグネットブロック" "safety" "マグネットブロック安全ガイド" "" "" "magnet-block-safety-guide"');
     process.exit(1);
   }
 
-  const [productName, category, customTitle, providedAsin, patternKey] = args;
+  const [productName, category, customTitle, providedAsin, patternKey, slugHint] = args;
 
   if (!CATEGORY_NAMES[category]) {
     console.error(`無効なカテゴリー: ${category}`);
@@ -548,7 +578,7 @@ async function main() {
     const article = await generateArticle(productName, category, searchResults, asin, customTitle, patternKey);
 
     // 4. HTMLファイルを生成
-    const { html, slug, date, articleTitle } = generateHTML(productName, category, article, asin, customTitle);
+    const { html, slug, date, articleTitle } = generateHTML(productName, category, article, asin, customTitle, slugHint);
 
     // 5. OGP画像を生成
     console.log(`🎨 OGP画像を生成中...`);
