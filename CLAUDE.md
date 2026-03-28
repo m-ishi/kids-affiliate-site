@@ -14,6 +14,7 @@
 ## 技術スタック
 - 静的サイト（HTML/CSS/JS）
 - Gemini API（記事生成）
+- Brave Search API（商品情報・ASIN取得）
 - GitHub → Cloudflare Pages（自動デプロイ）
 
 ## ディレクトリ構成
@@ -23,79 +24,99 @@ kids-affiliate-site/
 ├── products/               # 商品レビュー記事
 │   ├── index.html          # 一覧ページ
 │   └── [slug].html         # 各記事
+├── drafts/                 # 下書き記事（gitignore対象）
 ├── css/style.css           # スタイル
 ├── js/main.js              # JavaScript
+├── images/ogp/             # OGP画像（1200x630 PNG）
 ├── scripts/
-│   └── generate-articles.js # 記事生成スクリプト
+│   ├── pipeline-generate.js    # 統合パイプライン（推奨）
+│   ├── auto-generate-article.js # 単一記事生成
+│   ├── batch-generate.js       # バッチ処理
+│   ├── fix-amazon-links.js     # ASIN自動修正
+│   ├── generate-ogp-image.js   # OGP画像生成
+│   ├── rebuild-index.js        # インデックス再構築
+│   ├── update-sitemap.js       # サイトマップ更新
+│   ├── pattern-sections.js     # 29パターンセクション構成
+│   └── logs/                   # パイプラインログ（gitignore対象）
+├── sitemap.xml
+├── robots.txt
 └── templates/
-    └── product-template.html # テンプレート
+    └── product-template.html
 ```
 
-## よく使うコマンド
+## 記事生成フロー
 
-### 環境変数を設定（初回のみ）
-```bash
-export BRAVE_API_KEY="your-brave-api-key"
-export GEMINI_API_KEY="your-gemini-api-key"
-```
-
-### 記事を追加する
+### パス A: 統合パイプライン（量産 + 自動品質チェック）
 ```bash
 cd ~/kids-affiliate-site/scripts
-node auto-generate-article.js "商品名" "カテゴリー" "記事タイトル"
+
+# 通常生成（デプロイまで自動）
+node pipeline-generate.js "商品名" "カテゴリー" "記事タイトル"
+
+# テスト（デプロイなし）
+node pipeline-generate.js --dry-run "商品名" "カテゴリー"
 ```
 
-### バッチ処理（複数記事）
+フロー: Brave Search → ASIN取得 → Gemini生成 → OGP画像 → Critic/Safety/SEOチェック → ASIN検証 → インデックス更新 → git push
+
+### パス B: Claude Code エージェント（高品質記事）
+```
+Kids Writer → Kids Critic（プッシュバック） → Kids Safety → Kids SEO → QA → デプロイ
+```
+購入履歴ベースの記事、安全系記事、恐怖クエリ記事はこちら推奨。
+
+### パス C: 単一記事生成（シンプル）
 ```bash
-cd ~/kids-affiliate-site/scripts
+node auto-generate-article.js "商品名" "カテゴリー" "記事タイトル" "ASIN"
+```
+
+### パス D: バッチ処理
+```bash
 node batch-generate.js --limit 3
 ```
+products-queue.json から読み込み。
 
-### デプロイする
+## カテゴリ
+toy, baby, educational, consumable, outdoor, furniture, safety
+
+## エージェント定義
+- `~/.claude/agents/kids-writer.md` - 記事ライター（パパラボペルソナ）
+- `~/.claude/agents/kids-critic.md` - 批評家（5軸プッシュバック）
+- `~/.claude/agents/kids-safety.md` - 安全審査
+- `~/.claude/agents/kids-seo.md` - SEO最適化
+- `~/.claude/agents/kids-patrol.md` - 週次鮮度パトロール
+- `~/.claude/agents/kids-radar.md` - 日次市場スキャナー
+
+## 品質基準
+- 最低1,500文字（比較記事は2,000字以上）
+- CTA最大2箇所（冒頭+末尾）
+- 「安全です」「安心です」の断言禁止（根拠リンク必須）
+- 水道水等の不安煽り禁止
+- schema.org構造化データ必須（Product + Article）
+- 内部リンク3本以上、公的機関外部リンク必須
+- Amazonリンクに rel="noopener sponsored" 必須
+
+## デプロイ
 ```bash
-cd ~/kids-affiliate-site
-git add -A
+# 必要なファイルのみステージング（git add -A は使わない）
+git add products/ images/ogp/ index.html sitemap.xml
 git commit -m "記事追加"
 git push
 ```
 
-## Claudeへの依頼例
-
-### 新しい記事を追加
-「〇〇（商品名）のレビュー記事を作成して」
-
-### 既存記事を改善
-「products/rx68j0.html の記事をもっと売れる内容に改善して」
-
-### 記事の改善ポイント
-「〇〇の記事に以下を追加して：
-- 実際の使用シーン
-- 他商品との比較
-- 購入の決め手になるポイント」
-
-### 一括で記事改善
-「全記事に対して以下の改善を実施して：
-- CTAボタンの文言を強化
-- 緊急性を出す表現を追加」
-
-## 売れる記事にするための改善ポイント
-
-1. **具体的な体験談**を追加
-2. **比較表**で他商品との違いを明確に
-3. **デメリットも正直に**書いて信頼性UP
-4. **購入の後押し**になる文言（限定、人気、在庫わずか等）
-5. **画像**を追加（Amazonから取得）
-6. **関連商品**のリンクを追加
-
-## API情報
-- APIキーは環境変数で管理（セキュリティのためコードにはハードコードしない）
-- scripts/.env.example を参照
+## セキュリティ
+- APIキーは scripts/.env で管理（.gitignore対象）
+- git add -A は禁止（不要ファイル混入防止）
+- scripts/logs/ は .gitignore 対象
 
 ## Amazonアソシエイト
 - Store ID: kidsgoodslab-22
-- 登録済み
+- ASIN取得: Brave Search APIで自動（fix-amazon-links.jsで修正可能）
 
-## 次のTODO
+## TODO
 - [ ] PA-API取得（審査通過後）
-- [ ] 安値速報機能の実装
-- [ ] 商品画像を追加
+- [ ] 既存101記事へのschema.org遡及適用
+- [ ] CSS/JS最小化
+- [ ] スケジューラー導入（cron/GitHub Actions）
+- [ ] 監視・アラート体制（Telegram通知）
+- [ ] 記事定期更新メカニズム

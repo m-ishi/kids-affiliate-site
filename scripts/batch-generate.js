@@ -126,7 +126,7 @@ async function main() {
   // Gitコミット＆プッシュ
   console.log('\n📤 GitHubにプッシュ中...');
   try {
-    execSync('git add -A', { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
+    execSync('git add products/ images/ogp/ index.html sitemap.xml', { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
     execSync(`git commit -m "記事${toProcess.length}件追加（自動生成）"`, { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
     execSync('git push', { cwd: path.join(__dirname, '..'), stdio: 'inherit' });
     console.log('✅ プッシュ完了');

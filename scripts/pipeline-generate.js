@@ -326,7 +326,8 @@ async function runPipeline(productName, category, customTitle, providedAsin, dry
     // STEP 9: Git push
     console.log('\n📤 STEP 9: Git push → Cloudflare Pages');
     try {
-      execSync('git add -A', { cwd: ROOT_DIR, stdio: 'inherit' });
+      // git add -A ではなく必要なファイルのみステージング（不要ファイル混入防止）
+      execSync(`git add products/${slug}.html images/ogp/${slug}.png index.html products/index.html sitemap.xml`, { cwd: ROOT_DIR, stdio: 'inherit' });
       execSync(`git commit -m "feat: ${productName}のレビュー記事を追加（パイプライン生成）"`, { cwd: ROOT_DIR, stdio: 'inherit' });
       execSync('git push', { cwd: ROOT_DIR, stdio: 'inherit' });
       console.log('✅ デプロイ完了');
