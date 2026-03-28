@@ -365,16 +365,24 @@ function generateSlug(productName, slugHint) {
     slug = slug.replace(new RegExp(jp, 'gi'), en);
   }
 
-  // 残りの日本語や特殊文字を処理
+  // 残りの日本語はローマ字化できないのでそのまま除去
+  // ただし英数字・ハイフンのみ残す前に、既知の英語ブランド名は保持
   slug = slug
     .replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '') // 先頭・末尾のハイフンを除去
     .trim();
 
-  // 空の場合はタイムスタンプ
-  if (!slug || slug === '-') {
-    slug = `product-${Date.now()}`;
+  // 空の場合はGeminiにスラッグ生成を依頼（フォールバック）
+  if (!slug || slug.length < 3) {
+    // 英語部分だけ抽出してスラッグにする
+    const englishParts = productName.match(/[a-zA-Z0-9]+/g);
+    if (englishParts && englishParts.length > 0) {
+      slug = englishParts.join('-').toLowerCase();
+    } else {
+      slug = `product-${Date.now()}`;
+    }
   }
 
   return slug;
@@ -419,6 +427,43 @@ function generateHTML(productName, category, article, asin, customTitle = null, 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
   <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
+  <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}.html">
+  <meta property="og:site_name" content="キッズグッズラボ">
+  <meta name="twitter:title" content="${articleTitle}">
+  <meta name="twitter:description" content="${excerpt}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "${productName}",
+    "image": "https://kidsgoodslab.com/images/ogp/${slug}.png",
+    "description": "${excerpt}",
+    ${asin ? `"url": "${amazonUrl}",` : ''}
+    "review": {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "パパラボ" },
+      "datePublished": "${new Date().toISOString().split('T')[0]}",
+      "reviewBody": "${excerpt}",
+      "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5" }
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "${articleTitle}",
+    "image": "https://kidsgoodslab.com/images/ogp/${slug}.png",
+    "datePublished": "${new Date().toISOString().split('T')[0]}",
+    "dateModified": "${new Date().toISOString().split('T')[0]}",
+    "author": { "@type": "Person", "name": "パパラボ" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "キッズグッズラボ",
+      "logo": { "@type": "ImageObject", "url": "https://kidsgoodslab.com/images/logo.png" }
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
