@@ -38,8 +38,23 @@ build/
 
 # Generated
 *.generated.html
+
+# Environment (all .env files)
 .env
+.env.local
 scripts/.env
+
+# Pipeline logs (accumulate locally)
+scripts/logs/
+
+# Draft articles (not for production)
+drafts/
+
+# Research data
+research/
+
+# Note export tools
+note-export/
 
 # Tools (local MCP servers)
 tools/
