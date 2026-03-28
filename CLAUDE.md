@@ -21,23 +21,29 @@
 ```
 kids-affiliate-site/
 ├── index.html              # トップページ
-├── products/               # 商品レビュー記事
+├── products/               # 商品レビュー記事（110+）
 │   ├── index.html          # 一覧ページ
 │   └── [slug].html         # 各記事
 ├── drafts/                 # 下書き記事（gitignore対象）
 ├── css/style.css           # スタイル
 ├── js/main.js              # JavaScript
 ├── images/ogp/             # OGP画像（1200x630 PNG）
+├── functions/api/          # Cloudflare Functions（お問い合わせ）
 ├── scripts/
 │   ├── pipeline-generate.js    # 統合パイプライン（推奨）
-│   ├── auto-generate-article.js # 単一記事生成
+│   ├── auto-generate-article.js # 単一記事生成エンジン
 │   ├── batch-generate.js       # バッチ処理
 │   ├── fix-amazon-links.js     # ASIN自動修正
 │   ├── generate-ogp-image.js   # OGP画像生成
+│   ├── generate-all-ogp.js     # 全記事OGP一括生成
+│   ├── pattern-sections.js     # 29パターンセクション構成
 │   ├── rebuild-index.js        # インデックス再構築
 │   ├── update-sitemap.js       # サイトマップ更新
-│   ├── pattern-sections.js     # 29パターンセクション構成
-│   └── logs/                   # パイプラインログ（gitignore対象）
+│   ├── products-queue.json     # 生成キュー
+│   ├── products-done.json      # 生成済みリスト
+│   ├── logs/                   # パイプラインログ（gitignore対象）
+│   └── archive/                # 旧スクリプト（gitignore対象）
+├── archive/                # 旧ファイル（gitignore対象）
 ├── sitemap.xml
 ├── robots.txt
 └── templates/
