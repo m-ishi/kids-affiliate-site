@@ -56,5 +56,9 @@ research/
 # Note export tools
 note-export/
 
+# Archive (old scripts/data)
+archive/
+scripts/archive/
+
 # Tools (local MCP servers)
 tools/
