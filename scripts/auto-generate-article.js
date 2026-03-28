@@ -374,13 +374,26 @@ function generateSlug(productName, slugHint) {
     .replace(/^-+|-+$/g, '') // 先頭・末尾のハイフンを除去
     .trim();
 
-  // 空の場合はGeminiにスラッグ生成を依頼（フォールバック）
+  // 空の場合は英語部分抽出 or Gemini APIでローマ字化
   if (!slug || slug.length < 3) {
-    // 英語部分だけ抽出してスラッグにする
     const englishParts = productName.match(/[a-zA-Z0-9]+/g);
     if (englishParts && englishParts.length > 0) {
       slug = englishParts.join('-').toLowerCase();
     } else {
+      // Gemini APIでスラッグ生成（同期的に実行）
+      try {
+        const { execSync } = require('child_process');
+        const prompt = `Convert this Japanese product name to a short URL-friendly English slug (lowercase, hyphens, max 40 chars, no explanation): "${productName}"`;
+        const body = JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 50, temperature: 0 } });
+        const result = execSync(`curl -s -X POST "${GEMINI_URL}" -H "Content-Type: application/json" -d '${body.replace(/'/g, "'\\''")}'`, { timeout: 10000 }).toString();
+        const parsed = JSON.parse(result);
+        if (parsed.candidates && parsed.candidates[0]) {
+          slug = parsed.candidates[0].content.parts[0].text
+            .trim().toLowerCase().replace(/[^\w-]/g, '').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+        }
+      } catch (e) { /* fallback below */ }
+    }
+    if (!slug || slug.length < 3) {
       slug = `product-${Date.now()}`;
     }
   }
