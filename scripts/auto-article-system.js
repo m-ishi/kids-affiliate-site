@@ -1,6 +1,6 @@
 /**
- * 統合記事生成システム
- * 商品選定 → パターン選定 → 高CVR構成で記事生成
+ * 統合記事生成システム v2
+ * 商品選定 → サジェストKW取得 → 辛口E-E-A-T構成で記事生成
  */
 
 const fs = require('fs');
@@ -12,7 +12,88 @@ const { getSectionPrompt } = require('./pattern-sections');
 
 const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const SEARXNG_URL = process.env.SEARXNG_URL || 'http://localhost:8888';
 const AFFILIATE_TAG = 'kidsgoodslab-22';
+
+// ========================================
+// サジェストKW自動取得
+// ========================================
+
+/**
+ * Google Suggest API からサジェストキーワードを取得
+ * @param {string} query - 検索クエリ
+ * @returns {Promise<string[]>} サジェストキーワード配列
+ */
+async function getGoogleSuggestions(query) {
+  try {
+    const url = `http://suggestqueries.google.com/complete/search?client=firefox&hl=ja&q=${encodeURIComponent(query)}`;
+    const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    const data = await response.json();
+    return data[1] || [];
+  } catch (e) {
+    console.log(`  ⚠️ サジェスト取得失敗: ${e.message}`);
+    return [];
+  }
+}
+
+/**
+ * 商品名に対して多角的なサジェストKWを取得
+ * ネガティブ系・比較系・購入系・使い方系に分類
+ */
+async function fetchSuggestKeywords(productName) {
+  const suffixes = [
+    '', ' 口コミ', ' デメリット', ' 後悔', ' 比較',
+    ' おすすめ', ' いらない', ' 何歳'
+  ];
+
+  const allSuggestions = new Set();
+  for (const suffix of suffixes) {
+    const suggestions = await getGoogleSuggestions(productName + suffix);
+    suggestions.forEach(s => allSuggestions.add(s));
+    await new Promise(r => setTimeout(r, 200)); // レート制限
+  }
+
+  const keywords = [...allSuggestions];
+
+  // カテゴリ分類
+  const negative = keywords.filter(k =>
+    /デメリット|後悔|いらない|危ない|失敗|重い|高い|壊れ|うるさい|邪魔|不要|微妙/.test(k)
+  );
+  const comparison = keywords.filter(k =>
+    /比較|違い|vs|どっち|どれ|おすすめ|ランキング|選び方/.test(k)
+  );
+  const purchase = keywords.filter(k =>
+    /最安値|安い|どこ|買う|Amazon|楽天|セール|クーポン|中古|メルカリ/.test(k)
+  );
+  const usage = keywords.filter(k =>
+    /何歳|いつ|使い方|組み立て|サイズ|重さ|洗い|掃除|収納|お手入れ/.test(k)
+  );
+
+  return {
+    all: keywords,
+    negative,
+    comparison,
+    purchase,
+    usage,
+    summary: `取得KW: ${keywords.length}件 (ネガ:${negative.length} 比較:${comparison.length} 購入:${purchase.length} 使い方:${usage.length})`
+  };
+}
+
+/**
+ * SearXNG経由で競合記事の見出し構成を取得
+ */
+async function fetchCompetitorHeadings(productName, patternKey) {
+  try {
+    const query = `${productName} ${patternKey === 'regret' ? 'デメリット 後悔' : patternKey === 'reviews' ? '口コミ 評判' : 'レビュー'}`;
+    const url = `${SEARXNG_URL}/search?q=${encodeURIComponent(query)}&format=json&language=ja`;
+    const response = await fetch(url);
+    if (!response.ok) return '';
+    const data = await response.json();
+    return data.results?.slice(0, 5).map(r => `${r.title}: ${r.content || ''}`).join('\n') || '';
+  } catch (e) {
+    return '';
+  }
+}
 
 const productsDir = '/Users/masa/kids-affiliate-site/products';
 const ogpDir = '/Users/masa/kids-affiliate-site/images/ogp';
@@ -225,42 +306,84 @@ function generatePatternTitle(productName, patternKey, category) {
   return template.replace(/\[商品名\]/g, productName);
 }
 
-// 高CVR記事生成
-async function generateArticle(product, patternKey, searchResults) {
+// 辛口E-E-A-T記事生成（サジェストKW統合版）
+async function generateArticle(product, patternKey, searchResults, suggestKW = null) {
   const category = categoryMapping[product.category] || 'baby';
   const patternInfo = patterns[category]?.patterns[patternKey];
   const patternFocus = patternPrompts[patternKey] || '';
   const patternDesc = patternInfo?.prompt || '';
   const suggestedTitle = generatePatternTitle(product.name, patternKey, category);
 
-  const prompt = `
-あなたは高CVRアフィリエイト記事の専門ライター「パパラボ」です。
-2歳男の子と0歳女の子を育てている子育てパパとして記事を書きます。
+  // サジェストKWをプロンプトに組み込む
+  const kwSection = suggestKW ? `
+【SEO対策：記事内に自然に織り込むべきキーワード】
+以下のキーワードは実際にユーザーが検索しているものです。
+見出しや本文に自然に組み込んでください（無理に全部入れなくてOK、関連性の高いものを優先）。
 
-【重要：記事の視点ルール】
-★「調査・比較・検討」の視点で書く
-★「口コミを調べた」「友人に聞いた」「店頭でチェックした」「比較検討した」というスタンス
-★購入を検討している人に向けて、調べた情報をまとめる形式
+▼ ネガティブ系（デメリット・後悔系）※必ず2-3個は記事内で言及すること
+${suggestKW.negative.slice(0, 8).join('\n') || '（なし）'}
+
+▼ 比較・選択系
+${suggestKW.comparison.slice(0, 6).join('\n') || '（なし）'}
+
+▼ 購入検討系
+${suggestKW.purchase.slice(0, 6).join('\n') || '（なし）'}
+
+▼ 使い方・仕様系
+${suggestKW.usage.slice(0, 6).join('\n') || '（なし）'}
+
+▼ その他のサジェストKW（参考）
+${suggestKW.all.filter(k => !suggestKW.negative.includes(k) && !suggestKW.comparison.includes(k) && !suggestKW.purchase.includes(k) && !suggestKW.usage.includes(k)).slice(0, 10).join('\n') || '（なし）'}
+` : '';
+
+  const prompt = `
+あなたは「パパラボ」。2歳男の子と0歳女の子を育てている子育てパパ。
+性格は**そこそこ批判的で正直**。甘い言葉でごまかすのが嫌い。
+でもENTPほどの毒舌ではなく、ちゃんと良いものは良いと言う。
+「ダメなところはハッキリ言うけど、それでもおすすめなものはおすすめ」というスタンス。
+
+【E-E-A-T（経験・専門性・権威性・信頼性）を意識した文章構成】
+
+★Experience（経験）:
+- 自分の子育て体験をベースに書く。ただし所有していない商品は「友人パパに借りて試した」「店頭で触った」「保育園で見た」等のリアルな接触体験で書く
+- 「2歳の息子が〜した」「0歳の娘に〜」など具体的な子供の反応を入れる
+- 抽象的な感想（「とても良い」）ではなく、具体的なシーン（「朝の着替え中に3分だけ遊ばせる」）で書く
+
+★Expertise（専門性）:
+- スペック・数値データを必ず含める（重量、サイズ、対象年齢、価格帯）
+- 競合商品との具体的な違いを数字で比較する
+- 「なぜそうなのか」の理由を技術的に説明できる部分は説明する
+
+★Authoritativeness（権威性）:
+- 口コミの傾向をデータ的に分析する（「Amazonレビュー200件中、星1は〇%」等）
+- 保育士・小児科医の見解があれば引用
+- 受賞歴・認証があれば言及
+
+★Trustworthiness（信頼性）:
+- **デメリットを先に、具体的に書く** ← これが最重要
+- 「向かない人」を明確にする
+- アフィリエイトリンクがあることを隠さない
+- 他の選択肢も公平に紹介する
+
+【辛口パパラボの文体ルール】
+- 「正直に言うと、〇〇はイマイチ。」から入ることが多い
+- 「でもね、」「ただし、」で転換して良い点を語る
+- 「〜って言ってるブログ多いけど、本当にそう？」と他の記事に疑問を投げる
+- ☆☆☆☆★みたいな評価を入れる
+- 「ぶっちゃけ」「正直」「忖度なしで言うと」を適度に使う
+- ただし攻撃的にはならない。愛のある辛口。
+- 最後は「それでも○○は買い」と推薦で締める
 
 【絶対禁止の表現】
-- 「愛用」という単語自体を使わない
-- 「我が家で使っています」「うちで使っている」
-- 「実際に使ってみた」「使ってみました」
-- 「〜ヶ月使った感想」「〜年使った」
-- 「リピート」「リピ買い」
-- その他「自分や他人が継続使用している」ことを示す表現すべて
-
-【推奨する表現】
-- 「口コミを調べてみると」「評判をまとめると」
-- 「友人ママに聞いたところ」「ママ友の間では」
-- 「店頭で実物をチェックしたら」
-- 「比較検討した結果」「調べてわかったこと」
-- 「購入を検討している方へ」
+- 「愛用」「リピート」「リピ買い」
+- 過剰なポジティブ表現（「最高」「神」「完璧」「間違いない」）
+- ステマ感のある表現（「今だけ」「急いで」「限定」）
+- 抽象的すぎる感想（「とても良い商品です」「おすすめです」だけで終わる）
 
 【商品情報】
 商品名: ${product.name}
 カテゴリー: ${product.category}
-
+${kwSection}
 【記事の切り口（パターン）】
 パターン: ${patternKey}
 狙い: ${patternDesc}
@@ -269,7 +392,7 @@ async function generateArticle(product, patternKey, searchResults) {
 【参考タイトル例】
 ${suggestedTitle}
 
-【参考情報】
+【参考情報（検索結果）】
 ${searchResults || '（検索結果なし）'}
 
 【記事構成ルール（9セクション・5000-7000文字厳守）】
@@ -279,6 +402,7 @@ ${searchResults || '（検索結果なし）'}
 ★★★ 見出しルール ★★★
 - 全ての<h2>見出しは、読者が「読みたい！」と思う具体的で自然な日本語にすること
 - 見出しは疑問形、感嘆、具体的な数字を使って興味を引く
+- ネガティブ系KWは見出しに積極的に取り入れる（例：「[商品名] デメリット」「[商品名] 後悔」）
 - 「導入文」「まとめ」「商品概要」等の抽象的ワードは絶対禁止
 - 以下の見出し例は参考。そのまま使わず、内容に合わせてアレンジすること
 
@@ -287,7 +411,7 @@ ${searchResults || '（検索結果なし）'}
 ${getSectionPrompt(patternKey, product.name)}
 
 【出力形式】
-<title>キャッチーなタイトル（32文字以内）</title>
+<title>キャッチーなタイトル（32文字以内）★ネガティブ要素を含むタイトル推奨（例：「〇〇のデメリット5つ｜それでもおすすめな理由」）</title>
 <excerpt>記事要約（60文字）</excerpt>
 <content>
 <h2>読者の心を掴む具体的な見出し</h2>
@@ -298,7 +422,9 @@ ${getSectionPrompt(patternKey, product.name)}
 - 必ず5000文字以上書く
 - パターン「${patternKey}」の視点を全体に反映
 - 具体的なエピソード・数値を必ず含める
+- デメリットを最低3つは具体的に書く（ここが信頼性の核）
 - 断定的な表現を使う（「〜かもしれません」より「〜です」）
+- 辛口だけど最後は推薦で締める構成にする
 - ★絶対禁止ワード★ 以下は見出しに使用禁止：
   「導入文」「商品概要」「目次的導入」「事実・データパート」「メインコンテンツ」「実践的アドバイス」「注意点・デメリット」「おすすめな人チェックリスト」「まとめ」「最終判断」「商品の特徴」「データ・比較」「詳細レビュー」
 `;
@@ -520,30 +646,91 @@ async function main() {
     return;
   }
 
-  // キューをシャッフル（カテゴリ偏りを防ぐ）
-  for (let i = queue.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [queue[i], queue[j]] = [queue[j], queue[i]];
+  // ========================================
+  // 商品選定：検索需要スコアで優先順位付け
+  // ========================================
+  console.log('📊 検索需要スコアを算出中（商品選定）...\n');
+
+  // 商品別サジェストKWキャッシュ（同じ商品の別パターンで再利用）
+  const suggestCache = {};
+
+  // キュー内のユニーク商品名を取得
+  const uniqueProducts = [...new Set(queue.map(q => q.product.name))];
+
+  for (const productName of uniqueProducts) {
+    console.log(`  🔍 ${productName}...`);
+    suggestCache[productName] = await fetchSuggestKeywords(productName);
+    console.log(`     ${suggestCache[productName].summary}`);
+    await new Promise(r => setTimeout(r, 300));
   }
 
+  // 検索需要スコアを計算してキューに付与
+  // スコア = サジェストKW総数 × 1.0 + ネガティブ系 × 3.0 + 比較系 × 2.0 + 購入系 × 2.5
+  // （ネガティブ系・購入系KWが多い ＝ 購買検討段階のユーザーが多い ＝ CVR高い）
+  for (const item of queue) {
+    const kw = suggestCache[item.product.name];
+    if (kw) {
+      item.demandScore =
+        kw.all.length * 1.0 +
+        kw.negative.length * 3.0 +
+        kw.comparison.length * 2.0 +
+        kw.purchase.length * 2.5 +
+        kw.usage.length * 1.5;
+    } else {
+      item.demandScore = 0;
+    }
+  }
+
+  // スコア降順でソート（高需要の商品を先に生成）
+  queue.sort((a, b) => b.demandScore - a.demandScore);
+
+  // スコアランキング表示
+  console.log('\n📈 商品別 検索需要スコアランキング:');
+  const scoreByProduct = {};
+  for (const item of queue) {
+    if (!scoreByProduct[item.product.name]) {
+      scoreByProduct[item.product.name] = item.demandScore;
+    }
+  }
+  const ranked = Object.entries(scoreByProduct).sort((a, b) => b[1] - a[1]);
+  ranked.forEach(([name, score], i) => {
+    const kw = suggestCache[name];
+    const bar = '█'.repeat(Math.min(Math.round(score / 5), 30));
+    console.log(`  ${i + 1}. ${name} [${score.toFixed(0)}] ${bar}`);
+    if (kw) console.log(`     KW:${kw.all.length} ネガ:${kw.negative.length} 比較:${kw.comparison.length} 購入:${kw.purchase.length}`);
+  });
+  console.log();
+
   const toGenerate = queue.slice(0, limit);
-  console.log(`今回生成: ${toGenerate.length}件\n`);
+  console.log(`今回生成: ${toGenerate.length}件（検索需要スコア上位から）\n`);
 
   let generated = 0;
   for (const item of toGenerate) {
     const { product, patternKey, slug } = item;
     console.log(`[${generated + 1}/${toGenerate.length}] ${product.name} × ${patternKey}`);
 
-    // Brave検索
+    // サジェストKW取得（キャッシュあり）
+    if (!suggestCache[product.name]) {
+      console.log('  🔍 サジェストKW取得中...');
+      suggestCache[product.name] = await fetchSuggestKeywords(product.name);
+      console.log(`  ${suggestCache[product.name].summary}`);
+    }
+    const suggestKW = suggestCache[product.name];
+
+    // Brave検索 or SearXNG検索
     const category = categoryMapping[product.category];
     const patternName = patterns[category]?.patterns[patternKey]?.name || patternKey;
     console.log('  検索中...');
-    const searchResults = await searchBrave(`${product.name} ${patternName}`);
+    let searchResults = await searchBrave(`${product.name} ${patternName}`);
+    // SearXNGフォールバック
+    if (!searchResults) {
+      searchResults = await fetchCompetitorHeadings(product.name, patternKey);
+    }
     await new Promise(r => setTimeout(r, 1100));
 
-    // 記事生成
-    console.log('  生成中...');
-    const result = await generateArticle(product, patternKey, searchResults);
+    // 辛口E-E-A-T記事生成（サジェストKW付き）
+    console.log('  ✍️ 辛口E-E-A-T記事生成中...');
+    const result = await generateArticle(product, patternKey, searchResults, suggestKW);
 
     if (!result) {
       console.log('  ❌ 生成失敗');
@@ -608,7 +795,7 @@ async function main() {
   }
 }
 
-module.exports = { generateArticle, createHTML, generateSlug };
+module.exports = { generateArticle, createHTML, generateSlug, fetchSuggestKeywords, fetchCompetitorHeadings };
 
 if (require.main === module) {
   main().catch(console.error);
