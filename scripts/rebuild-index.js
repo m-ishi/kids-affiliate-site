@@ -19,33 +19,29 @@ for (const file of files) {
   const imageMatch = content.match(/src="https:\/\/m\.media-amazon\.com\/images\/P\/([A-Z0-9]+)/);
 
   if (titleMatch) {
+    const stat = fs.statSync(path.join(productsDir, file));
+    const publishDate = dateMatch ? dateMatch[1] : '2026.02.07';
+    const modifiedDate = stat.mtime.toISOString().split('T')[0].replace(/-/g, '.');
+    const isUpdated = publishDate !== modifiedDate && (stat.mtime - new Date(publishDate.replace(/\./g, '-'))) > 86400000;
+
     products.push({
       file,
       title: titleMatch[1].substring(0, 50),
       category: categoryMatch ? categoryMatch[1] : 'ベビー用品',
       excerpt: excerptMatch ? excerptMatch[1].substring(0, 60) : '',
       rating: ratingMatch ? ratingMatch[1] : '4.0',
-      date: dateMatch ? dateMatch[1] : '2026.02.07',
-      asin: imageMatch ? imageMatch[1] : null
+      date: publishDate,
+      modifiedDate,
+      mtime: stat.mtime,
+      isUpdated
     });
   }
 }
 
 console.log(`Extracted ${products.length} products`);
 
-// 日付でソート（新しい順）、同じ日付の場合はファイル更新日時で
-products.sort((a, b) => {
-  // 日付を比較可能な形式に変換 (2026.02.07 -> 20260207)
-  const dateA = a.date.replace(/\./g, '');
-  const dateB = b.date.replace(/\./g, '');
-  if (dateB !== dateA) {
-    return dateB.localeCompare(dateA);
-  }
-  // 同じ日付の場合はファイル更新日時で比較
-  const statA = fs.statSync(path.join(productsDir, a.file));
-  const statB = fs.statSync(path.join(productsDir, b.file));
-  return statB.mtime - statA.mtime;
-});
+// ファイル更新日時でソート（最近更新されたものが上）
+products.sort((a, b) => b.mtime - a.mtime);
 
 console.log('Sorted by date (newest first)');
 
@@ -78,12 +74,12 @@ function generateCard(p, isProductsPage) {
               ${imgHTML}
             </div>
             <div class="product-content">
-              <span class="product-category">${p.category}</span>
+              ${p.isUpdated ? '<span style="background:#e74c3c;color:#fff;padding:2px 8px;border-radius:4px;font-size:0.75rem;margin-right:6px;">更新</span>' : ''}<span class="product-category">${p.category}</span>
               <h3 class="product-title">${p.title}</h3>
               <p class="product-excerpt">${p.excerpt}</p>
               <div class="product-meta">
                 <div class="product-rating">${generateStars(p.rating)}</div>
-                <span class="product-date">${p.date}</span>
+                <span class="product-date">${p.isUpdated ? p.modifiedDate + ' 更新' : p.date}</span>
               </div>
             </div>
           </a>
