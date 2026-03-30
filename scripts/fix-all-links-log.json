@@ -1,0 +1,765 @@
+{
+  "fixed": [
+    {
+      "file": "wipes-moony-reviews.html",
+      "oldASINs": [
+        "B0CGK6JHBX"
+      ],
+      "newASIN": "B0BH4Q8G5T",
+      "title": "【Amazon.co.jp限定】【おしりふき】 ムーニー ..."
+    }
+  ],
+  "rakutenAdded": [
+    "anpanman-block-lab-town.html",
+    "aprica-ag.html",
+    "aprica-ah.html",
+    "aprica-rakuna-storage.html",
+    "aprica-yurarizm-model-comparison.html",
+    "azamia-child-tray-review.html",
+    "babybjorn-bliss.html",
+    "babybjorn-mini-used.html",
+    "babybjorn-one-kai-air.html",
+    "bornelund-magformers-62.html",
+    "cleansui-md101-baby-water-review.html",
+    "combi-auto-swing.html",
+    "combi-nemulila-auto-swing.html",
+    "combi-nemulila-ff.html",
+    "combi-sugokaru-alpha.html",
+    "cybex-melio-storage.html",
+    "delonghi-oil-heater-kids-room-review.html",
+    "ergo-adapt-softflex.html",
+    "ergo-omni-360.html",
+    "ergobaby-adapt-used.html",
+    "ergobaby-omni-360.html",
+    "ergobaby-omni-breeze-seasonal.html",
+    "fisher-price-ii.html",
+    "fisherprice-bilingual-used.html",
+    "gingakobo-andromeda.html",
+    "goon-coupon.html",
+    "goon-lowest-price.html",
+    "goon-reviews.html",
+    "goon-sarasara-tape.html",
+    "goon-skin-trouble.html",
+    "goon-where-to-buy.html",
+    "icreo-liquid-milk.html",
+    "icreo-milk.html",
+    "intex-frame-pool.html",
+    "joie-tilt-repair.html",
+    "joie-tilt-used.html",
+    "jtc-baby-yuraride.html",
+    "kewpie-babyfood-reviews.html",
+    "kumon-kurukuru-chime.html",
+    "kumon-new.html",
+    "lego-duplo-kazuasobi-train.html",
+    "lifaxia-babygate.html",
+    "mamypoko-pants.html",
+    "meiji-hohoemi-cube.html",
+    "meiji-hohoemi-powder.html",
+    "mell-chan-baby-car.html",
+    "mell-chan-starter.html",
+    "merries-first-premium.html",
+    "merries-sarasara-coupon.html",
+    "merries-sarasara-lowest-price.html",
+    "merries-sarasara-quantity.html",
+    "merries-sarasara-reviews.html",
+    "merries-sarasara-seasonal.html",
+    "merries-sarasara-skin-trouble.html",
+    "merries-sarasara-where-to-buy.html",
+    "moony-coupon.html",
+    "moony-lowest-price.html",
+    "moony-quantity.html",
+    "moony-reviews.html",
+    "moony-seasonal.html",
+    "moony-skin-trouble.html",
+    "moony-where-to-buy.html",
+    "natural-moony-organic.html",
+    "nihon-ikuji-smartgate2-where-to-buy.html",
+    "pampers-coupon.html",
+    "pampers-lowest-price.html",
+    "pampers-quantity.html",
+    "pampers-reviews.html",
+    "pampers-sarasara-care.html",
+    "pampers-sarasara-coupon.html",
+    "pampers-sarasara-lowest-price.html",
+    "pampers-sarasara-quantity.html",
+    "pampers-sarasara-reviews.html",
+    "pampers-sarasara-seasonal.html",
+    "pampers-sarasara-skin-trouble.html",
+    "pampers-sarasara-where-to-buy.html",
+    "pampers-seasonal.html",
+    "pampers-skin-trouble.html",
+    "pampers-where-to-buy.html",
+    "pampers-wipes-hadaichi.html",
+    "pampers.html",
+    "pigeon-bonyu-jikkan.html",
+    "pigeon-bonyujikkan-glass.html",
+    "pigeon-bonyujikkan-seasonal.html",
+    "pigeon-handy-fit.html",
+    "plarail-thomas-set.html",
+    "pormido-prd8xc-digital-mirror-diy.html",
+    "richell-fukafukababybath-coupon.html",
+    "richell-fukafukababybath-seasonal.html",
+    "richell-fuwafuwa-baby-bath.html",
+    "shnuggle-babybath.html",
+    "skip-hop-babybath.html",
+    "stokke-flexibath.html",
+    "strider-14x-reviews.html",
+    "strider-14x-warranty.html",
+    "strider-14x.html",
+    "strider-sport-model.html",
+    "sylvanian-red-roof-house.html",
+    "sylvanian-sylvanian.html",
+    "tapo-c210-baby-monitor-review.html",
+    "tomica-basicroad-reviews.html",
+    "tomica-dx-tower.html",
+    "wakodo-googoo-kitchen.html",
+    "wipes-moony-reviews.html"
+  ],
+  "asinNotFound": [],
+  "asinInvalid": [
+    {
+      "file": "anpanman-block-lab-town.html",
+      "query": "アンパンマン ブロックラボ はじめてのブロックワゴン",
+      "asin": "B004WLSOVU",
+      "title": "[バンダイ(BANDAI)] BlockLabo ブロックラボ はじめての ..."
+    },
+    {
+      "file": "aprica-ag.html",
+      "query": "アップリカ マジカルエアー AG",
+      "asin": "B09X137GDR",
+      "title": "Amazon.co.jp: Aprica(アップリカ) B型ベビーカー マジカルエアー AG 7か月～36か月まで 軽量 コンパクト (カーキ) 2156831 : ベビー＆マタニティ"
+    },
+    {
+      "file": "aprica-ah.html",
+      "query": "アップリカ ラクーナクッション AH",
+      "asin": "B0BWD78775",
+      "title": "Amazon.co.jp: Aprica(アップリカ) A型ベビーカー ラクーナクッション AF 1か月~36か月まで 軽量 両対面 オート4輪 (ベージュ) 【2023年モデル】 : ベビー＆マタニティ"
+    },
+    {
+      "file": "aprica-rakuna-storage.html",
+      "query": "アップリカ ラクーナクッション",
+      "asin": "B0BWD78775",
+      "title": "Amazon.co.jp: Aprica(アップリカ) A型ベビーカー ラクーナクッション AF 1か月~36か月まで 軽量 両対面 オート4輪 (ベージュ) 【2023年モデル】 : ベビー＆マタニティ"
+    },
+    {
+      "file": "aprica-yurarizm-model-comparison.html",
+      "query": "アップリカ ユラリズム",
+      "asin": "B087MQ2S6W",
+      "title": "Amazon | Aprica(アップリカ) ハイローチェア ユラリズム エレファントラブ 0か月~4歳頃まで 手動スウィングタイプ (グレー) 2109079 | ハイチェア | ベビー＆マタニティ 通販"
+    },
+    {
+      "file": "azamia-child-tray-review.html",
+      "query": "Azamia チャイルドトレイ",
+      "asin": "B0D5QYWDNT",
+      "title": "Amazon | チャイルドトレイ ベビーテーブル チャイルドシートテーブル カーシートテーブル お絵かきテーブル ボトル 子供用車 おもちゃ収納ポケット 食事遊び 食事遊び 読書 座席サイドテーブル チャイルドシートテーブル 固定バンド付き 子供用テーブル おもちゃ おでかけ 旅行に大活躍 | 車内収納小物 | ベビー＆マタニティ 通販"
+    },
+    {
+      "file": "baby-cord-safety-cable-box-guide.html",
+      "query": "赤ちゃんのコード・配線安全対策ガイド｜ケーブルボックスで感電・絡まり事故を防ぐ【2026年最新】｜キッズグッズラボ",
+      "asin": "B0BBMD1SGM",
+      "title": "Amazon.co.jp: Mscien Outlet Cover, Baby Power Tap, Baby Guard, Extension Cord, 6.6 ft (2 m), Lightning Guard, 9 Outlets, Outlet Tap, Table Tap, Wall Hanging, OA Tap, Branch, Outlet, Outlet, Children's Outlet Guard, : Baby"
+    },
+    {
+      "file": "babybjorn-bliss.html",
+      "query": "ベビービョルン バウンサー Bliss",
+      "asin": "B07PWZYV45",
+      "title": "Amazon.co.jp: Baby Björn 【日本正規品保証付】Bouncer Bliss Air, Anthracite, 1 month and up, 1 PCS (x 1) : Baby"
+    },
+    {
+      "file": "babybjorn-mini-used.html",
+      "query": "ベビービョルン MINI 抱っこ紐",
+      "asin": "B07D6R2S73",
+      "title": "BabyBjörn(ベビービョルン) 抱っこ紐 【日本正規品保証付】 ..."
+    },
+    {
+      "file": "babybjorn-one-kai-air.html",
+      "query": "ベビービョルン ONE KAI Air",
+      "asin": "B07PWZYPGB",
+      "title": "Amazon.co.jp: ベビービョルン 抱っこ紐 0カ月~36カ月まで 通気性の良いメッシュ素材 ONE KAI Air アンスラサイト 4WAY対応 : ベビー＆マタニティ"
+    },
+    {
+      "file": "bornelund-magformers-62.html",
+      "query": "ボーネルンド マグフォーマー 62ピース",
+      "asin": "B07C2YDD7S",
+      "title": "Amazon.co.jp: ボーネルンド ( BorneLund ) マグ・フォーマー ( MAGFORMERS ) ベーシックセット [ 62ピース ] 3歳頃から 知育玩具 磁石 マグネット ブロック MF701007J : Toys & Games"
+    },
+    {
+      "file": "cleansui-md101-baby-water-review.html",
+      "query": "三菱ケミカル・クリンスイ MONOシリーズ MD101",
+      "asin": "B003AZZS3Q",
+      "title": "Amazon.co.jp: Mitsubishi Rayon - Cleansui - Direct Connecting Faucet Water Filter MD101 MD101-NC : Home & Kitchen"
+    },
+    {
+      "file": "co-sleeping-bed-safety-guide.html",
+      "query": "添い寝ベッドは危険",
+      "asin": "B0DJF31JQZ",
+      "title": "Amazon.co.jp"
+    },
+    {
+      "file": "combi-auto-swing.html",
+      "query": "コンビ ネムリラ AUTO SWING",
+      "asin": "B07ZTN6WBG",
+      "title": "Amazon.co.jp: COMBI Combi Electric High Low Chair, White Label, Nemurilla AUTO SWING BEDi, Long Shell, EG, Minty Blue, Equipped with Sleep Shell to Block Room Light : Baby"
+    },
+    {
+      "file": "combi-nemulila-auto-swing.html",
+      "query": "コンビ ネムリラ AUTO SWING",
+      "asin": "B07ZTN6WBG",
+      "title": "Amazon.co.jp: COMBI Combi Electric High Low Chair, White Label, Nemurilla AUTO SWING BEDi, Long Shell, EG, Minty Blue, Equipped with Sleep Shell to Block Room Light : Baby"
+    },
+    {
+      "file": "combi-nemulila-ff.html",
+      "query": "コンビ ネムリラ FF ハイローチェア",
+      "asin": "B019DA84BO",
+      "title": "コンビ ハイローチェア ネムリラ FF リバーシブルシートモデル ..."
+    },
+    {
+      "file": "combi-sugokaru-alpha.html",
+      "query": "コンビ スゴカルα コンパクト エッグショック",
+      "asin": "B0B51519B3",
+      "title": "Amazon.co.jp: コンビ A型(両対面)ベビーカー 1ヶ月から36カ月頃まで スゴカルα compact エッグショック AW ノーブルグレー エッグショック搭載軽量ベビーカー : ベビー＆マタニティ"
+    },
+    {
+      "file": "cybex-melio-storage.html",
+      "query": "CYBEX メリオカーボン ベビーカー",
+      "asin": "B0DTH8DKBR",
+      "title": "CYBEX サイベックス【公式】メリオ カーボン (2025) マジック ..."
+    },
+    {
+      "file": "delonghi-oil-heater-kids-room-review.html",
+      "query": "デロンギ オイルヒーター アミカルド RHJ35M0812-DG",
+      "asin": "B07HNSYSCQ",
+      "title": "Amazon.co.jp: De'Longhi (デロンギ) Amicardo Oil Heater RHJ35M0812-DG, Electric Heater, Zero Wind Heating, Silent, Less Drying, Surface Temperature Approx. 70℃, No Need for Fuel Refill, Child Lock, For 142.3 to 177.9 sq : Home & Kitchen"
+    },
+    {
+      "file": "ergo-adapt-softflex.html",
+      "query": "エルゴベビー ADAPT SoftFlex",
+      "asin": "B0C3LK3XX2",
+      "title": "Amazon.co.jp: Ergobaby エルゴベビー 抱っこひも ADAPT SoftFlex ナチュラルベージュ 0ヶ月から メッシュ素材 通気性抜群 CREGBCASFMNATBGE : ベビー＆マタニティ"
+    },
+    {
+      "file": "ergo-omni-360.html",
+      "query": "エルゴベビー OMNI 360 メッシュ",
+      "asin": "B07CPX7R4P",
+      "title": "Amazon.co.jp: エルゴベビー (Ergobaby) 抱っこひも メッシュ おんぶ 前向き抱き 日本正規品保証付 (洗濯機で洗える) ベビーキャリア 成長にフィット オムニ360 クールエア/グレー CREGBCS360PGREY 1個 (x 1) : ベビー＆マタニティ"
+    },
+    {
+      "file": "ergobaby-adapt-used.html",
+      "query": "エルゴベビー ADAPT 抱っこ紐",
+      "asin": "B0F82H881N",
+      "title": "Amazon.co.jp: Ergobaby エルゴベビー ADAPT Linen(アダプト リネン)/ナチュラル 抱っこ紐 抱っこひも お出かけ 夏 CREGBCANATLIN : ベビー＆マタニティ"
+    },
+    {
+      "file": "ergobaby-omni-360.html",
+      "query": "エルゴベビー OMNI 360 クールエア",
+      "asin": "B07CPX7R4P",
+      "title": "Amazon.co.jp: エルゴベビー (Ergobaby) 抱っこひも メッシュ おんぶ 前向き抱き 日本正規品保証付 (洗濯機で洗える) ベビーキャリア 成長にフィット オムニ360 クールエア/グレー CREGBCS360PGREY 1個 (x 1) : ベビー＆マタニティ"
+    },
+    {
+      "file": "ergobaby-omni-breeze-seasonal.html",
+      "query": "エルゴベビー オムニブリーズ 抱っこ紐",
+      "asin": "B093L84C7H",
+      "title": "Amazon.co.jp: Ergobaby エルゴベビー Baby Carrier OMNI Breeze, Midnight Blue, 0 Months to 36 Months, Mesh Material, Breathable, Front-Facing Possible, Newborn Compatible, Baby Carrier, Carrier Strap, Baby Sling : Baby"
+    },
+    {
+      "file": "fisher-price-ii.html",
+      "query": "フィッシャープライス レインフォレスト デラックスジムII",
+      "asin": "B016XS2NM0",
+      "title": "フィッシャープライス(fisher price) レインフォレスト・デラックス ..."
+    },
+    {
+      "file": "fisherprice-bilingual-used.html",
+      "query": "フィッシャープライス バイリンガル おもちゃ",
+      "asin": "B01I52KP3Q",
+      "title": "Amazon.co.jp: フィッシャープライス(fisher price) バイリンガル ..."
+    },
+    {
+      "file": "gingakobo-andromeda.html",
+      "query": "銀河工房 アンドロメダ銀河 木のおもちゃ",
+      "asin": "B07Q44BWZV",
+      "title": "Amazon.co.jp: ︎アンドロメダ銀河 //日本グッド・トイ受賞おもちゃ 木のおもちゃ 木製玩具 ビー玉 知育玩具 赤ちゃん スロープ ランキング 1歳 1歳半 2歳 3歳 4歳 5歳 男の子 女の子 ギフト 誕生日 誕生祝い 安全 : おもちゃ"
+    },
+    {
+      "file": "goon-coupon.html",
+      "query": "グーンプラス 敏感肌設計 テープ",
+      "asin": "B08HQXYQPC",
+      "title": "Amazon.co.jp: 【テープ Sサイズ】グーンプラス 敏感肌設計 (4~8ｋｇ) 【Amazon.co.jp限定】 ≪ディズニーデザイン≫ ホワイト82枚 : ドラッグストア"
+    },
+    {
+      "file": "goon-lowest-price.html",
+      "query": "グーンプラス テープ",
+      "asin": "B08HQXYQPC",
+      "title": "Amazon.co.jp: 【テープ Sサイズ】グーンプラス 敏感肌設計 (4~8ｋｇ) 【Amazon.co.jp限定】 ≪ディズニーデザイン≫ ホワイト82枚 : ドラッグストア"
+    },
+    {
+      "file": "goon-reviews.html",
+      "query": "グーンプラス 敏感肌設計",
+      "asin": "B08HQYRXTM",
+      "title": "Amazon.co.jp: 【テープ 新生児サイズ】グーンプラス 敏感肌設計 (お誕生~5kg) 【Amazon.co.jp限定】 ホワイト 88枚 : ベビー＆マタニティ"
+    },
+    {
+      "file": "goon-sarasara-tape.html",
+      "query": "グーンプラス 敏感肌設計 テープ",
+      "asin": "B08HQXYQPC",
+      "title": "Amazon.co.jp: 【テープ Sサイズ】グーンプラス 敏感肌設計 (4~8ｋｇ) 【Amazon.co.jp限定】 ≪ディズニーデザイン≫ ホワイト82枚 : ドラッグストア"
+    },
+    {
+      "file": "goon-skin-trouble.html",
+      "query": "グーンプラス 敏感肌設計",
+      "asin": "B08HQYRXTM",
+      "title": "Amazon.co.jp: 【テープ 新生児サイズ】グーンプラス 敏感肌設計 (お誕生~5kg) 【Amazon.co.jp限定】 ホワイト 88枚 : ベビー＆マタニティ"
+    },
+    {
+      "file": "goon-where-to-buy.html",
+      "query": "グーンプラス テープ",
+      "asin": "B08HQXYQPC",
+      "title": "Amazon.co.jp: 【テープ Sサイズ】グーンプラス 敏感肌設計 (4~8ｋｇ) 【Amazon.co.jp限定】 ≪ディズニーデザイン≫ ホワイト82枚 : ドラッグストア"
+    },
+    {
+      "file": "icreo-liquid-milk.html",
+      "query": "アイクレオ 赤ちゃんミルク 液体",
+      "asin": "B0CJFR912F",
+      "title": "Amazon.co.jp: アイクレオ 赤ちゃんミルク 125ml×18本 江崎グリコ 液体ミルク 粉ミルク 乳児 ベビー 0ヵ月~1歳頃 : 食品・飲料・お酒"
+    },
+    {
+      "file": "icreo-milk.html",
+      "query": "アイクレオ バランスミルク 粉ミルク",
+      "asin": "B0D9QNTNHX",
+      "title": "Amazon.co.jp: アイクレオ バランスミルク 800g 江崎グリコ 粉ミルク 新生児 乳児 赤ちゃん ベビー 0ヵ月~1歳頃 : 食品・飲料・お酒"
+    },
+    {
+      "file": "intex-frame-pool.html",
+      "query": "INTEX フレームプール 家庭用",
+      "asin": "B01CUCEXBC",
+      "title": "Amazon.co.jp: INTEX インテックス フレームプール カバー付き お庭で簡単設置 家庭用 300cm Ｘ200cm : おもちゃ"
+    },
+    {
+      "file": "joie-tilt-repair.html",
+      "query": "Joie チルト チャイルドシート",
+      "asin": "B006Y48NXM",
+      "title": "Amazon | ジョイー Joie チャイルドシート 04 チルト ブラウン | チャイルドシート 新生児から | ベビー＆マタニティ 通販"
+    },
+    {
+      "file": "joie-tilt-used.html",
+      "query": "Joie チルト チャイルドシート",
+      "asin": "B006Y48NXM",
+      "title": "Amazon | ジョイー Joie チャイルドシート 04 チルト ブラウン | チャイルドシート 新生児から | ベビー＆マタニティ 通販"
+    },
+    {
+      "file": "jtc-baby-yuraride.html",
+      "query": "JTC BABY ユラライド",
+      "asin": "B0CDFR9M47",
+      "title": "Amazon.co.jp: JTC BABY YURA RIDE ユラライド 子ども用 三輪車 キックバイク ペダルなし ロッキング 子供 乗用玩具 おもちゃ : おもちゃ"
+    },
+    {
+      "file": "kewpie-babyfood-reviews.html",
+      "query": "キユーピー ベビーフード 瓶詰",
+      "asin": "B00PBL9U4U",
+      "title": "Amazon.co.jp: Kewpie Baby Food, Bottled, Set of 6 Types, 2.5 oz (70 g) x 12 Packs, Ages 5 Months and Up, Assorted, Small Portion Freezable : Food, Beverages & Alcohol"
+    },
+    {
+      "file": "kumon-kurukuru-chime.html",
+      "query": "くもん くるくるチャイム",
+      "asin": "B06XKCSJ55",
+      "title": "くもん くるくるチャイム (リニューアル) : おもちゃ"
+    },
+    {
+      "file": "kumon-new.html",
+      "query": "くもん NEWスタディ将棋",
+      "asin": "B07Y1T2GVY",
+      "title": "Amazon.co.jp: Kumon Publishing NEW Study Shogi Educational Toy 2 People Ages 5 and Up KUMON : Toys & Games"
+    },
+    {
+      "file": "lego-duplo-kazuasobi-train.html",
+      "query": "レゴ デュプロ かずあそびトレイン",
+      "asin": "B08W5FV9GN",
+      "title": "Amazon.co.jp: LEGO Duplo My First Duplo Number Play Train Toy Plaything Birthday Present Blocks Educational Boys Girls Children 1.5 years old 2 years old 3 years old Toddlers Train Vehicles 10954 : Toys & Games"
+    },
+    {
+      "file": "lifaxia-babygate.html",
+      "query": "LIFAXIA ベビーゲート ロール式",
+      "asin": "B09N2JB6GP",
+      "title": "Amazon.co.jp: LIFAXIA ベビーゲート ロール式 賃貸 階段 高さ86cm 貼り付け 穴あけ不要 子供 赤ちゃん 猫 ペットゲート 犬 室内 こども 子ども ペットフェンス : ベビー＆マタニティ"
+    },
+    {
+      "file": "mamypoko-pants.html",
+      "query": "マミーポコ パンツ",
+      "asin": "B0CP1HVWTH",
+      "title": "【パンツ Lサイズ】マミーポコ パンツ ドラえもん オムツ (9~15kg ..."
+    },
+    {
+      "file": "meiji-hohoemi-cube.html",
+      "query": "明治 ほほえみ らくらくキューブ",
+      "asin": "B0F64ZWLF3",
+      "title": "Amazon.co.jp: Meiji Hohoemi Easy Cube, 1.0 oz (27 g) x 20 Bags x 2 Pieces, Gift Included (Around 0 Months - 1 Years, Solid Milk Powder) : Food, Beverages & Alcohol"
+    },
+    {
+      "file": "meiji-hohoemi-powder.html",
+      "query": "明治 ほほえみ 粉ミルク 大缶",
+      "asin": "B0116PPVTM",
+      "title": "Amazon.co.jp: 明治 ほほえみ 800g 粉末 [0ヵ月~1歳頃の粉ミルク] : Food, Beverages & Alcohol"
+    },
+    {
+      "file": "mell-chan-baby-car.html",
+      "query": "メルちゃん おせわパーツ ベビーカー",
+      "asin": "B07YDRDNL6",
+      "title": "Amazon | パイロットコーポレーション メルちゃん おせわパーツ おせわだいすきベビーカー | 人形・ドール | おもちゃ"
+    },
+    {
+      "file": "mell-chan-starter.html",
+      "query": "メルちゃん 入門セット",
+      "asin": "B01G827DA8",
+      "title": "Amazon | メルちゃん お人形セット入門セット (NEW) | 人形・ドール | おもちゃ"
+    },
+    {
+      "file": "merries-first-premium.html",
+      "query": "メリーズ ファーストプレミアム",
+      "asin": "B08RB224W3",
+      "title": "Amazon.co.jp: メリーズ 【テープ Sサイズ】 ファーストプレミアム 2倍やわらかカシミヤタッチ ホワイト (4~8kg) 19枚 : ベビー＆マタニティ"
+    },
+    {
+      "file": "merries-sarasara-coupon.html",
+      "query": "メリーズ さらさらエアスルー テープ",
+      "asin": "B0CXDVP7P9",
+      "title": "Amazon.co.jp: Merries Diapers Smooth Air Thru Tape for Newborn Babies (Birth - 16.9 lbs (5,000 g), 164 Sheets (82 Sheets x 2) [Case Products] : Health & Personal Care"
+    },
+    {
+      "file": "merries-sarasara-lowest-price.html",
+      "query": "メリーズ さらさらエアスルー",
+      "asin": "B0DDY69D3J",
+      "title": "メリーズ パンツ Mサイズ 186枚 (6~11kg) ずっと肌さらエアスルー"
+    },
+    {
+      "file": "merries-sarasara-quantity.html",
+      "query": "メリーズ さらさらエアスルー",
+      "asin": "B0DDY69D3J",
+      "title": "メリーズ パンツ Mサイズ 186枚 (6~11kg) ずっと肌さらエアスルー"
+    },
+    {
+      "file": "merries-sarasara-reviews.html",
+      "query": "メリーズ さらさらエアスルー",
+      "asin": "B0DDY69D3J",
+      "title": "メリーズ パンツ Mサイズ 186枚 (6~11kg) ずっと肌さらエアスルー"
+    },
+    {
+      "file": "merries-sarasara-seasonal.html",
+      "query": "メリーズ さらさらエアスルー",
+      "asin": "B0DDY69D3J",
+      "title": "メリーズ パンツ Mサイズ 186枚 (6~11kg) ずっと肌さらエアスルー"
+    },
+    {
+      "file": "merries-sarasara-skin-trouble.html",
+      "query": "メリーズ さらさらエアスルー",
+      "asin": "B0DDY69D3J",
+      "title": "メリーズ パンツ Mサイズ 186枚 (6~11kg) ずっと肌さらエアスルー"
+    },
+    {
+      "file": "merries-sarasara-where-to-buy.html",
+      "query": "メリーズ さらさらエアスルー",
+      "asin": "B0DDY69D3J",
+      "title": "メリーズ パンツ Mサイズ 186枚 (6~11kg) ずっと肌さらエアスルー"
+    },
+    {
+      "file": "moony-coupon.html",
+      "query": "ムーニー エアフィット テープ",
+      "asin": "B001FOQZYU",
+      "title": "Amazon | 【テープ Lサイズ】ムーニーエアフィット オムツ (9~14kg)54枚 | ムーニー | ドラッグストア"
+    },
+    {
+      "file": "moony-lowest-price.html",
+      "query": "ムーニー エアフィット テープ",
+      "asin": "B001FOQZYU",
+      "title": "Amazon | 【テープ Lサイズ】ムーニーエアフィット オムツ (9~14kg)54枚 | ムーニー | ドラッグストア"
+    },
+    {
+      "file": "moony-quantity.html",
+      "query": "ムーニー エアフィット",
+      "asin": "B00MTHVCH2",
+      "title": "Amazon"
+    },
+    {
+      "file": "moony-reviews.html",
+      "query": "ムーニー エアフィット",
+      "asin": "B00MTHVCH2",
+      "title": "Amazon"
+    },
+    {
+      "file": "moony-seasonal.html",
+      "query": "ムーニー エアフィット",
+      "asin": "B00MTHVCH2",
+      "title": "Amazon"
+    },
+    {
+      "file": "moony-skin-trouble.html",
+      "query": "ムーニー エアフィット",
+      "asin": "B00MTHVCH2",
+      "title": "Amazon"
+    },
+    {
+      "file": "moony-where-to-buy.html",
+      "query": "ムーニー エアフィット テープ",
+      "asin": "B001FOQZYU",
+      "title": "Amazon | 【テープ Lサイズ】ムーニーエアフィット オムツ (9~14kg)54枚 | ムーニー | ドラッグストア"
+    },
+    {
+      "file": "natural-moony-organic.html",
+      "query": "ナチュラルムーニー オーガニックコットン テープ",
+      "asin": "B0BKYY4HT2",
+      "title": "Amazon.co.jp: ナチュラルムーニー 【テープ 新生児サイズ】ムーニーナチュラル オーガニックコットン オムツ [ケース品] 白 (お誕生~5000g)248枚(62枚×4) : ベビー＆マタニティ"
+    },
+    {
+      "file": "nihon-ikuji-smartgate2-where-to-buy.html",
+      "query": "日本育児 スマートゲイト2",
+      "asin": "B004EHLS3S",
+      "title": "Amazon.co.jp: Japan childcare smart gate II Smart Gate 2 mounting width 67 ~ 91cm ~ depth 3 ~ height 91cm 5014045001 6 months to 24 months subject door retractable bracing gate : Baby"
+    },
+    {
+      "file": "pampers-coupon.html",
+      "query": "パンパース 肌へのいちばん テープ 新生児",
+      "asin": "B0CCJ338PF",
+      "title": "Amazon.co.jp: Tape, Newborn Size, Pampers Diapers, First Skin (Up to 11.0 lbs (5 kg), 60 Sheets : Clothing, Shoes & Jewelry"
+    },
+    {
+      "file": "pampers-lowest-price.html",
+      "query": "パンパース 肌へのいちばん テープ",
+      "asin": "B084PGP3LD",
+      "title": "Amazon | パンパース オムツ テープ はじめての肌へのいちばん M(6~11kg)52枚 | パンパース | おむつ"
+    },
+    {
+      "file": "pampers-quantity.html",
+      "query": "パンパース 肌へのいちばん テープ",
+      "asin": "B084PGP3LD",
+      "title": "Amazon | パンパース オムツ テープ はじめての肌へのいちばん M(6~11kg)52枚 | パンパース | おむつ"
+    },
+    {
+      "file": "pampers-reviews.html",
+      "query": "パンパース 肌へのいちばん テープ",
+      "asin": "B084PGP3LD",
+      "title": "Amazon | パンパース オムツ テープ はじめての肌へのいちばん M(6~11kg)52枚 | パンパース | おむつ"
+    },
+    {
+      "file": "pampers-sarasara-care.html",
+      "query": "パンパース さらさらケア テープ",
+      "asin": "B0BBF3BHG1",
+      "title": "Amazon | 【テープ Sサイズ】 パンパース オムツ さらさらケア (4~8kg) 70枚 | パンパース | おむつ"
+    },
+    {
+      "file": "pampers-sarasara-coupon.html",
+      "query": "パンパース さらさらケア テープ",
+      "asin": "B0BBF3BHG1",
+      "title": "Amazon | 【テープ Sサイズ】 パンパース オムツ さらさらケア (4~8kg) 70枚 | パンパース | おむつ"
+    },
+    {
+      "file": "pampers-sarasara-lowest-price.html",
+      "query": "パンパース さらさらケア",
+      "asin": "B0BBF1HJ3R",
+      "title": "【テープ 新生児サイズ】 パンパース オムツ さらさらケア (~5kg) ..."
+    },
+    {
+      "file": "pampers-sarasara-quantity.html",
+      "query": "パンパース さらさらケア",
+      "asin": "B0BBF1HJ3R",
+      "title": "【テープ 新生児サイズ】 パンパース オムツ さらさらケア (~5kg) ..."
+    },
+    {
+      "file": "pampers-sarasara-reviews.html",
+      "query": "パンパース さらさらケア",
+      "asin": "B0BBF1HJ3R",
+      "title": "【テープ 新生児サイズ】 パンパース オムツ さらさらケア (~5kg) ..."
+    },
+    {
+      "file": "pampers-sarasara-seasonal.html",
+      "query": "パンパース さらさらケア",
+      "asin": "B0BBF1HJ3R",
+      "title": "【テープ 新生児サイズ】 パンパース オムツ さらさらケア (~5kg) ..."
+    },
+    {
+      "file": "pampers-sarasara-skin-trouble.html",
+      "query": "パンパース さらさらケア",
+      "asin": "B0BBF1HJ3R",
+      "title": "【テープ 新生児サイズ】 パンパース オムツ さらさらケア (~5kg) ..."
+    },
+    {
+      "file": "pampers-sarasara-where-to-buy.html",
+      "query": "パンパース さらさらケア",
+      "asin": "B0BBF1HJ3R",
+      "title": "【テープ 新生児サイズ】 パンパース オムツ さらさらケア (~5kg) ..."
+    },
+    {
+      "file": "pampers-seasonal.html",
+      "query": "パンパース 肌へのいちばん",
+      "asin": "B0CNGX2MK3",
+      "title": "パンパース おしりふき 肌へのいちばん 896枚(56枚x16パック) ..."
+    },
+    {
+      "file": "pampers-skin-trouble.html",
+      "query": "パンパース 肌へのいちばん",
+      "asin": "B0CNGX2MK3",
+      "title": "パンパース おしりふき 肌へのいちばん 896枚(56枚x16パック) ..."
+    },
+    {
+      "file": "pampers-vs-merries.html",
+      "query": "パンパース 肌へのいちばん テープ 新生児",
+      "asin": "B0CCJ338PF",
+      "title": "Amazon.co.jp: Tape, Newborn Size, Pampers Diapers, First Skin (Up to 11.0 lbs (5 kg), 60 Sheets : Clothing, Shoes & Jewelry"
+    },
+    {
+      "file": "pampers-where-to-buy.html",
+      "query": "パンパース 肌へのいちばん テープ",
+      "asin": "B084PGP3LD",
+      "title": "Amazon | パンパース オムツ テープ はじめての肌へのいちばん M(6~11kg)52枚 | パンパース | おむつ"
+    },
+    {
+      "file": "pampers-wipes-hadaichi.html",
+      "query": "パンパース おしりふき 肌へのいちばん",
+      "asin": "B0CNGX2MK3",
+      "title": "パンパース おしりふき 肌へのいちばん 896枚(56枚x16パック) ..."
+    },
+    {
+      "file": "pampers.html",
+      "query": "パンパース おしりふき 肌へのいちばん",
+      "asin": "B0CNGX2MK3",
+      "title": "パンパース おしりふき 肌へのいちばん 896枚(56枚x16パック) ..."
+    },
+    {
+      "file": "pigeon-bonyu-jikkan.html",
+      "query": "ピジョン 母乳実感 哺乳びん プラスチック",
+      "asin": "B09QBZ99QM",
+      "title": "Amazon | ピジョン 母乳実感 哺乳びん 160ml 0ヵ月~ 上質なプラスチック 医療機関にも採用 軽くて割れにくい | 哺乳びん本体 | ベビー＆マタニティ 通販"
+    },
+    {
+      "file": "pigeon-bonyujikkan-glass.html",
+      "query": "ピジョン 母乳実感 哺乳びん 耐熱ガラス",
+      "asin": "B09QC29YVW",
+      "title": "Amazon.co.jp: Pigeon Pigeon Breast Milk Feeding Nursing Bottle 160ml 0 Months~ Fast Cooling Heat-Resistant Glass Scratch-Resistant and Hygienic : Baby"
+    },
+    {
+      "file": "pigeon-bonyujikkan-seasonal.html",
+      "query": "ピジョン 母乳実感",
+      "asin": "B01CCLDK42",
+      "title": "Amazon | ピジョン 【SSサイズ 1個入】 母乳実感 乳首(シリコーンゴム製) 0-1ヶ月 丸穴 01135 | 哺乳びん用乳首・キャップ | ベビー＆マタニティ 通販"
+    },
+    {
+      "file": "pigeon-handy-fit.html",
+      "query": "ピジョン さく乳器 母乳アシスト ハンディフィット",
+      "asin": "B09QC7DZS4",
+      "title": "Amazon.co.jp: PIGEON Pigeon Electric Breast Pump Breast Milk Assistant handy fit + : Baby"
+    },
+    {
+      "file": "plarail-thomas-set.html",
+      "query": "プラレール トーマス ベーシックセット",
+      "asin": "B07FY7Z1FM",
+      "title": "Amazon.co.jp: タカラトミー 『 プラレール きかんしゃトーマス ベーシックセット 』 電車 列車 おもちゃ 3歳以上 玩具安全基準合格 STマーク認証 PLARAIL TAKARA TOMY : Toys & Games"
+    },
+    {
+      "file": "pormido-prd8xc-digital-mirror-diy.html",
+      "query": "PORMIDO PRD8XC ミラー型 ドライブレコーダー 12インチ",
+      "asin": "B09M6WB2T4",
+      "title": "Amazon.co.jp: PORMIDO Dash Camera, Mirror Type, Front & Rear Camera, 12 Inch (20 Stage Rear Camera Zoom Function), Front Camera Separated Digital Inner Mirror, Sony IMX307 Sensor, HDR/WDR Included, Super Capacitor, : Automotive"
+    },
+    {
+      "file": "richell-fukafukababybath-coupon.html",
+      "query": "リッチェル ふかふかベビーバスW",
+      "asin": "B00WYPFLCQ",
+      "title": "リッチェル ふかふかベビーバス W グリーン 新生児~6カ月"
+    },
+    {
+      "file": "richell-fukafukababybath-seasonal.html",
+      "query": "リッチェル ふかふかベビーバスW",
+      "asin": "B00WYPFLCQ",
+      "title": "リッチェル ふかふかベビーバス W グリーン 新生児~6カ月"
+    },
+    {
+      "file": "richell-fuwafuwa-baby-bath.html",
+      "query": "リッチェル ふかふかベビーバスW",
+      "asin": "B00WYPFLCQ",
+      "title": "リッチェル ふかふかベビーバス W グリーン 新生児~6カ月"
+    },
+    {
+      "file": "sandbox-toy-set-review.html",
+      "query": "砂場セット ダンプカー おもちゃ 15個",
+      "asin": "B0015466IK",
+      "title": "Amazon.co.jp: Green Toys (グリーントイズ) 砂場セット グリーン : おもちゃ"
+    },
+    {
+      "file": "shnuggle-babybath.html",
+      "query": "Shnuggle シュナグル ベビーバス",
+      "asin": "B08FCH8267",
+      "title": "シンクで使える ベビーバス 赤ちゃん お風呂 沐浴 【 Shnuggle ..."
+    },
+    {
+      "file": "skip-hop-babybath.html",
+      "query": "SKIP HOP ソフト・シンクバス",
+      "asin": "B077MBL7JK",
+      "title": "Amazon.co.jp: SKIP HOP スキップホップ ベビーバス 赤ちゃんお風呂 ふかふか 沐浴 新生児 洗面台やシンクで使える 乾きやすい メッシュ コンパクト 冬 あったか ソフト・シンクバス 【日本正規品】 1個 (x 1) BCSH235110 : ベビー＆マタニティ"
+    },
+    {
+      "file": "stokke-flexibath.html",
+      "query": "ストッケ フレキシバス",
+      "asin": "B07S1TBBDS",
+      "title": "Amazon.co.jp: Stokke (ストッケ) Official Baby Bath, Main Unit, Flexi Bath, Bathing, Foldable, Collapsible, Baby, Bath, White : Baby"
+    },
+    {
+      "file": "strider-14x-reviews.html",
+      "query": "ストライダー 14x",
+      "asin": "B07K2B7LD1",
+      "title": "Amazon.co.jp: Strider 14x (STRIDER 14x) 14-inch Body Steel Blue Authentic Japan Product : Toys & Games"
+    },
+    {
+      "file": "strider-14x-warranty.html",
+      "query": "ストライダー 14x",
+      "asin": "B07K2B7LD1",
+      "title": "Amazon.co.jp: Strider 14x (STRIDER 14x) 14-inch Body Steel Blue Authentic Japan Product : Toys & Games"
+    },
+    {
+      "file": "strider-14x.html",
+      "query": "ストライダー 14x ペダル",
+      "asin": "B07K2B7LD1",
+      "title": "Amazon.co.jp: Strider 14x (STRIDER 14x) 14-inch Body Steel Blue Authentic Japan Product : Toys & Games"
+    },
+    {
+      "file": "strider-sport-model.html",
+      "query": "ストライダー スポーツモデル",
+      "asin": "B07CXKPGWH",
+      "title": "Amazon.co.jp: Strider Sport Model, 12-inch Body, Yellow, Genuine Japan Product : Toys & Games"
+    },
+    {
+      "file": "sylvanian-red-roof-house.html",
+      "query": "シルバニアファミリー 赤い屋根の大きなお家",
+      "asin": "B0B1P81W6W",
+      "title": "Amazon.co.jp: Epoch Sylvanian Family House, Large House with Red Roof, Har51 : Toys & Games"
+    },
+    {
+      "file": "sylvanian-sylvanian.html",
+      "query": "シルバニアファミリー はじめてのシルバニアファミリー",
+      "asin": "B0B1PCW32Y",
+      "title": "Amazon.co.jp: Sylvanian Families Epoch Sylvanian Families, DH-08 ST Mark Certified, For Ages 3 and Up : Toys & Games"
+    },
+    {
+      "file": "tapo-c210-baby-monitor-review.html",
+      "query": "TP-Link Tapo C210/A",
+      "asin": "B09F9N8GLY",
+      "title": "Amazon.co.jp: TP-Link Tapo C210/A 3 Megapixel Network Wi-Fi Camera, Pet Camera, Full HD, Indoor Camera, Night Photography, 3 Years Manufacturer's Warranty : Computers"
+    },
+    {
+      "file": "tomica-basicroad-reviews.html",
+      "query": "トミカ つながる道路 ベーシックどうろセット",
+      "asin": "B00OGWTBGC",
+      "title": "Amazon.co.jp: トミカ トミカシステム ベーシックどうろセット : おもちゃ"
+    },
+    {
+      "file": "tomica-dx-tower.html",
+      "query": "トミカ でっかく遊ぼう DXトミカタワー",
+      "asin": "B07S5BTXQQ",
+      "title": "トミカ でっかく遊ぼう ! DX トミカタワー【日本おもちゃ ..."
+    },
+    {
+      "file": "wakodo-googoo-kitchen.html",
+      "query": "和光堂 グーグーキッチン ベビーフード",
+      "asin": "B0CKBYFKGS",
+      "title": "Amazon | 和光堂 離乳食 ベビーフード 具たっぷりグーグーキッチン 9か月頃から 全16種×2 計32個アソート 食べ比べセット オリジナルティッシュ付き | ノーブランド品 | ごはんのベビーフード 通販"
+    }
+  ],
+  "errors": [],
+  "skipped": []
+}
