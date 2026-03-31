@@ -40,14 +40,30 @@ ask_claude() {
 
   # 直近10件の文脈
   local ctx=$(jq -r '.[-10:] | map(.role + ": " + .text) | join("\n")' "$SESSION_FILE")
+  local system_prompt=$(cat "$PROMPT_FILE")
 
-  # Claude CLI
+  # Gemini API（CLIログイン不要）
+  local GEMINI_KEY
+  GEMINI_KEY=$(grep '^GEMINI_API_KEY=' "$SCRIPT_DIR/.env" 2>/dev/null | cut -d= -f2-)
+  local GEMINI_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}"
+
+  local prompt="${system_prompt}
+
+会話履歴:
+${ctx}
+
+最新メッセージに返信:"
+
+  local body
+  body=$(jq -n --arg p "$prompt" '{
+    contents: [{parts: [{text: $p}]}],
+    generationConfig: {maxOutputTokens: 512, temperature: 0.7}
+  }')
+
   local reply
-  reply=$(claude -p --model sonnet --system-prompt-file "$PROMPT_FILE" \
-    "会話履歴:
-$ctx
-
-最新メッセージに返信:" 2>/dev/null)
+  reply=$(curl -s -X POST "$GEMINI_URL" \
+    -H "Content-Type: application/json" \
+    -d "$body" 2>/dev/null | jq -r '.candidates[0].content.parts[0].text // empty')
 
   [ -z "$reply" ] && reply="ちょっとエラーでした。もう一度お願いします。"
 
