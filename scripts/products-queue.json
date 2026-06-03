@@ -123,13 +123,15 @@
     "name": "コンビ ジョイトリップ エッグショック GH チャイルドシート",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "skipped",
+    "skipReason": "Combi公式サイトにて生産終了（endcarseat）確認。Amazon ASIN特定不可。"
   },
   {
     "name": "エジソンのお箸 トレーニング箸",
     "category": "baby",
-    "title": "",
-    "status": "pending"
+    "title": "「エジソン箸はダメ」説を2歳息子で試したら半分本当だった｜正しい使い方と普通箸への移行タイミング",
+    "slug": "edison-hashi-training-chopsticks-review",
+    "status": "published"
   },
   {
     "name": "プラレール ベストセレクションセット",
