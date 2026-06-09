@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 出力ディレクトリ
-const outputDir = '/Users/masa/kids-affiliate-site/images/ogp';
+const outputDir = path.join(__dirname, '../images/ogp');
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
