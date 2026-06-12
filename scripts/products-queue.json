@@ -193,13 +193,15 @@
     "name": "レック アンパンマン おでかけベビーカー用クリップ 扇風機",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "skipped",
+    "skipReason": "Amazon.co.jpでのASIN特定不可。複数の検索でも商品ページが見つからず、製品が廃番または別名で販売されている可能性がある。"
   },
   {
     "name": "子供用レインコート キッズフォーレ ランドセル対応",
     "category": "consumable",
-    "title": "",
-    "status": "pending"
+    "title": "キッズフォーレのレインコート、保育園から小学校まで「長く使えるか」を検証した｜ランドセル対応のサイズ選びで失敗しないために",
+    "slug": "kidsforet-raincoat-randoseru-review",
+    "status": "published"
   },
   {
     "name": "ボーネルンド マグフォーマー ベーシックセット 62ピース",
