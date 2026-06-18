@@ -242,13 +242,15 @@
     "name": "トイザらス限定 水遊びパッド スプラッシュパッド",
     "category": "outdoor",
     "title": "",
-    "status": "pending"
+    "status": "skipped",
+    "skipReason": "トイザらス限定商品のためAmazon.co.jpでのASIN特定不可。類似スプラッシュパッドは汎用品が多く、「限定」の要件を満たすASINが存在しない。"
   },
   {
     "name": "シルバニアファミリー はじめてのシルバニアファミリー DH-08",
     "category": "toy",
-    "title": "",
-    "status": "pending"
+    "title": "「3歳から」のシルバニアDH-08を2歳息子に買った正直レポート｜何がよくて何が早すぎたか、全部書く",
+    "slug": "sylvanian-families-dh-08-hajimete-review",
+    "status": "published"
   },
   {
     "name": "くもん はじめてのソフトパズル",
