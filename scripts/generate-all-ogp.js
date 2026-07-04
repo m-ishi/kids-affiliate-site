@@ -10,8 +10,8 @@ const fs = require('fs');
 const path = require('path');
 const { generateOGP } = require('./generate-ogp-image');
 
-const productsDir = '/Users/masa/kids-affiliate-site/products';
-const ogpDir = '/Users/masa/kids-affiliate-site/images/ogp';
+const productsDir = path.join(__dirname, '..', 'products');
+const ogpDir = path.join(__dirname, '..', 'images', 'ogp');
 
 // カテゴリマッピング（日本語→英語）
 const categoryMap = {
