@@ -62,3 +62,14 @@ scripts/archive/
 
 # Tools (local MCP servers)
 tools/
+
+# Telegram runtime state (個人チャット履歴を含む)
+scripts/.telegram-session.json
+scripts/.telegram-offset
+
+# 監査スクリプトの結果ファイル（ランタイム生成物）
+scripts/audit-results.json
+scripts/problem-audit.json
+scripts/fix-results.json
+scripts/affiliate-eligibility.json
+scripts/audit-report.json
