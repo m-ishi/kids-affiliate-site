@@ -6,8 +6,7 @@
     "build": "echo 'Static site - no build needed'"
   },
   "dependencies": {
-    "canvas": "^3.2.1",
-    "mcp-server-amazon": "^0.0.1",
-    "puppeteer": "^24.40.0"
+    "@napi-rs/canvas": "^1.0.2",
+    "puppeteer": "^25.3.0"
   }
 }
