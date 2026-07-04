@@ -32,6 +32,7 @@ kids-affiliate-site/
 ├── scripts/
 │   ├── pipeline-generate.js    # 統合パイプライン（推奨）
 │   ├── auto-generate-article.js # 単一記事生成エンジン
+│   ├── asin-resolver.js        # ASIN検証（Puppeteer実ページ+Gemini同一商品判定）
 │   ├── batch-generate.js       # バッチ処理
 │   ├── fix-amazon-links.js     # ASIN自動修正
 │   ├── generate-ogp-image.js   # OGP画像生成
@@ -63,7 +64,9 @@ node pipeline-generate.js "商品名" "カテゴリー" "記事タイトル"
 node pipeline-generate.js --dry-run "商品名" "カテゴリー"
 ```
 
-フロー: Brave Search → ASIN取得 → Gemini生成 → OGP画像 → Critic/Safety/SEOチェック → ASIN検証 → インデックス更新 → git push
+フロー: ASIN検証（Puppeteer実ページ確認: 404/商品名不一致/在庫なし/アフィ対象外/模倣品/別バリエーションを排除。通らなければ生成中止） → Brave Search商品情報 → Gemini生成（gemini-2.5-flash、文字数・禁止表現ゲート内蔵） → OGP画像 → Critic/Safety/SEOチェック → 問題あればGemini自動修正（最大2回） → 合格のみインデックス更新+git push、不合格は drafts/ に隔離
+
+品質はテンプレートが機械的に保証: CTA2箇所のみ（冒頭+末尾）、内部リンク3本（あわせて読みたい）、公的機関リンク（カテゴリ別）、HTMLエスケープ、schema.orgに根拠なし評価を出さない。ASIN単体検証は `node asin-resolver.js "商品名" [ASIN]` で実行可能。
 
 ### パス B: Claude Code エージェント（高品質記事）
 ```
@@ -78,9 +81,9 @@ node auto-generate-article.js "商品名" "カテゴリー" "記事タイトル"
 
 ### パス D: バッチ処理
 ```bash
-node batch-generate.js --limit 3
+node batch-generate.js --limit 3 [--dry-run]
 ```
-products-queue.json から読み込み。
+products-queue.json の status=pending を pipeline-generate.js（品質ゲート付き）経由で処理。結果を status に反映（published / failed）。
 
 ## カテゴリ
 toy, baby, educational, consumable, outdoor, furniture, safety

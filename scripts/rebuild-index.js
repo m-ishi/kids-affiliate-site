@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const productsDir = '/Users/masa/kids-affiliate-site/products';
+const productsDir = path.join(__dirname, '..', 'products');
 const files = fs.readdirSync(productsDir).filter(f => f.endsWith('.html') && f !== 'index.html');
 
 console.log(`Found ${files.length} product files`);
@@ -61,7 +61,7 @@ function generateCard(p, isProductsPage) {
   const cat = categoryMap[p.category] || 'baby';
   const href = isProductsPage ? p.file : `products/${p.file}`;
   const slug = p.file.replace('.html', '');
-  const ogpPath = path.join('/Users/masa/kids-affiliate-site/images/ogp', `${slug}.png`);
+  const ogpPath = path.join(__dirname, '..', 'images', 'ogp', `${slug}.png`);
   const hasOgp = fs.existsSync(ogpPath);
   const imgPrefix = isProductsPage ? '../' : '';
   const imgHTML = hasOgp
@@ -87,7 +87,7 @@ function generateCard(p, isProductsPage) {
 }
 
 // index.html を更新
-const indexPath = '/Users/masa/kids-affiliate-site/index.html';
+const indexPath = path.join(__dirname, '..', 'index.html');
 let indexContent = fs.readFileSync(indexPath, 'utf8');
 
 // products-grid開始から About Section前までを置換
@@ -108,7 +108,7 @@ if (gridStart > 0 && aboutSection > gridStart) {
 }
 
 // products/index.html を更新
-const prodIndexPath = '/Users/masa/kids-affiliate-site/products/index.html';
+const prodIndexPath = path.join(__dirname, '..', 'products', 'index.html');
 let prodContent = fs.readFileSync(prodIndexPath, 'utf8');
 
 const prodGridStart = prodContent.indexOf('<div class="products-grid">');
