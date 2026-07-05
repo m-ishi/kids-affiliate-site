@@ -135,13 +135,15 @@
     "name": "プラレール ベストセレクションセット",
     "category": "toy",
     "title": "",
-    "status": "pending"
+    "status": "published",
+    "note": "ブランチ救出記事で公開済み"
   },
   {
     "name": "こどもちゃれんじ ぷち 1歳",
     "category": "educational",
     "title": "",
-    "status": "pending"
+    "status": "published",
+    "note": "ブランチ救出記事で公開済み"
   },
   {
     "name": "ピジョン マグマグ コップ トレーニング",

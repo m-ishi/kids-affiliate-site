@@ -247,12 +247,17 @@ async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
   const skipGemini = args.includes('--skip-gemini');
+  // 体験談ベース記事(パスB)には禁止表現の書き換えを適用しない
+  const skipBanned = args.includes('--skip-banned');
   const limitIdx = args.indexOf('--limit');
   const limit = limitIdx !== -1 ? parseInt(args[limitIdx + 1], 10) : Infinity;
+  const onlyIdx = args.indexOf('--only');
+  const only = onlyIdx !== -1 ? new Set(args[onlyIdx + 1].split(',')) : null;
 
   const allMeta = loadAllMeta();
   const files = fs.readdirSync(PRODUCTS_DIR)
     .filter(f => f.endsWith('.html') && f !== 'index.html')
+    .filter(f => !only || only.has(f))
     .slice(0, limit);
 
   const report = [];
@@ -308,7 +313,7 @@ async function main() {
     stats.schemaFixed = schemaResult.changed;
 
     // 5. 禁止表現（Gemini）
-    if (!skipGemini) {
+    if (!skipGemini && !skipBanned) {
       html = await fixBannedExpressions(html, stats);
       if (stats.bannedFixed) await new Promise(r => setTimeout(r, 1000));
     }
