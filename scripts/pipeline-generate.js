@@ -207,8 +207,8 @@ function runSEOCheck(htmlContent, slug) {
     issues.push({ check: 'slug_invalid', severity: 'high', detail: `スラッグ「${slug}」が不適切` });
   }
 
-  // 内部リンク（ナビ以外の記事間リンク）
-  const internalLinks = (htmlContent.match(/href="[a-z0-9][a-z0-9-]*\.html"/g) || [])
+  // 内部リンク（ナビ以外の記事間リンク。拡張子なしURLにも対応）
+  const internalLinks = (htmlContent.match(/href="[a-z0-9][a-z0-9-]*(?:\.html)?"/g) || [])
     .filter(l => !l.includes('index.html'));
   if (internalLinks.length < 3) {
     issues.push({ check: 'internal_links_few', severity: 'high', detail: `内部リンク${internalLinks.length}本（基準3本以上）` });
@@ -450,6 +450,10 @@ async function runPipeline(productName, category, customTitle, providedAsin, dry
       execSync(`git commit -m "feat: ${productName}のレビュー記事を追加（パイプライン生成）"`, { cwd: ROOT_DIR, stdio: 'inherit' });
       execSync('git push', { cwd: ROOT_DIR, stdio: 'inherit' });
       console.log('✅ デプロイ完了');
+      // IndexNowで新記事を即時通知（Bing→ChatGPT検索の入口）
+      try {
+        execSync(`node "${path.join(__dirname, 'indexnow-submit.js')}" ${slug}`, { stdio: 'inherit' });
+      } catch { console.log('⚠️ IndexNow送信失敗（致命的ではない）'); }
     } catch (error) {
       console.log('⚠️ Gitプッシュをスキップ');
     }

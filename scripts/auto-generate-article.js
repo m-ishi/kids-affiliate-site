@@ -43,7 +43,7 @@ if (!BRAVE_API_KEY || !GEMINI_API_KEY) {
 }
 
 const AMAZON_TAG = 'kidsgoodslab-22';
-const { generateOGP } = require('./generate-ogp-image');
+const { generateOGP, fetchRakutenImage } = require('./generate-ogp-image');
 const { getSectionPrompt } = require('./pattern-sections');
 const { resolveVerifiedASIN } = require('./asin-resolver');
 
@@ -278,9 +278,21 @@ ${sectionPrompt}
 <h2>読者の心を掴む具体的な見出し</h2>
 <p>本文...</p>
 </content>
+<faq>
+<q>読者が検索しそうな質問（例: ○○は何歳から使える？）</q><a>簡潔で具体的な回答（2〜3文）</a>
+<q>2つ目の質問</q><a>回答</a>
+<q>3つ目の質問</q><a>回答</a>
+</faq>
+
+【FAQのルール】
+- 質問は実際に検索されそうな自然な疑問文（何歳から・いつまで・洗える？・違いは？等）
+- 回答は結論から書く。あいまいな回答は禁止
+- 3〜4問
 
 【厳守事項】
 - 必ず5000文字以上書く
+- ★最初のセクションの冒頭に「結論サマリー」を置く（AI検索・流し読み対策で最重要）:
+  この商品が「誰に向くか・向かないか」「価格帯」「判断のポイント」を2〜3文で言い切る
 ${patternKey ? `- パターン「${patternKey}」の視点を全体に反映\n` : ''}- 具体的なエピソード・数値を必ず含める
 - 断定的な表現を使う（「〜かもしれません」より「〜です」）※ただし安全性の断言は禁止
 - 本文にURLやリンク（<a>タグ）を書かない（リンクはテンプレート側で挿入される）
@@ -293,15 +305,24 @@ ${extraInstruction}`;
   const titleMatch = text.match(/<title>([^<]+)<\/title>/);
   const excerptMatch = text.match(/<excerpt>([^<]+)<\/excerpt>/);
   const contentMatch = text.match(/<content>([\s\S]*?)<\/content>/);
+  const faqMatch = text.match(/<faq>([\s\S]*?)<\/faq>/);
 
   const title = titleMatch ? titleMatch[1].trim() : `${productName}を徹底解説`;
   const excerpt = excerptMatch ? excerptMatch[1].trim() : `${productName}の選び方と注意点をまとめました`;
   let content = contentMatch ? contentMatch[1].trim() : text;
 
-  const textContent = content.replace(/<[^>]+>/g, '');
-  console.log(`   📊 生成文字数: ${textContent.length}文字`);
+  // FAQ抽出（<q>質問</q><a>回答</a>のペア）
+  const faq = faqMatch
+    ? [...faqMatch[1].matchAll(/<q>([\s\S]*?)<\/q>\s*<a>([\s\S]*?)<\/a>/g)]
+        .map(m => ({ q: m[1].trim(), a: m[2].trim() }))
+        .filter(x => x.q && x.a)
+        .slice(0, 5)
+    : [];
 
-  return { title, excerpt, content, chars: textContent.length };
+  const textContent = content.replace(/<[^>]+>/g, '');
+  console.log(`   📊 生成文字数: ${textContent.length}文字 / FAQ: ${faq.length}問`);
+
+  return { title, excerpt, content, faq, chars: textContent.length };
 }
 
 // 禁止表現をスキャン → 検出結果 [{label, count}]
@@ -481,7 +502,7 @@ function pickRelatedArticles(category, excludeSlug, count = 3) {
 function buildRelatedSection(related) {
   if (related.length === 0) return '';
   const items = related.map(a =>
-    `            <li><a href="${a.slug}.html">${a.title}</a></li>`
+    `            <li><a href="${a.slug}">${a.title}</a></li>`
   ).join('\n');
   return `
         <div class="related-articles" style="background:#f8f9fa;padding:24px;border-radius:12px;margin:40px 0 0;">
@@ -507,8 +528,32 @@ ${items}
         </div>`;
 }
 
+// FAQセクションのHTML + FAQPage schema
+function buildFaqSection(faq) {
+  if (!faq || faq.length === 0) return { html: '', schema: null };
+  const items = faq.map(x => `
+          <div style="margin-bottom:16px;">
+            <p style="font-weight:700;margin-bottom:4px;">Q. ${escapeHtml(x.q)}</p>
+            <p style="margin:0;">A. ${escapeHtml(x.a)}</p>
+          </div>`).join('');
+  const html = `
+        <div class="faq-section" style="background:#f8f9fa;padding:24px;border-radius:12px;margin:32px 0;">
+          <h2 style="margin-top:0;">よくある質問</h2>${items}
+        </div>`;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(x => ({
+      '@type': 'Question',
+      name: x.q,
+      acceptedAnswer: { '@type': 'Answer', text: x.a }
+    }))
+  };
+  return { html, schema };
+}
+
 // HTMLファイルを生成
-function generateHTML(productName, category, article, asin, customTitle = null, slugHint = null) {
+function generateHTML(productName, category, article, asin, customTitle = null, slugHint = null, productImageUrl = null) {
   const slug = generateSlug(productName, slugHint);
   const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
   const isoDate = new Date().toISOString().split('T')[0];
@@ -524,6 +569,10 @@ function generateHTML(productName, category, article, asin, customTitle = null, 
 
   const relatedSection = buildRelatedSection(pickRelatedArticles(category, slug));
   const authoritySection = buildAuthoritySection(category);
+  const { html: faqSection, schema: faqSchema } = buildFaqSection(article.faq);
+
+  // 商品画像: 楽天API画像があれば実物写真、なければOGP画像
+  const cardImage = productImageUrl || `../images/ogp/${slug}.png`;
 
   // schema.org: 根拠のない評価（reviewRating）は出さない
   const productSchema = {
@@ -564,8 +613,8 @@ function generateHTML(productName, category, article, asin, customTitle = null, 
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://kidsgoodslab.com/images/ogp/${slug}.png">
-  <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}.html">
-  <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}.html">
+  <link rel="canonical" href="https://kidsgoodslab.com/products/${slug}">
+  <meta property="og:url" content="https://kidsgoodslab.com/products/${slug}">
   <meta property="og:site_name" content="キッズグッズラボ">
   <meta name="twitter:title" content="${eTitle}">
   <meta name="twitter:description" content="${eExcerpt}">
@@ -574,7 +623,10 @@ function generateHTML(productName, category, article, asin, customTitle = null, 
   </script>
   <script type="application/ld+json">
   ${JSON.stringify(articleSchema, null, 2)}
-  </script>
+  </script>${faqSchema ? `
+  <script type="application/ld+json">
+  ${JSON.stringify(faqSchema, null, 2)}
+  </script>` : ''}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -611,7 +663,7 @@ function generateHTML(productName, category, article, asin, customTitle = null, 
       <div class="article-body">
         <div class="product-info-card" style="background:#f8f9fa;padding:24px;border-radius:12px;margin-bottom:32px;text-align:center;">
           <a href="${amazonUrl}" target="_blank" rel="noopener sponsored">
-            <img src="../images/ogp/${slug}.png" alt="${eProduct}" style="max-width:280px;height:auto;display:block;margin:0 auto 16px;">
+            <img src="${cardImage}" alt="${eProduct}" style="max-width:280px;height:auto;display:block;margin:0 auto 16px;" loading="lazy">
           </a>
           <p style="font-weight:600;margin-bottom:8px;">${eProduct}</p>
           <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored">Amazonで価格を見る</a>
@@ -620,7 +672,7 @@ function generateHTML(productName, category, article, asin, customTitle = null, 
         <!-- article-content-start -->
         ${article.content}
         <!-- article-content-end -->
-${authoritySection}
+${faqSection}${authoritySection}
         <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:32px;border-radius:12px;text-align:center;margin:40px 0;">
           <p style="color:#fff;font-size:1.1rem;margin-bottom:16px;font-weight:600;">この商品をAmazonでチェック</p>
           <a href="${amazonUrl}" class="affiliate-btn" target="_blank" rel="noopener sponsored" style="background:#fff;color:#667eea;font-weight:700;padding:16px 32px;font-size:1.1rem;">
@@ -712,16 +764,16 @@ async function main() {
       }
     }
 
-    // 4. 禁止表現チェック → 自動修正（1回）→ 残れば失敗
+    // 4. 禁止表現チェック → 自動修正（最大2回）→ 残れば失敗
     let violations = scanBannedExpressions(article.content);
-    if (violations.length > 0) {
+    for (let attempt = 1; violations.length > 0 && attempt <= 2; attempt++) {
       article.content = await reviseBannedExpressions(article.content, violations);
       violations = scanBannedExpressions(article.content);
-      if (violations.length > 0) {
-        console.error(`❌ 禁止表現が修正後も残っています: ${violations.map(v => v.label).join(', ')}`);
-        process.exit(1);
-      }
-      console.log('   ✅ 禁止表現を修正しました');
+      if (violations.length === 0) console.log(`   ✅ 禁止表現を修正しました（${attempt}回目）`);
+    }
+    if (violations.length > 0) {
+      console.error(`❌ 禁止表現が修正後も残っています: ${violations.map(v => v.label).join(', ')}`);
+      process.exit(1);
     }
 
     // 5. スラッグを確定（辞書変換 → 英字抽出 → Geminiローマ字化の順）
@@ -731,13 +783,20 @@ async function main() {
     }
     console.log(`   🔗 スラッグ: ${finalSlug}`);
 
-    // 6. HTMLファイルを生成
-    const { html, slug, articleTitle } = generateHTML(productName, category, article, asin, customTitle, finalSlug);
+    // 6. 楽天APIで商品画像を取得（RAKUTEN_APP_IDが有効な場合のみ。なければnull）
+    let rakutenImageUrl = null;
+    try {
+      rakutenImageUrl = await fetchRakutenImage(productName);
+      if (rakutenImageUrl) console.log(`🖼️ 楽天商品画像: ${rakutenImageUrl}`);
+    } catch { /* 画像なしで続行 */ }
 
-    // 6. OGP画像を生成
+    // 7. HTMLファイルを生成
+    const { html, slug, articleTitle } = generateHTML(productName, category, article, asin, customTitle, finalSlug, rakutenImageUrl);
+
+    // 8. OGP画像を生成（楽天画像があれば商品写真入り）
     console.log(`🎨 OGP画像を生成中...`);
     try {
-      await generateOGP(productName, articleTitle, category, slug);
+      await generateOGP(productName, articleTitle, category, slug, rakutenImageUrl);
       console.log(`✅ OGP画像を生成: images/ogp/${slug}.png`);
     } catch (ogpError) {
       console.error(`⚠️ OGP画像生成失敗（記事は作成します）: ${ogpError.message}`);

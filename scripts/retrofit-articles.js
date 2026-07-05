@@ -125,7 +125,7 @@ function pickRelated(allMeta, category, excludeSlug, count = 3) {
 }
 
 function buildRelatedSection(related) {
-  const items = related.map(a => `            <li><a href="${a.slug}.html">${a.title}</a></li>`).join('\n');
+  const items = related.map(a => `            <li><a href="${a.slug}">${a.title}</a></li>`).join('\n');
   return `
         <div class="related-articles" style="background:#f8f9fa;padding:24px;border-radius:12px;margin:40px 0 0;">
           <p style="font-weight:700;margin-bottom:12px;">📖 あわせて読みたい</p>
