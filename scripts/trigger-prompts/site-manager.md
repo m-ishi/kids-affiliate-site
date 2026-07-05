@@ -83,5 +83,13 @@ This step MUST execute even if previous steps had errors.
 ## RULES
 - 既存記事の修正はOK（リンク切れ修正、meta修正、価格更新、リコール注記追加）
 - 新規記事の作成はNG（kids-article-generatorの仕事）
+- **削除済み記事の復活は絶対NG**: products/ に存在しない記事は「意図的に削除された」もの
+  （在庫なし・アフィリエイト対象外・流通終了・品質不合格のいずれか）。
+  「欠落している」と判断して過去のブランチやgit履歴から記事を復元してはならない。
+  drafts/ にある記事も公開待ちではなく「不合格で隔離中」なので products/ に移動しない。
+- **ASINを追加・変更する場合は必ず `node scripts/asin-resolver.js "商品名" [ASIN]` で検証**
+  （exit 0 のASINのみ使用可。在庫なし・対象外・模倣品・別モデルは自動で弾かれる）
+- **git push は main に直接行う**。ブランチを作って放置しない
+  （mainにpushできない環境の場合は、作業を放棄してTelegramで報告する）
 - Recall/safety = HIGHEST PRIORITY
 - ALWAYS send Telegram at start AND end. NO EXCEPTIONS.
