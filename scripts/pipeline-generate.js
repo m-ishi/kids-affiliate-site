@@ -327,7 +327,7 @@ function quarantine(slug) {
 // メインパイプライン
 // =========================================
 
-async function runPipeline(productName, category, customTitle, providedAsin, dryRun) {
+async function runPipeline(productName, category, customTitle, providedAsin, dryRun, patternKey) {
   console.log(`\n${'='.repeat(60)}`);
   console.log(`📦 パイプライン開始: ${productName}`);
   console.log(`${'='.repeat(60)}\n`);
@@ -339,8 +339,9 @@ async function runPipeline(productName, category, customTitle, providedAsin, dry
   try {
     const titleArg = customTitle ? `"${customTitle.replace(/"/g, '\\"')}"` : '""';
     const asinArg = providedAsin ? `"${providedAsin}"` : '""';
+    const patternArg = patternKey ? `"${patternKey}"` : '""';
     execSync(
-      `node "${path.join(__dirname, 'auto-generate-article.js')}" "${productName}" "${category}" ${titleArg} ${asinArg}`,
+      `node "${path.join(__dirname, 'auto-generate-article.js')}" "${productName}" "${category}" ${titleArg} ${asinArg} ${patternArg}`,
       { stdio: 'inherit', cwd: __dirname }
     );
   } catch (error) {
@@ -488,8 +489,8 @@ async function main() {
     process.exit(1);
   }
 
-  const [productName, category, customTitle, providedAsin] = cleanArgs;
-  const report = await runPipeline(productName, category, customTitle || null, providedAsin || null, dryRun);
+  const [productName, category, customTitle, providedAsin, patternKey] = cleanArgs;
+  const report = await runPipeline(productName, category, customTitle || null, providedAsin || null, dryRun, patternKey || null);
 
   if (!report || report.success === false || report.quarantined) {
     process.exit(1);

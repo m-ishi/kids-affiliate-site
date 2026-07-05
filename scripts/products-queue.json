@@ -1,5 +1,213 @@
 [
   {
+    "name": "BOIFUN ベビーモニター",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "BOIFUNはどこの国？ベビーモニターのセキュリティと評判を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Sense-U ベビーセンサー",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "Sense-Uは怪しい？ベビーセンサーの会社と医療機器登録を調査した",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Dreamegg ホワイトノイズマシン",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "Dreameggはどこの国？ホワイトノイズマシンの会社と評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Momcozy 搾乳機",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "Momcozyはどこの国？搾乳機の安全性と評判を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "GROWNSY 哺乳瓶消毒器",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "GROWNSYはどこの国？哺乳瓶消毒器の安全性と評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "HelloBaby ベビーモニター",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "HelloBabyはどこの国？ベビーモニターの評判と耐久性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Babysense ベビーセンサー",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "Babysenseはどこの国？病産院導入実績と信頼性を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "MOMMED ベビースケール",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "MOMMEDはどこの国？ベビースケールの精度と評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "iFam ベビーサークル",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "iFamはどこの国？ベビーサークルの正規品と安全性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "DUOGIO ベビーゲート",
+    "category": "safety",
+    "pattern": "brand-trust",
+    "title": "DUOGIOのベビーゲートは大丈夫？強度と安全性を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "ieGeek ベビーモニター",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "ieGeekはどこの国？ベビーモニター用途の安全性を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "BabyGoo ベビーモニター",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "BabyGooはどこの国？ベビーモニターの評判と安全性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Caraz ベビーサークル マット",
+    "category": "baby",
+    "pattern": "brand-trust",
+    "title": "Carazはどこの国？ベビーサークルの安全基準と評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "XJD キックバイク",
+    "category": "outdoor",
+    "pattern": "brand-trust",
+    "title": "XJDはどこの国？キックバイクの安全性と評判を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "OUTDOORMASTER 子供用ヘルメット",
+    "category": "outdoor",
+    "pattern": "brand-trust",
+    "title": "OUTDOORMASTERはどこの国？子供ヘルメットの安全規格を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "MAXEVIS キッズカメラ",
+    "category": "toy",
+    "pattern": "brand-trust",
+    "title": "MAXEVISはどこの国？キッズカメラの安全性と評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "VisionKids ハピカム キッズカメラ",
+    "category": "toy",
+    "pattern": "brand-trust",
+    "title": "VisionKidsはどこの国？ハピカムの会社と評判を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "myFirst Fone キッズスマートウォッチ",
+    "category": "toy",
+    "pattern": "brand-trust",
+    "title": "myFirst Foneはどこの国？子供用GPSウォッチの信頼性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "DABADA トランポリン",
+    "category": "outdoor",
+    "pattern": "brand-trust",
+    "title": "DABADAはどこの国？トランポリンの耐久性と安全性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "BTM 室内鉄棒",
+    "category": "outdoor",
+    "pattern": "brand-trust",
+    "title": "BTMはどこの国？室内鉄棒の安全性と評判を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "SONGMICS トランポリン",
+    "category": "outdoor",
+    "pattern": "brand-trust",
+    "title": "SONGMICSはどこの国？子供用トランポリンの安全性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Apitor プログラミングロボット",
+    "category": "educational",
+    "pattern": "brand-trust",
+    "title": "Apitorはどこの国？プログラミングロボットの評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Tiny Land キッズテント",
+    "category": "toy",
+    "pattern": "brand-trust",
+    "title": "Tiny Landはどこの国？キッズテントの安全性と評判を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "Jojoin 木製知育玩具",
+    "category": "educational",
+    "pattern": "brand-trust",
+    "title": "Jojoinはどこの国？木製知育玩具の安全性と評判を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "PicassoTiles マグネットブロック",
+    "category": "educational",
+    "pattern": "brand-trust",
+    "title": "PicassoTilesはどこの国？マグネットタイルの安全性を調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
+    "name": "マグビルド マグネットブロック",
+    "category": "educational",
+    "pattern": "brand-trust",
+    "title": "マグビルドに偽物？見分け方と正規品の安全性を徹底調査",
+    "status": "pending",
+    "strategy": "tottio"
+  },
+  {
     "name": "こどもちゃれんじ vs トイサブ 比較",
     "category": "educational",
     "title": "こどもちゃれんじ vs トイサブ、両方やったパパが正直に比較する｜コスパ・おもちゃの質・解約のしやすさ",

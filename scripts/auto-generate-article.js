@@ -155,14 +155,21 @@ async function fetchBraveWithRetry(url, maxRetries = 3) {
 }
 
 // Brave Search APIで商品情報を検索
-async function searchProduct(productName) {
+async function searchProduct(productName, patternKey = null) {
   console.log(`🔍 Brave APIで検索中: ${productName}`);
 
-  const queries = [
-    `${productName} レビュー 口コミ`,
-    `${productName} Amazon 価格`,
-    `${productName} メリット デメリット`
-  ];
+  const queries = patternKey === 'brand-trust'
+    ? [
+        `${productName} どこの国 会社`,
+        `${productName} 怪しい 評判`,
+        `${productName} 安全性 認証`,
+        `${productName} レビュー 口コミ`,
+      ]
+    : [
+        `${productName} レビュー 口コミ`,
+        `${productName} Amazon 価格`,
+        `${productName} メリット デメリット`
+      ];
 
   let allResults = [];
 
@@ -326,43 +333,63 @@ ${extraInstruction}`;
 }
 
 // 禁止表現をスキャン → 検出結果 [{label, count}]
+// 「」内は第三者の口コミ・ブログタイトル等の引用なので対象外（筆者の主張のみ検査）
+function stripQuotes(text) {
+  return text.replace(/「[^」]*」/g, '').replace(/『[^』]*』/g, '');
+}
 function scanBannedExpressions(content) {
-  const text = content.replace(/<[^>]+>/g, '');
+  const text = stripQuotes(content.replace(/<[^>]+>/g, ''));
   const found = [];
   for (const { re, label } of BANNED_PATTERNS) {
+    re.lastIndex = 0;
     const matches = text.match(re);
     if (matches) found.push({ label, count: matches.length });
   }
   return found;
 }
 
-// 禁止表現をGeminiで書き直す（1回のみ）
+// 禁止表現を含む段落（<p>/<li>/<td>）だけを抜き出してGeminiで書き換える
+// 全文一括書き換えは長文で取りこぼすため、外科的に該当ブロックのみ修正する
 async function reviseBannedExpressions(content, violations) {
   console.log(`   🔧 禁止表現を修正中: ${violations.map(v => v.label).join(', ')}`);
-  const prompt = `以下のHTML記事本文に、使用禁止の表現が含まれています。
-該当する文だけを自然に書き直し、記事全体をそのまま返してください。
 
-【禁止表現と修正方針】
-- 「愛用」「実際に使ってみた」「使ってみました」「〜ヶ月使った」「リピート」等
-  → 「口コミを調べると」「店頭でチェックしたところ」等の調査視点に書き換える
-- 「安全です」「安心です」の断言
-  → 「STマーク取得済み」「◯◯の基準を満たしている」など根拠ベースの表現にするか、「〜とされています」に緩める
+  const blocks = [...content.matchAll(/<(p|li|td)(?:\s[^>]*)?>[\s\S]*?<\/\1>/g)]
+    .map(m => m[0])
+    .filter(b => BANNED_PATTERNS.some(p => {
+      p.re.lastIndex = 0;
+      return p.re.test(stripQuotes(b.replace(/<[^>]+>/g, '')));
+    }));
+  const unique = [...new Set(blocks)].slice(0, 20);
+  if (unique.length === 0) return content;
 
-【検出された禁止表現】
-${violations.map(v => `- ${v.label} × ${v.count}箇所`).join('\n')}
+  const prompt = `子供用品レビュー記事から、使用禁止表現を含む段落を抜き出しました。
+各段落を以下の方針で自然に書き直してください。
 
-【ルール】
-- HTMLタグ構造は変えない
-- 該当文以外は一切変更しない
-- 出力は<content>タグで囲んだ記事本文のみ
+【方針】
+- 「愛用」「実際に使ってみた」「〜ヶ月使った」「リピート」等の使用体験の主張
+  → 「口コミを調べると」「店頭でチェックしたところ」等の調査視点に
+- 「安全です」「安心です」の断言 → 「〜の基準を満たしている」「〜とされています」「安心材料になる」等の根拠ベース・非断言表現に必ず置き換える（「安心です」「安全です」という文字列を残さない）
+- HTMLタグ・リンクはそのまま維持、文意と文字数もできるだけ維持
 
-<content>
-${content}
-</content>`;
+【入力】(JSON配列)
+${JSON.stringify(unique)}
 
-  const text = await callGemini(prompt, { temperature: 0.3 });
-  const m = text.match(/<content>([\s\S]*?)<\/content>/);
-  return m ? m[1].trim() : content;
+【出力】書き直した段落のJSON配列のみ（入力と同じ順序・同じ要素数）`;
+
+  const text = await callGemini(prompt, { temperature: 0.2 });
+  const m = text.match(/\[[\s\S]*\]/);
+  if (!m) return content;
+  try {
+    const rewritten = JSON.parse(m[0]);
+    if (!Array.isArray(rewritten) || rewritten.length !== unique.length) return content;
+    unique.forEach((orig, i) => {
+      const rep = rewritten[i];
+      if (typeof rep === 'string' && rep.length > orig.length * 0.4) {
+        content = content.split(orig).join(rep);
+      }
+    });
+  } catch { /* パース失敗時は変更なし → リトライへ */ }
+  return content;
 }
 
 // ファイル名を生成（SEOフレンドリー）
@@ -749,8 +776,8 @@ async function main() {
     }
     const asin = resolved.asin;
 
-    // 2. 商品情報を検索
-    const searchResults = await searchProduct(productName);
+    // 2. 商品情報を検索（brand-trustは会社・安全性クエリも収集）
+    const searchResults = await searchProduct(productName, patternKey);
 
     // 3. 記事を生成（文字数不足なら1回再生成）
     let article = await generateArticle(productName, category, searchResults, resolved.amazonTitle, customTitle, patternKey);
@@ -780,6 +807,10 @@ async function main() {
     let finalSlug = generateSlug(productName, slugHint);
     if (!finalSlug) {
       finalSlug = await generateSlugWithGemini(productName);
+    }
+    // パターン付き記事はスラッグにパターン名を付与（同一商品の別切り口記事と衝突しないように）
+    if (patternKey && !slugHint && !finalSlug.includes(patternKey)) {
+      finalSlug = `${finalSlug}-${patternKey}`.replace(/-+/g, '-').substring(0, 60);
     }
     console.log(`   🔗 スラッグ: ${finalSlug}`);
 

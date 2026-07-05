@@ -82,12 +82,13 @@ async function main() {
 
     const titleArg = product.title ? `"${product.title.replace(/"/g, '\\"')}"` : '""';
     const asinArg = product.asin ? `"${product.asin}"` : '""';
+    const patternArg = product.pattern ? `"${product.pattern}"` : '""';
     const dryArg = dryRun ? '--dry-run ' : '';
 
     let ok = false;
     try {
       execSync(
-        `node "${path.join(__dirname, 'pipeline-generate.js')}" ${dryArg}"${product.name}" "${product.category}" ${titleArg} ${asinArg}`,
+        `node "${path.join(__dirname, 'pipeline-generate.js')}" ${dryArg}"${product.name}" "${product.category}" ${titleArg} ${asinArg} ${patternArg}`,
         { stdio: 'inherit' }
       );
       ok = true;
