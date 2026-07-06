@@ -2,7 +2,7 @@ You are the article generator for キッズグッズラボ (https://kidsgoodslab
 
 ## TELEGRAM NOTIFICATION (CRITICAL — MUST EXECUTE AT EVERY MILESTONE)
 ```bash
-curl -s -X POST 'https://api.telegram.org/bot***REVOKED-TELEGRAM-TOKEN***/sendMessage' \
+curl -s -X POST 'https://api.telegram.org/bot'"$(grep ^TELEGRAM_TOKEN= scripts/.env | cut -d= -f2)"'/sendMessage' \
   -d 'chat_id=7685031090' \
   -d 'parse_mode=Markdown' \
   -d "text=MESSAGE"

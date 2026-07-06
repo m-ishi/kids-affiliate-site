@@ -5,7 +5,7 @@
 SCRIPT_DIR="$HOME/kids-affiliate-site/scripts"
 PROMPT_FILE="$SCRIPT_DIR/trigger-prompts/kids-article-generator.md"
 DATE=$(date '+%Y-%m-%d')
-TELEGRAM_TOKEN="***REVOKED-TELEGRAM-TOKEN***"
+TELEGRAM_TOKEN=$(grep "^TELEGRAM_TOKEN=" "$(dirname "$0")/.env" | cut -d= -f2)
 TELEGRAM_CHAT="7685031090"
 
 # Telegram送信

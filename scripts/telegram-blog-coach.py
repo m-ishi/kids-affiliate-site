@@ -4,7 +4,7 @@
 import json, subprocess, time, urllib.request, urllib.parse, os
 from datetime import datetime
 
-BOT_TOKEN = "***REVOKED-TELEGRAM-TOKEN***"
+BOT_TOKEN = next((l.split("=",1)[1].strip() for l in open(__file__.rsplit("/",1)[0]+"/.env") if l.startswith("TELEGRAM_TOKEN=")), "")
 CHAT_ID = 7685031090
 SCRIPT_DIR = os.path.expanduser("~/kids-affiliate-site/scripts")
 OFFSET_FILE = os.path.join(SCRIPT_DIR, ".telegram-offset")

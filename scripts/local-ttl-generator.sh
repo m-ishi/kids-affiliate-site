@@ -4,7 +4,7 @@
 
 PROMPT_FILE="$HOME/kids-affiliate-site/scripts/trigger-prompts/ttl-article-generator.md"
 DATE=$(date '+%Y-%m-%d')
-TELEGRAM_TOKEN="***REVOKED-TELEGRAM-TOKEN***"
+TELEGRAM_TOKEN=$(grep "^TELEGRAM_TOKEN=" "$(dirname "$0")/.env" | cut -d= -f2)
 TELEGRAM_CHAT="7685031090"
 
 send_telegram() {

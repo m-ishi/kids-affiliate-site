@@ -1,7 +1,7 @@
 #!/bin/bash
 # Telegram → Claude Code ブリッジ（ブログコーチ）
 
-BOT_TOKEN="***REVOKED-TELEGRAM-TOKEN***"
+BOT_TOKEN=$(grep "^TELEGRAM_TOKEN=" "$(dirname "${BASH_SOURCE[0]}")/.env" | cut -d= -f2)
 CHAT_ID="7685031090"
 SCRIPT_DIR="$HOME/kids-affiliate-site/scripts"
 OFFSET_FILE="$SCRIPT_DIR/.telegram-offset"

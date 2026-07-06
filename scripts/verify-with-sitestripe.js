@@ -21,7 +21,7 @@ const PRODUCTS_DIR = path.join(__dirname, '..', 'products');
 const ROOT_DIR = path.join(__dirname, '..');
 const TAG = 'kidsgoodslab-22';
 const RAKUTEN = '525ce562.e179174b.525ce563.a29a3c52';
-const TELEGRAM_TOKEN = '***REVOKED-TELEGRAM-TOKEN***';
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || '';
 const TELEGRAM_CHAT = '7685031090';
 
 async function sendTelegram(msg) {

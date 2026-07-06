@@ -4,7 +4,6 @@
     "category": "baby",
     "pattern": "brand-trust",
     "title": "BOIFUNはどこの国？ベビーモニターのセキュリティと評判を徹底調査",
-    "slug": "boifun-baby-monitor-review",
     "status": "published",
     "strategy": "tottio"
   },
@@ -332,13 +331,13 @@
     "name": "コンビ ジョイトリップ エッグショック GH チャイルドシート",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "エジソンのお箸 トレーニング箸",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "プラレール ベストセレクションセット",
@@ -358,96 +357,96 @@
     "name": "ピジョン マグマグ コップ トレーニング",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "アイデス D-Bike ミニ プラス",
     "category": "toy",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "コンビ ネムリラ AUTO SWING BEDi おやすみドーム",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "ピープル お米のおもちゃシリーズ 純国産",
     "category": "toy",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "西松屋 SmartAngel 抗菌プレイマット",
     "category": "furniture",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "ベビービョルン ベビーディナーセット",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "レック アンパンマン おでかけベビーカー用クリップ 扇風機",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "子供用レインコート キッズフォーレ ランドセル対応",
     "category": "consumable",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "ボーネルンド マグフォーマー ベーシックセット 62ピース",
     "category": "educational",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "サーモス まほうびんのベビーストローマグ FJL-350",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "コールマン クイックアップIGシェード+ キャンプ 日よけ",
     "category": "outdoor",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "ジョイパレット アンパンマン よくばりビジーカー",
     "category": "toy",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "ピジョン 電子レンジスチーム 消毒ケース",
     "category": "baby",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "トイザらス限定 水遊びパッド スプラッシュパッド",
     "category": "outdoor",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "シルバニアファミリー はじめてのシルバニアファミリー DH-08",
     "category": "toy",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   },
   {
     "name": "くもん はじめてのソフトパズル",
     "category": "educational",
     "title": "",
-    "status": "pending"
+    "status": "hold"
   }
 ]

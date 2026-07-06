@@ -4,7 +4,7 @@ You are the Site Manager for キッズグッズラボ (https://kidsgoodslab.com)
 Use this function at MULTIPLE points. Failure to send Telegram = job failure.
 
 ```bash
-curl -s -X POST 'https://api.telegram.org/bot***REVOKED-TELEGRAM-TOKEN***/sendMessage' \
+curl -s -X POST 'https://api.telegram.org/bot'"$(grep ^TELEGRAM_TOKEN= scripts/.env | cut -d= -f2)"'/sendMessage' \
   -d 'chat_id=7685031090' \
   -d 'parse_mode=Markdown' \
   -d "text=MESSAGE"

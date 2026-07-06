@@ -21,6 +21,29 @@ const path = require('path');
 const QUEUE_FILE = path.join(__dirname, 'products-queue.json');
 const DONE_FILE = path.join(__dirname, 'products-done.json');
 
+// .env読み込み（Telegram通知用）
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
+    const m = line.match(/^([^#=]+)=(.*)$/);
+    if (m && !process.env[m[1].trim()]) process.env[m[1].trim()] = m[2].trim();
+  }
+}
+
+// Telegram通知（失敗しても処理は止めない）
+async function notifyTelegram(text) {
+  const token = process.env.TELEGRAM_TOKEN;
+  const chat = process.env.TELEGRAM_CHAT;
+  if (!token || !chat) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chat, text }),
+    });
+  } catch { /* 通知失敗は無視 */ }
+}
+
 function loadDoneList() {
   if (fs.existsSync(DONE_FILE)) {
     return JSON.parse(fs.readFileSync(DONE_FILE, 'utf8'));
@@ -120,6 +143,15 @@ async function main() {
   if (summary.failed.length > 0) {
     console.log('失敗（status=failed、要確認）:');
     summary.failed.forEach(n => console.log(`  - ${n}`));
+  }
+
+  if (!dryRun) {
+    const lines = [`📝 記事自動生成: 成功${summary.published.length} / 失敗${summary.failed.length}`];
+    summary.published.forEach(n => lines.push(`✅ ${n}`));
+    summary.failed.forEach(n => lines.push(`❌ ${n}（ASIN検証落ち or 品質ゲート不合格）`));
+    const remaining = queue.filter(p => (!p.status || p.status === 'pending')).length;
+    lines.push(`📋 キュー残り: ${remaining}件`);
+    await notifyTelegram(lines.join('\n'));
   }
 }
 

@@ -7,7 +7,7 @@ LOG_DIR="$HOME/kids-affiliate-site/logs/manager"
 PROMPT_FILE="$SCRIPT_DIR/.site-manager-prompt.txt"
 DATE=$(date '+%Y-%m-%d')
 LOG_FILE="$LOG_DIR/$DATE.md"
-TELEGRAM_TOKEN="***REVOKED-TELEGRAM-TOKEN***"
+TELEGRAM_TOKEN=$(grep "^TELEGRAM_TOKEN=" "$(dirname "$0")/.env" | cut -d= -f2)
 TELEGRAM_CHAT="7685031090"
 
 mkdir -p "$LOG_DIR"
