@@ -39,8 +39,9 @@
     "category": "baby",
     "pattern": "brand-trust",
     "title": "GROWNSYはどこの国？哺乳瓶消毒器の安全性と評判を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "grownsy-brand-trust"
   },
   {
     "name": "HelloBaby ベビーモニター",
