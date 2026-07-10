@@ -48,16 +48,18 @@
     "category": "baby",
     "pattern": "brand-trust",
     "title": "HelloBabyはどこの国？ベビーモニターの評判と耐久性を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "skipped",
+    "strategy": "tottio",
+    "skipReason": "Amazon.co.jp の固有ASINを確認できず（Hello Baby Direct ストアは存在するが商品ページへのアクセス不可）"
   },
   {
     "name": "Babysense ベビーセンサー",
     "category": "baby",
     "pattern": "brand-trust",
     "title": "Babysenseはどこの国？病産院導入実績と信頼性を徹底調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "babysense-brand-trust"
   },
   {
     "name": "MOMMED ベビースケール",
