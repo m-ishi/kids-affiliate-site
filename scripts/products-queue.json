@@ -66,16 +66,18 @@
     "category": "baby",
     "pattern": "brand-trust",
     "title": "MOMMEDはどこの国？ベビースケールの精度と評判を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "skipped",
+    "strategy": "tottio",
+    "skipReason": "Amazon.co.jp に固有ASINなし（US Amazon専売ブランド）"
   },
   {
     "name": "iFam ベビーサークル",
     "category": "baby",
     "pattern": "brand-trust",
     "title": "iFamはどこの国？ベビーサークルの正規品と安全性を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "ifam-brand-trust"
   },
   {
     "name": "DUOGIO ベビーゲート",
