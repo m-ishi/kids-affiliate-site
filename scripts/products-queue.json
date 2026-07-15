@@ -111,8 +111,9 @@
     "category": "baby",
     "pattern": "brand-trust",
     "title": "Carazはどこの国？ベビーサークルの安全基準と評判を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "caraz-brand-trust"
   },
   {
     "name": "XJD キックバイク",
