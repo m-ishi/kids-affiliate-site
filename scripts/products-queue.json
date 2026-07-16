@@ -120,8 +120,9 @@
     "category": "outdoor",
     "pattern": "brand-trust",
     "title": "XJDはどこの国？キックバイクの安全性と評判を徹底調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "xjd-brand-trust"
   },
   {
     "name": "OUTDOORMASTER 子供用ヘルメット",
