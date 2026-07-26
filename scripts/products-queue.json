@@ -174,8 +174,9 @@
     "category": "outdoor",
     "pattern": "brand-trust",
     "title": "BTMはどこの国？室内鉄棒の安全性と評判を徹底調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "btm-brand-trust"
   },
   {
     "name": "SONGMICS トランポリン",
