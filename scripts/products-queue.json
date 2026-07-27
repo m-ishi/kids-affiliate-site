@@ -183,16 +183,18 @@
     "category": "outdoor",
     "pattern": "brand-trust",
     "title": "SONGMICSはどこの国？子供用トランポリンの安全性を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "skipped",
+    "strategy": "tottio",
+    "skipReason": "Amazon.co.jpに固有ASINなし（欧州・米国向け製品のため日本Amazonでの取扱いなし）"
   },
   {
     "name": "Apitor プログラミングロボット",
     "category": "educational",
     "pattern": "brand-trust",
     "title": "Apitorはどこの国？プログラミングロボットの評判を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "apitor-brand-trust"
   },
   {
     "name": "Tiny Land キッズテント",
