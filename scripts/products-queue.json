@@ -201,8 +201,9 @@
     "category": "toy",
     "pattern": "brand-trust",
     "title": "Tiny Landはどこの国？キッズテントの安全性と評判を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "tiny-land-brand-trust"
   },
   {
     "name": "Jojoin 木製知育玩具",
