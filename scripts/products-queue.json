@@ -210,16 +210,18 @@
     "category": "educational",
     "pattern": "brand-trust",
     "title": "Jojoinはどこの国？木製知育玩具の安全性と評判を徹底調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "skipped",
+    "strategy": "tottio",
+    "skipReason": "Amazon.co.jpに固有ASINなし（Amazon.co.ukおよびAmazon.esのみ展開。日本Amazonでの取扱いが確認できず）"
   },
   {
     "name": "PicassoTiles マグネットブロック",
     "category": "educational",
     "pattern": "brand-trust",
-    "title": "PicassoTilesはどこの国？マグネットタイルの安全性を調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "title": "PicassoTilesはどこの国？マグネットタイルの安全性と磁石事故リスクを調査",
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "picassotiles-brand-trust"
   },
   {
     "name": "マグビルド マグネットブロック",
