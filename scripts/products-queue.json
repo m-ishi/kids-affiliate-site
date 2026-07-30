@@ -228,8 +228,9 @@
     "category": "educational",
     "pattern": "brand-trust",
     "title": "マグビルドに偽物？見分け方と正規品の安全性を徹底調査",
-    "status": "pending",
-    "strategy": "tottio"
+    "status": "published",
+    "strategy": "tottio",
+    "slug": "magbuild-brand-trust"
   },
   {
     "name": "こどもちゃれんじ vs トイサブ 比較",
