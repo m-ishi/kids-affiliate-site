@@ -9,6 +9,6 @@
     "puppeteer": "^25.3.0"
   },
   "devDependencies": {
-    "@napi-rs/canvas": "^1.0.9"
+    "@napi-rs/canvas": "^1.0.10"
   }
 }
