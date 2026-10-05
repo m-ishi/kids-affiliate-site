@@ -479,8 +479,11 @@
   {
     "name": "くもん はじめてのソフトパズル",
     "category": "educational",
-    "title": "",
-    "status": "hold"
+    "title": "くもん はじめてのソフトパズル、1歳半から本当に使える？2歳息子と3ヶ月遊んだパパの正直評価",
+    "status": "published",
+    "slug": "kumon-soft-puzzle-1sai-review",
+    "asin": "B0BGX8RHPS",
+    "publishedDate": "2026-10-01"
   },
   {
     "name": "ピジョン マグマグコロン コップ",
@@ -762,5 +765,23 @@
     "slug": "fisher-price-jumperoo-0sai-review",
     "asin": "B00IXG1AJS",
     "publishedDate": "2026-09-29"
+  },
+  {
+    "name": "AnnaNicola アンナニコラ フリーススリーパー",
+    "category": "baby",
+    "title": "アンナニコラ フリーススリーパーは薄い？2歳息子の冬の寝冷えに3ヶ月使ったパパの正直評価",
+    "status": "published",
+    "slug": "annanicola-fleece-sleeper-2sai-review",
+    "asin": "B07TVBFQFC",
+    "publishedDate": "2026-10-02"
+  },
+  {
+    "name": "くもん NEW さんかくたんぐらむ",
+    "category": "educational",
+    "title": "くもん さんかくたんぐらむ、2歳に買っていい？NEWたんぐらむとの違いをパパが正直評価",
+    "status": "published",
+    "slug": "kumon-sankaku-tangram-2sai-review",
+    "asin": "B00XOKVZEI",
+    "publishedDate": "2026-10-03"
   }
 ]
